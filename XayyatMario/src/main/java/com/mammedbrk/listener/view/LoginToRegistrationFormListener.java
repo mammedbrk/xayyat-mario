@@ -2,6 +2,7 @@ package com.mammedbrk.listener.view;
 
 import com.mammedbrk.event.FormEvent;
 import com.mammedbrk.listener.Listener;
+import com.mammedbrk.listener.RegistrationFormListener;
 import com.mammedbrk.view.MainView;
 import com.mammedbrk.view.auth.RegistrationView;
 import javafx.fxml.FXMLLoader;
@@ -23,6 +24,8 @@ public class LoginToRegistrationFormListener implements Listener<FormEvent> {
             RegistrationView registrationView = registrationViewFxml.getController();
             registrationView.setUsername(formEvent.getUsername());
             registrationView.setPassword(formEvent.getPassword());
+            registrationView.setRegistrationToLoginFormListener(new RegistrationToLoginFormListener(mainView));
+            registrationView.setRegistrationFormListener(new RegistrationFormListener());
             return true;
         } catch (IOException e) {
             throw new RuntimeException(e);

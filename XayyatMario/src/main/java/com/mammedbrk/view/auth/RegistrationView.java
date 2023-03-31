@@ -1,6 +1,9 @@
 package com.mammedbrk.view.auth;
 
+import com.mammedbrk.event.FormEvent;
 import com.mammedbrk.listener.Listener;
+import com.mammedbrk.listener.RegistrationFormListener;
+import com.mammedbrk.listener.view.RegistrationToLoginFormListener;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.PasswordField;
@@ -17,6 +20,37 @@ public class RegistrationView {
     @FXML
     private PasswordField confirmPassword;
 
+    private RegistrationToLoginFormListener registrationToLoginFormListener;
+    private RegistrationFormListener registrationFormListener;
+
+
+
+    public void backClicked(ActionEvent e) {
+        FormEvent formEvent = new FormEvent(this, getUsername(), getPassword());
+        registrationToLoginFormListener.listen(formEvent);
+    }
+
+    public void signUpClicked(ActionEvent e) {
+        FormEvent formEvent = new FormEvent(this, getUsername(), getPassword());
+        registrationFormListener.listen(formEvent);
+    }
+
+
+    public RegistrationToLoginFormListener getRegistrationToLoginFormListener() {
+        return registrationToLoginFormListener;
+    }
+
+    public void setRegistrationToLoginFormListener(RegistrationToLoginFormListener registrationToLoginFormListener) {
+        this.registrationToLoginFormListener = registrationToLoginFormListener;
+    }
+
+    public RegistrationFormListener getRegistrationFormListener() {
+        return registrationFormListener;
+    }
+
+    public void setRegistrationFormListener(RegistrationFormListener registrationFormListener) {
+        this.registrationFormListener = registrationFormListener;
+    }
 
     public String getUsername() {
         return username.getText();
@@ -40,13 +74,5 @@ public class RegistrationView {
 
     public void setConfirmPassword(String confirmPassword) {
         this.confirmPassword.setText(confirmPassword);
-    }
-
-    public void backClicked(ActionEvent e) {
-
-    }
-
-    public void signUpClicked(ActionEvent e) {
-
     }
 }

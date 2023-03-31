@@ -1,5 +1,5 @@
-.root {
-    -fx-background-color: "#43fcb3"
+#vbox {
+    -fx-font-family: "Gill Sans"
 }
 .button {
     -fx-background-radius: 40;
@@ -9,6 +9,7 @@
 
 .text-field {
     -fx-background-radius: 40;
+    -fx-font-size: 24;
 }
 
 .label {

@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox alignment="CENTER" minHeight="500.0" minWidth="900.0" prefHeight="580.0" prefWidth="900.0" spacing="20.0" stylesheets="@../../style/auth.css" BorderPane.alignment="CENTER" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mammedbrk.view.auth.RegistrationView">
+<VBox id="vbox" alignment="CENTER" minHeight="500.0" minWidth="900.0" prefHeight="580.0" prefWidth="900.0" spacing="20.0" style="-fx-background-color: #42bfc9;" stylesheets="@../../style/auth.css" BorderPane.alignment="CENTER" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mammedbrk.view.auth.RegistrationView">
     <children>
         <Label id="title" alignment="CENTER" contentDisplay="CENTER" prefHeight="100.0" text="Xayyat Mario">
          <VBox.margin>
