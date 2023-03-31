@@ -11,7 +11,7 @@ public class UserController {
         if (access.get(e.getUsername()) != null) {
             return null;
         }
-        User user = new User(access.lastId(), e.getUsername(), e.getPassword());
+        User user = new User(access.lastId() + 1, e.getUsername(), e.getPassword());
         access.add(user);
         return user;
     }
