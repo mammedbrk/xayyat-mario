@@ -1,5 +1,6 @@
 package com.mammedbrk.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class User {
@@ -15,6 +16,8 @@ public class User {
         this.id = id;
         this.username = username;
         this.password = password;
+        games = new ArrayList<>();
+        characters = new ArrayList<>();
     }
 
     // Methods
