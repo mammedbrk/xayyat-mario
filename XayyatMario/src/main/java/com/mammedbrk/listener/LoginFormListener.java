@@ -9,6 +9,7 @@ public class LoginFormListener implements Listener<FormEvent> {
 
     @Override
     public boolean listen(FormEvent e) {
-        return false;
+        Current.user = controller.login(e);
+        return Current.user != null;
     }
 }

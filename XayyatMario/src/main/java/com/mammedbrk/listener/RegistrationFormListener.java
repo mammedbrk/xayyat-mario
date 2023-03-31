@@ -9,6 +9,7 @@ public class RegistrationFormListener implements Listener<FormEvent> {
 
     @Override
     public boolean listen(FormEvent e) {
-        return false;
+        Current.user = controller.register(e);
+        return Current.user != null;
     }
 }
