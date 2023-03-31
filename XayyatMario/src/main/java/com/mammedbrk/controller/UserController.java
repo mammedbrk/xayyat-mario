@@ -18,7 +18,7 @@ public class UserController {
 
     public User login(FormEvent e) {
         User user = access.get(e.getUsername());
-        if (user.getPassword().equals(e.getPassword())) {
+        if (user != null && user.getPassword().equals(e.getPassword())) {
             return user;
         }
         return null;
