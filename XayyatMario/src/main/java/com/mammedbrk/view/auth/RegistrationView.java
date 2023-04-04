@@ -1,16 +1,12 @@
 package com.mammedbrk.view.auth;
 
 import com.mammedbrk.event.FormEvent;
-import com.mammedbrk.listener.Listener;
 import com.mammedbrk.listener.RegistrationFormListener;
-import com.mammedbrk.listener.view.RegistrationToLoginFormListener;
+import com.mammedbrk.listener.view.auth.RegistrationToLoginFormListener;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-
-import java.util.LinkedList;
-import java.util.List;
 
 public class RegistrationView {
     @FXML

@@ -1,11 +1,10 @@
-package com.mammedbrk.listener.view;
+package com.mammedbrk.listener.view.auth;
 
 import com.mammedbrk.event.FormEvent;
 import com.mammedbrk.listener.Listener;
 import com.mammedbrk.listener.LoginFormListener;
 import com.mammedbrk.view.MainView;
 import com.mammedbrk.view.auth.LoginView;
-import com.mammedbrk.view.auth.RegistrationView;
 import javafx.fxml.FXMLLoader;
 
 import java.io.IOException;
