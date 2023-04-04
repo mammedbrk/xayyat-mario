@@ -17,8 +17,29 @@ public class LoginView {
     private LoginToRegistrationFormListener loginToRegistrationFormListener;
 
     public void signInClicked(ActionEvent e) {
-        FormEvent formEvent = new FormEvent(this, getUsername(), getPassword());
-        System.out.println(loginFormListener.listen(formEvent)); // todo if false
+        if (getUsername().isEmpty()) {
+            username.setStyle("-fx-border-color: red;");
+        }
+        else {
+            username.setStyle("-fx-border-color: transparent;");
+        }
+        if (getPassword().isEmpty()) {
+            password.setStyle("-fx-border-color: red;");
+        }
+        else {
+            password.setStyle("-fx-border-color: transparent;");
+        }
+        if (!getUsername().isEmpty() && !getPassword().isEmpty()) {
+            FormEvent formEvent = new FormEvent(this, getUsername(), getPassword());
+            if (loginFormListener.listen(formEvent)) {
+                // todo login to main menu of game
+                System.out.println("Logged in!");
+            }
+            else {
+                username.setStyle("-fx-border-color: red;");
+                password.setStyle("-fx-border-color: red;");
+            }
+        }
     }
 
     public void signUpClicked(ActionEvent e) {

@@ -27,8 +27,34 @@ public class RegistrationView {
     }
 
     public void signUpClicked(ActionEvent e) {
-        FormEvent formEvent = new FormEvent(this, getUsername(), getPassword());
-        registrationFormListener.listen(formEvent);
+        if (getUsername().isEmpty()) {
+            username.setStyle("-fx-border-color: red;");
+        }
+        else {
+            username.setStyle("-fx-border-color: transparent;");
+        }
+        if (getPassword().isEmpty()) {
+            password.setStyle("-fx-border-color: red;");
+        }
+        else {
+            password.setStyle("-fx-border-color: transparent;");
+        }
+        if (!getConfirmPassword().equals(getPassword())) {
+            confirmPassword.setStyle("-fx-border-color: red;");
+        }
+        else {
+            confirmPassword.setStyle("-fx-border-color: transparent;");
+        }
+        if (!getUsername().isEmpty() && !getPassword().isEmpty() && getConfirmPassword().equals(getPassword())) {
+            FormEvent formEvent = new FormEvent(this, getUsername(), getPassword());
+            if (registrationFormListener.listen(formEvent)) {
+                // todo login to main menu of game
+                System.out.println("Registered!");
+            }
+            else {
+                username.setStyle("-fx-border-color: red;");
+            }
+        }
     }
 
 
