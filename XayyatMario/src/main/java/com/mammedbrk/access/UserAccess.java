@@ -5,6 +5,8 @@ import com.google.gson.GsonBuilder;
 import com.mammedbrk.model.User;
 
 import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class UserAccess {
     private final Gson gson = new GsonBuilder().setPrettyPrinting().create();
@@ -52,19 +54,29 @@ public class UserAccess {
         return null;
     }
 
-    public int lastId() {
-        int id = 0;
+    public List<User> getAll() {
+        List<User> returnList = new ArrayList<>();
         File dir = new File(directory);
         File[] files = dir.listFiles();
-        if (files != null) {
-            for (File file : files) {
-                try {
-                    id = Math.max(id, gson.fromJson(new FileReader(file), User.class).getId());
-                } catch (FileNotFoundException e) {
-                    throw new RuntimeException(e);
-                }
+        if (files == null) {
+            return returnList;
+        }
+        for (File file: files) {
+            try {
+                returnList.add(gson.fromJson(new FileReader(file), User.class));
+            } catch (FileNotFoundException e) {
+                throw new RuntimeException(e);
             }
         }
-        return id;
+        return returnList;
+    }
+
+    public int lastId() {
+        File dir = new File(directory);
+        File[] files = dir.listFiles();
+        if (files == null) {
+            return 0;
+        }
+        return files.length;
     }
 }
