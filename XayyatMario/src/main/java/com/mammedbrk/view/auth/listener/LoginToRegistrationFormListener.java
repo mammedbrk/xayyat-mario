@@ -1,4 +1,4 @@
-package com.mammedbrk.listener.view.auth;
+package com.mammedbrk.view.auth.listener;
 
 import com.mammedbrk.event.FormEvent;
 import com.mammedbrk.listener.Listener;

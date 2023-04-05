@@ -1,7 +1,7 @@
 package com.mammedbrk.view;
 
 import com.mammedbrk.listener.LoginFormListener;
-import com.mammedbrk.listener.view.auth.LoginToRegistrationFormListener;
+import com.mammedbrk.view.auth.listener.LoginToRegistrationFormListener;
 import com.mammedbrk.view.auth.LoginView;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.BorderPane;

@@ -2,7 +2,7 @@ package com.mammedbrk.view.auth;
 
 import com.mammedbrk.event.FormEvent;
 import com.mammedbrk.listener.RegistrationFormListener;
-import com.mammedbrk.listener.view.auth.RegistrationToLoginFormListener;
+import com.mammedbrk.view.auth.listener.RegistrationToLoginFormListener;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.PasswordField;
