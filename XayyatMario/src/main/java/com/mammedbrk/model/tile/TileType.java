@@ -1,4 +1,4 @@
-package com.mammedbrk.model.gamecomponent.tile;
+package com.mammedbrk.model.tile;
 
 public enum TileType {
     block,

@@ -1,6 +1,6 @@
-package com.mammedbrk.model.block;
+package com.mammedbrk.model.gamecomponent.block;
 
-import com.mammedbrk.model.GameComponent;
+import com.mammedbrk.model.gamecomponent.GameComponent;
 
 public class Block extends GameComponent {
 }

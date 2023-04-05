@@ -1,13 +1,12 @@
-package com.mammedbrk.model.gamecomponent.tile;
+package com.mammedbrk.model.tile;
 
-import com.mammedbrk.model.gamecomponent.Coin;
 import com.mammedbrk.model.gamecomponent.block.Block;
 
 public class Tile {
     private final int x, y;
     private final TileType type;
     private Block block;
-    private Coin coin;
+    private boolean coin;
 
     public Tile(int x, int y, TileType type) {
         this.x = x;
@@ -37,11 +36,11 @@ public class Tile {
         this.block = block;
     }
 
-    public Coin getCoin() {
+    public boolean isCoin() {
         return coin;
     }
 
-    public void setCoin(Coin coin) {
+    public void setCoin(boolean coin) {
         this.coin = coin;
     }
 }
