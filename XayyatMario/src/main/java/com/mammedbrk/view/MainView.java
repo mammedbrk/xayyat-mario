@@ -24,7 +24,8 @@ public class MainView extends BorderPane {
     }
 
 
-    public void loginView() throws IOException {
+    private void loginView() throws IOException {
+        resetPane();
         loginViewLoader = new FXMLLoader(getClass().getResource(dir + "auth/login-view.fxml"));
         this.setCenter(loginViewLoader.load());
         LoginView loginView = loginViewLoader.getController();
@@ -58,7 +59,8 @@ public class MainView extends BorderPane {
         });
     }
 
-    public void registrationView() throws IOException {
+    private void registrationView() throws IOException {
+        resetPane();
         registrationViewLoader = new FXMLLoader(getClass().getResource(dir + "auth/registration-view.fxml"));
         this.setCenter(registrationViewLoader.load());
         RegistrationView registrationView = registrationViewLoader.getController();
@@ -92,7 +94,8 @@ public class MainView extends BorderPane {
         });
     }
 
-    public void mainMenu() throws IOException {
+    private void mainMenu() throws IOException {
+        resetPane();
         mainMenuHeaderViewLoader = new FXMLLoader(getClass().getResource(dir + "menu/main-menu-header-view.fxml"));
         mainMenuViewLoader = new FXMLLoader(getClass().getResource(dir + "menu/main-menu-view.fxml"));
         this.setTop(mainMenuHeaderViewLoader.load());
@@ -100,5 +103,47 @@ public class MainView extends BorderPane {
         MainMenuHeaderView mainMenuHeaderView = mainMenuHeaderViewLoader.getController();
         MainMenuView mainMenuView = mainMenuViewLoader.getController();
 
+        mainMenuView.addListener(new Listener<String>() {
+            @Override
+            public boolean listen(String s) {
+                if (s.equals("LoginView")) {
+                    try {
+                        loginView();
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+                if (s.equals("RankingView")) {
+                    // todo
+                }
+                if (s.equals("NewGameSetupView")) {
+                    // todo
+                }
+                if (s.equals("PreGameSetupView")) {
+                    // todo
+                }
+                return true;
+            }
+        });
+        mainMenuHeaderView.addListener(new Listener<String>() {
+            @Override
+            public boolean listen(String s) {
+                if (s.equals("ProfileView")) {
+                    // todo
+                }
+                if (s.equals("ShopView")) {
+                    // todo
+                }
+                return true;
+            }
+        });
+    }
+
+    private void resetPane() {
+        this.setTop(null);
+        this.setLeft(null);
+        this.setCenter(null);
+        this.setRight(null);
+        this.setBottom(null);
     }
 }

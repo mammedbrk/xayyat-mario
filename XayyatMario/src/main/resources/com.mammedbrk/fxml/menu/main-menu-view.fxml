@@ -47,7 +47,7 @@
          <children>
             <FlowPane alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="200.0">
                <children>
-                  <Button contentDisplay="RIGHT" graphicTextGap="5.0" mnemonicParsing="false" prefHeight="50.0" text="Logout" textFill="WHITE">
+                  <Button contentDisplay="RIGHT" graphicTextGap="5.0" mnemonicParsing="false" onAction="#logoutBtnClicked" prefHeight="50.0" text="Logout" textFill="WHITE">
                      <FlowPane.margin>
                         <Insets left="10.0" />
                      </FlowPane.margin>
@@ -63,7 +63,7 @@
             </FlowPane>
             <FlowPane alignment="CENTER_RIGHT" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1">
                <children>
-                  <Button contentDisplay="RIGHT" graphicTextGap="5.0" mnemonicParsing="false" prefHeight="50.0" text="Ranking" textFill="WHITE">
+                  <Button contentDisplay="RIGHT" graphicTextGap="5.0" mnemonicParsing="false" onAction="#rankingBtnClicked" prefHeight="50.0" text="Ranking" textFill="WHITE">
                      <FlowPane.margin>
                         <Insets right="10.0" />
                      </FlowPane.margin>
