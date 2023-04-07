@@ -1,12 +1,15 @@
 package com.mammedbrk.view.auth;
 
 import com.mammedbrk.event.FormEvent;
+import com.mammedbrk.listener.Listener;
 import com.mammedbrk.listener.RegistrationFormListener;
-import com.mammedbrk.view.auth.listener.RegistrationToLoginFormListener;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+
+import java.util.LinkedList;
+import java.util.List;
 
 public class RegistrationView {
     @FXML
@@ -15,15 +18,18 @@ public class RegistrationView {
     private PasswordField password;
     @FXML
     private PasswordField confirmPassword;
-
-    private RegistrationToLoginFormListener registrationToLoginFormListener;
     private RegistrationFormListener registrationFormListener;
+    private List<Listener<String>> listeners = new LinkedList<>();
 
 
+    public void addListener(Listener<String> listener) {
+        listeners.add(listener);
+    }
 
     public void backClicked(ActionEvent e) {
-        FormEvent formEvent = new FormEvent(this, getUsername(), getPassword());
-        registrationToLoginFormListener.listen(formEvent);
+        for (Listener<String> listener: listeners) {
+            listener.listen("LoginView");
+        }
     }
 
     public void signUpClicked(ActionEvent e) {
@@ -48,8 +54,9 @@ public class RegistrationView {
         if (!getUsername().isEmpty() && !getPassword().isEmpty() && getConfirmPassword().equals(getPassword())) {
             FormEvent formEvent = new FormEvent(this, getUsername(), getPassword());
             if (registrationFormListener.listen(formEvent)) {
-                // todo login to main menu of game
-                System.out.println("Registered!");
+                for (Listener<String> listener: listeners) {
+                    listener.listen("MainMenu");
+                }
             }
             else {
                 username.setStyle("-fx-border-color: red;");
@@ -57,14 +64,7 @@ public class RegistrationView {
         }
     }
 
-
-    public RegistrationToLoginFormListener getRegistrationToLoginFormListener() {
-        return registrationToLoginFormListener;
-    }
-
-    public void setRegistrationToLoginFormListener(RegistrationToLoginFormListener registrationToLoginFormListener) {
-        this.registrationToLoginFormListener = registrationToLoginFormListener;
-    }
+    // Getters and setters
 
     public RegistrationFormListener getRegistrationFormListener() {
         return registrationFormListener;
