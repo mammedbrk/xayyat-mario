@@ -7,6 +7,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
@@ -39,8 +40,8 @@ public class MainMenuHeaderView implements Initializable {
         coin.setText(String.valueOf(Current.user.getNumOfCoins()));
         profileBtn.setPrefWidth(Current.user.getUsername().length() * 5 + 200);
         for (Character character: Current.user.getCharacters()) {
-            if (character.isChosen) {
-                characterImg.setImage(character.getImageAddress);
+            if (character.isChosen()) {
+                characterImg.setImage(new Image(character.getImageAddress()));
                 break;
             }
         }
