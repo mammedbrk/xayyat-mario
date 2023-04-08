@@ -4,5 +4,6 @@
   "speed": 2,
   "jumpAbility": 1,
   "collectAbility": 2,
-  "shootAbility": 1
+  "shootAbility": 1,
+  "chosen": false
 }
