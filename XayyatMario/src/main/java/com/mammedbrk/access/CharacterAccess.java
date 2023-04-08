@@ -3,43 +3,27 @@ package com.mammedbrk.access;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.mammedbrk.model.Character;
-import com.mammedbrk.model.User;
 
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class CharacterAccess {
     private final Gson gson = new GsonBuilder().setPrettyPrinting().create();
-    private final String directory = "src/resources/character/";
-
-    public void add(Character character) {
-        try {
-            FileWriter writer = new FileWriter(directory + character.getName() + ".json");
-            gson.toJson(character, writer);
-            writer.flush();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
+    private final String directory = "src/main/resources/com.mammedbrk/character/";
 
     public Character get(String name) {
-        File dir = new File(directory);
-        File[] files = dir.listFiles();
-        if (files == null) {
+        File file = new File(directory + name + ".json");
+        if (!file.exists()) {
             return null;
         }
-        for (File file : files) {
-            try {
-                Character character = gson.fromJson(new FileReader(file), Character.class);
-                if (character.getName().equals(name)) {
-                    return character;
-                }
-            } catch (FileNotFoundException e) {
-                throw new RuntimeException(e);
-            }
+        try {
+            FileReader reader = new FileReader(file);
+            return gson.fromJson(reader, Character.class);
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
         }
-        return null;
     }
 
     public List<Character> getAll() {

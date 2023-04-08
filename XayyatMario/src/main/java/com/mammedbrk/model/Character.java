@@ -7,7 +7,7 @@ public class Character {
     private int jumpAbility;
     private int collectAbility;
     private int shootAbility;
-    private boolean chosen;
+    transient private boolean chosen;
 
     public Character() {
     }
