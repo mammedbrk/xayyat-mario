@@ -6,6 +6,9 @@ import com.mammedbrk.event.FormEvent;
 import com.mammedbrk.model.Character;
 import com.mammedbrk.model.User;
 
+import java.util.Comparator;
+import java.util.List;
+
 public class UserController {
     UserAccess userAccess = new UserAccess();
     CharacterAccess characterAccess = new CharacterAccess();
@@ -29,5 +32,11 @@ public class UserController {
             return user;
         }
         return null;
+    }
+
+    public List<User> getSortedUsersList() {
+        List<User> users = userAccess.getAll();
+        users.sort(Comparator.comparing(User::getMaxScore).reversed());
+        return users;
     }
 }

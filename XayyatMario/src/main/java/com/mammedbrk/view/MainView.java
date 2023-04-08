@@ -2,11 +2,13 @@ package com.mammedbrk.view;
 
 import com.mammedbrk.listener.Listener;
 import com.mammedbrk.listener.LoginFormListener;
+import com.mammedbrk.listener.RankingListListener;
 import com.mammedbrk.listener.RegistrationFormListener;
 import com.mammedbrk.view.auth.LoginView;
 import com.mammedbrk.view.auth.RegistrationView;
 import com.mammedbrk.view.menu.MainMenuHeaderView;
 import com.mammedbrk.view.menu.MainMenuView;
+import com.mammedbrk.view.ranking.RankingView;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.BorderPane;
 
@@ -18,6 +20,7 @@ public class MainView extends BorderPane {
     private FXMLLoader registrationViewLoader;
     private FXMLLoader mainMenuViewLoader;
     private FXMLLoader mainMenuHeaderViewLoader;
+    private FXMLLoader rankingViewLoader;
 
     public MainView() throws IOException {
         loginView();
@@ -114,7 +117,11 @@ public class MainView extends BorderPane {
                     }
                 }
                 if (s.equals("RankingView")) {
-                    // todo
+                    try {
+                        rankingView();
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
                 }
                 if (s.equals("NewGameSetupView")) {
                     // todo
@@ -137,6 +144,13 @@ public class MainView extends BorderPane {
                 return true;
             }
         });
+    }
+
+    private void rankingView() throws IOException {
+        resetPane();
+        rankingViewLoader = new FXMLLoader(getClass().getResource(dir + "ranking/ranking-view.fxml"));
+        this.setCenter(rankingViewLoader.load());
+        RankingView rankingView = rankingViewLoader.getController();
     }
 
     private void resetPane() {
