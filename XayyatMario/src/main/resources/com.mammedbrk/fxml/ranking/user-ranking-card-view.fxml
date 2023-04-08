@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.text.Font?>
+
+<FlowPane alignment="CENTER_LEFT" hgap="15.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="70.0" prefWidth="450.0" style="-fx-background-color: #232323; -fx-background-radius: 9;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mammedbrk.view.ranking.UserRankingCardView">
+   <children>
+      <Label fx:id="rankLabel" maxWidth="-Infinity" text="1" textFill="WHITE">
+         <font>
+            <Font name="Chalkduster" size="22.0" />
+         </font>
+         <FlowPane.margin>
+            <Insets left="20.0" />
+         </FlowPane.margin>
+      </Label>
+      <ImageView fx:id="characterImg" fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+         <FlowPane.margin>
+            <Insets />
+         </FlowPane.margin>
+         <image>
+            <Image url="@../../image/character/shrek-xayyat.png" />
+         </image>
+      </ImageView>
+      <Label fx:id="usernameLabel" maxWidth="-Infinity" prefWidth="230.0" text="mammedbrk" textFill="WHITE">
+         <font>
+            <Font name="Chalkduster" size="22.0" />
+         </font>
+      </Label>
+      <Label fx:id="scoreLabel" maxWidth="-Infinity" prefWidth="80.0" text="1200" textFill="WHITE">
+         <font>
+            <Font name="Chalkduster" size="22.0" />
+         </font>
+      </Label>
+   </children>
+</FlowPane>
