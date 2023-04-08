@@ -38,6 +38,14 @@ public class User {
         characters.add(character);
     }
 
+    public Character getChosenCharacter() {
+        for (Character character: characters) {
+            if (character.isChosen())
+                return character;
+        }
+        return null;
+    }
+
     // Getters and setters
 
     public int getId() {

@@ -39,15 +39,10 @@ public class MainMenuHeaderView implements Initializable {
         username.setText(Current.user.getUsername());
         score.setText(String.valueOf(Current.user.getMaxScore()));
         coin.setText(String.valueOf(Current.user.getNumOfCoins()));
-        for (Character character: Current.user.getCharacters()) {
-            if (character.isChosen()) {
-                try {
-                    characterImg.setImage(new Image(new FileInputStream(character.getImageAddress())));
-                } catch (FileNotFoundException e) {
-                    throw new RuntimeException(e);
-                }
-                break;
-            }
+        try {
+            characterImg.setImage(new Image(new FileInputStream(Current.user.getChosenCharacter().getImageAddress())));
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -56,13 +51,13 @@ public class MainMenuHeaderView implements Initializable {
     }
 
     public void profileBtnClicked(MouseEvent mouseEvent) {
-        for (Listener<String> listener: listeners) {
+        for (Listener<String> listener : listeners) {
             listener.listen("ProfileView");
         }
     }
 
     public void shopBtnClicked(ActionEvent event) {
-        for (Listener<String> listener: listeners) {
+        for (Listener<String> listener : listeners) {
             listener.listen("ShopView");
         }
     }
