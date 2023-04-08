@@ -1,0 +1,8 @@
+{
+  "name": "Ordeinary Xayyat",
+  "imageAddress": "src/main/resources/com.mammedbrk/image/character/ordinary-xayyat.png",
+  "speed": 1,
+  "jumpAbility": 1,
+  "collectAbility": 1,
+  "shootAbility": 1
+}

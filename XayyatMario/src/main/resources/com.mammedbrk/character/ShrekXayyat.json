@@ -1,0 +1,8 @@
+{
+  "name": "Shrek Xayyat",
+  "imageAddress": "src/main/resources/com.mammedbrk/image/character/shrek-xayyat.png",
+  "speed": 2,
+  "jumpAbility": 1,
+  "collectAbility": 2,
+  "shootAbility": 1
+}
