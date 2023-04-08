@@ -23,13 +23,12 @@
    <children>
       <FlowPane alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="200.0">
          <children>
-            <FlowPane fx:id="profileBtn" alignment="CENTER_LEFT" onMouseClicked="#profileBtnClicked" prefHeight="60.0" prefWidth="230.0" style="-fx-background-color: #292929; -fx-background-radius: 5;" vgap="10.0">
+            <FlowPane fx:id="profileBtn" alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minWidth="150.0" onMouseClicked="#profileBtnClicked" prefHeight="60.0" prefWidth="250.0" prefWrapLength="150.0" style="-fx-background-color: #292929; -fx-background-radius: 5;" vgap="15.0">
                <FlowPane.margin>
                   <Insets left="10.0" />
                </FlowPane.margin>
                <children>
-                  <ImageView fx:id="characterImg" fitHeight="55.0" fitWidth="55.0" pickOnBounds="true"
-                             preserveRatio="true"/>
+                  <ImageView fx:id="characterImg" fitHeight="55.0" fitWidth="55.0" pickOnBounds="true" preserveRatio="true" />
                   <VBox alignment="CENTER_LEFT" prefHeight="60.0">
                      <children>
                         <Label fx:id="username" textFill="WHITE" />

@@ -39,7 +39,6 @@ public class MainMenuHeaderView implements Initializable {
         username.setText(Current.user.getUsername());
         score.setText(String.valueOf(Current.user.getMaxScore()));
         coin.setText(String.valueOf(Current.user.getNumOfCoins()));
-        profileBtn.setPrefWidth(Current.user.getUsername().length() * 5 + 200);
         for (Character character: Current.user.getCharacters()) {
             if (character.isChosen()) {
                 try {
@@ -57,11 +56,15 @@ public class MainMenuHeaderView implements Initializable {
     }
 
     public void profileBtnClicked(MouseEvent mouseEvent) {
-        System.out.println("profile");
+        for (Listener<String> listener: listeners) {
+            listener.listen("ProfileView");
+        }
     }
 
     public void shopBtnClicked(ActionEvent event) {
-        System.out.println("shop");
+        for (Listener<String> listener: listeners) {
+            listener.listen("ShopView");
+        }
     }
 
     // Getters and setters
