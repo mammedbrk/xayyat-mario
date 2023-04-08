@@ -11,8 +11,9 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.net.URL;
 import java.util.LinkedList;
 import java.util.List;
@@ -41,7 +42,11 @@ public class MainMenuHeaderView implements Initializable {
         profileBtn.setPrefWidth(Current.user.getUsername().length() * 5 + 200);
         for (Character character: Current.user.getCharacters()) {
             if (character.isChosen()) {
-                characterImg.setImage(new Image(character.getImageAddress()));
+                try {
+                    characterImg.setImage(new Image(new FileInputStream(character.getImageAddress())));
+                } catch (FileNotFoundException e) {
+                    throw new RuntimeException(e);
+                }
                 break;
             }
         }

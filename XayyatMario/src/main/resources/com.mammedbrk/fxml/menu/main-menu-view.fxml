@@ -15,13 +15,13 @@
 
 <BorderPane id="main" prefHeight="500.0" prefWidth="900.0" style="-fx-background-color: #c34343;" stylesheets="@../../style/main.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mammedbrk.view.menu.MainMenuView">
    <center>
-      <VBox id="vbox" alignment="TOP_CENTER" spacing="10.0" BorderPane.alignment="CENTER">
+      <VBox id="vbox" alignment="CENTER" spacing="10.0" BorderPane.alignment="CENTER">
          <children>
             <StackPane alignment="BOTTOM_CENTER" prefHeight="200.0" prefWidth="200.0">
                <children>
                   <ImageView fitHeight="250.0" fitWidth="250.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../../../../../../../../../../Downloads/supermario1.png" />
+                        <Image url="@../../image/main/xayyat.png" />
                      </image>
                   </ImageView>
                   <Label id="title" alignment="BOTTOM_CENTER" contentDisplay="CENTER" graphicTextGap="0.0" text="Xayyat Mario" textFill="#ffc508" />
