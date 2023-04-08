@@ -1,24 +1,51 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<ScrollPane fitToHeight="true" fitToWidth="true" prefHeight="503.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mammedbrk.view.ranking.RankingView">
-   <content>
-      <VBox fx:id="vBox" alignment="TOP_CENTER" prefHeight="512.0" prefWidth="898.0" spacing="10.0">
+<BorderPane id="main" prefHeight="580.0" prefWidth="900.0" style="-fx-background-color: #c34343;" stylesheets="@../../style/ranking.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mammedbrk.view.ranking.RankingView">
+   <top>
+      <GridPane alignment="CENTER_RIGHT" maxWidth="1.7976931348623157E308" prefHeight="80.0" BorderPane.alignment="CENTER">
+         <columnConstraints>
+            <ColumnConstraints halignment="LEFT" maxWidth="130.0" minWidth="-Infinity" prefWidth="123.0" />
+            <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="775.0" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+         </rowConstraints>
          <children>
-            <Label alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" text="Ranking of Xayyat Mario">
+            <Button mnemonicParsing="false" onAction="#backBtnClicked" prefHeight="50.0" prefWidth="120.0" text="&lt; Back" textFill="WHITE">
+               <GridPane.margin>
+                  <Insets left="10.0" />
+               </GridPane.margin>
+            </Button>
+            <Label id="title" alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" text="Ranking of Xayyat Mario" GridPane.columnIndex="1">
                <font>
                   <Font name="Chalkduster" size="36.0" />
                </font>
-               <VBox.margin>
-                  <Insets bottom="30.0" top="15.0" />
-               </VBox.margin>
+               <GridPane.margin>
+                  <Insets right="120.0" />
+               </GridPane.margin>
             </Label>
          </children>
-      </VBox>
-   </content>
-</ScrollPane>
+      </GridPane>
+   </top>
+   <center>
+      <ScrollPane fitToHeight="true" fitToWidth="true" prefHeight="503.0" prefWidth="900.0" style="-fx-background-color: #232323;" BorderPane.alignment="CENTER">
+         <content>
+            <VBox fx:id="vBox" alignment="TOP_CENTER" prefHeight="512.0" prefWidth="898.0" spacing="10.0" style="-fx-background-color: #c34343;">
+               <padding>
+                  <Insets top="10.0" />
+               </padding></VBox>
+         </content>
+      </ScrollPane>
+   </center>
+</BorderPane>

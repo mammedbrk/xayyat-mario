@@ -151,6 +151,20 @@ public class MainView extends BorderPane {
         rankingViewLoader = new FXMLLoader(getClass().getResource(dir + "ranking/ranking-view.fxml"));
         this.setCenter(rankingViewLoader.load());
         RankingView rankingView = rankingViewLoader.getController();
+
+        rankingView.addListener(new Listener<String>() {
+            @Override
+            public boolean listen(String s) {
+                if (s.equals("MainMenu")) {
+                    try {
+                        mainMenu();
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+                return true;
+            }
+        });
     }
 
     private void resetPane() {
