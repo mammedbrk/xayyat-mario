@@ -28,6 +28,16 @@ public class Character {
         this.price = price;
     }
 
+    // Methods
+
+    @Override
+    public boolean equals(Object obj) {
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        return this.name.equals(((Character) obj).name);
+    }
+
 
     // Getters and setters
 
