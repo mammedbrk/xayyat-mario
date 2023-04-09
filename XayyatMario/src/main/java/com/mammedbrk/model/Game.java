@@ -8,12 +8,12 @@ public class Game {
     private int totalScore;
     private int numOfCoins;
     private Character character;
-    private List<Section> sections;
+    private List<Level> levels;
 
     public Game() {
         numOfLives = 3;
         character = new Character();
-        sections = new ArrayList<>();
+        levels = new ArrayList<>();
     }
 
     // Methods
@@ -30,8 +30,8 @@ public class Game {
         numOfCoins += coin;
     }
 
-    public void addSection(Section section) {
-        sections.add(section);
+    public void addSection(Level level) {
+        levels.add(level);
     }
 
     // Getters and setters
@@ -68,11 +68,11 @@ public class Game {
         this.character = character;
     }
 
-    public List<Section> getSections() {
-        return sections;
+    public List<Level> getSections() {
+        return levels;
     }
 
-    public void setSections(List<Section> sections) {
-        this.sections = sections;
+    public void setSections(List<Level> levels) {
+        this.levels = levels;
     }
 }
