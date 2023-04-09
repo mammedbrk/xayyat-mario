@@ -176,6 +176,7 @@ public class MainView extends BorderPane {
         shopViewLoader = new FXMLLoader(getClass().getResource(dir + "shop/shop-view.fxml"));
         this.setCenter(shopViewLoader.load());
         ShopView shopView = shopViewLoader.getController();
+        shopView.setCharacterBuyListener(new CharacterBuyListener());
         shopView.addListener(new Listener<String>() {
             @Override
             public boolean listen(String s) {

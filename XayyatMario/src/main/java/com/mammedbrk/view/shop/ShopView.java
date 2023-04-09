@@ -1,7 +1,9 @@
 package com.mammedbrk.view.shop;
 
 import com.mammedbrk.current.Current;
+import com.mammedbrk.event.CharacterEvent;
 import com.mammedbrk.event.CharacterListEvent;
+import com.mammedbrk.listener.CharacterBuyListener;
 import com.mammedbrk.listener.CharacterListListener;
 import com.mammedbrk.listener.Listener;
 import com.mammedbrk.model.Character;
@@ -45,6 +47,7 @@ public class ShopView implements Initializable {
 
     private CharacterListListener characterListListener = new CharacterListListener();
     private List<Listener<String>> listeners = new LinkedList<>();
+    private CharacterBuyListener characterBuyListener;
 
     // Methods
 
@@ -55,13 +58,7 @@ public class ShopView implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         // User info
-        username.setText(Current.user.getUsername());
-        coin.setText(String.valueOf(Current.user.getNumOfCoins()));
-        try {
-            characterImg.setImage(new Image(new FileInputStream(Current.user.getChosenCharacter().getImageAddress())));
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
-        }
+        setUserInfo();
 
         // Character cards
         List<Character> characters = new ArrayList<>();
@@ -76,6 +73,9 @@ public class ShopView implements Initializable {
             setItemsInCard(loader.getController(), character);
 
             Pane card = loader.getRoot();
+            if (Current.user.getCharacters().contains(character)) {
+                card.setStyle("-fx-background-color: #236346; -fx-background-radius: 10;");
+            }
 
             card.setOnMouseClicked(new EventHandler<MouseEvent>() {
                 @Override
@@ -89,6 +89,10 @@ public class ShopView implements Initializable {
                         throw new RuntimeException(e);
                     }
                     setItemsInCard(mainCardLoader.getController(), character);
+
+                    if (Current.user.getCharacters().contains(character)) {
+                        selectedPane.setStyle("-fx-background-color: #236346; -fx-background-radius: 10;");
+                    }
 
                     selectedPane.setScaleX(1.5);
                     selectedPane.setScaleY(1.5);
@@ -108,16 +112,34 @@ public class ShopView implements Initializable {
                     buyBtn.setOnAction(new EventHandler<ActionEvent>() {
                         @Override
                         public void handle(ActionEvent event) {
-                            buyBtn.setText("Bought!");
-                            buyBtn.setDisable(true);
+                            if (characterBuyListener.listen(new CharacterEvent(this, character))) {
+                                selectedPane.setStyle("-fx-background-color: #236346; -fx-background-radius: 10;");
+                                card.setStyle("-fx-background-color: #236346; -fx-background-radius: 10;");
 
+                                buyBtn.setText("Bought!");
+                                buyBtn.setDisable(true);
 
+                                setUserInfo();
+                            }
+                            else {
+                                // todo message that you don't have enough money
+                            }
                         }
                     });
                 }
             });
         }
 
+    }
+
+    private void setUserInfo() {
+        username.setText(Current.user.getUsername());
+        coin.setText(String.valueOf(Current.user.getNumOfCoins()));
+        try {
+            characterImg.setImage(new Image(new FileInputStream(Current.user.getChosenCharacter().getImageAddress())));
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private void setItemsInCard(CharacterCardView characterCardView, Character character) {
@@ -157,5 +179,13 @@ public class ShopView implements Initializable {
 
     public void setListeners(List<Listener<String>> listeners) {
         this.listeners = listeners;
+    }
+
+    public CharacterBuyListener getCharacterBuyListener() {
+        return characterBuyListener;
+    }
+
+    public void setCharacterBuyListener(CharacterBuyListener characterBuyListener) {
+        this.characterBuyListener = characterBuyListener;
     }
 }
