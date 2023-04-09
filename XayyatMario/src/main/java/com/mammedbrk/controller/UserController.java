@@ -2,6 +2,7 @@ package com.mammedbrk.controller;
 
 import com.mammedbrk.access.CharacterAccess;
 import com.mammedbrk.access.UserAccess;
+import com.mammedbrk.current.Current;
 import com.mammedbrk.event.FormEvent;
 import com.mammedbrk.model.Character;
 import com.mammedbrk.model.User;
@@ -22,13 +23,13 @@ public class UserController {
         newCharacter.setChosen(true);
         user.addCharacter(newCharacter);
         access.add(user);
-        return user;
+        return Current.user = user;
     }
 
     public User login(FormEvent e) {
         User user = access.get(e.getUsername());
         if (user != null && user.getPassword().equals(e.getPassword())) {
-            return user;
+            return Current.user = user;
         }
         return null;
     }
@@ -39,10 +40,16 @@ public class UserController {
         return users;
     }
 
-    public void buyCharacter(User user, Character character) {
+    public boolean buyCharacter(User user, Character character) {
+        if (user.getNumOfCoins() < character.getPrice()) {
+            return false;
+        }
+        user.changeNumOfCoinsBy(character.getPrice() * -1);
         Character newCharacter = new Character(character.getName(), character.getImageAddress(), character.getSpeed(), character.getJumpAbility(), character.getCollectAbility(), character.getShootAbility(), character.getPrice());
         newCharacter.setChosen(true);
         user.addCharacter(newCharacter);
         access.add(user);
+        Current.user = user;
+        return true;
     }
 }
