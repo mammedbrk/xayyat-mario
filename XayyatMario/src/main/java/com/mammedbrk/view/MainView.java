@@ -1,14 +1,12 @@
 package com.mammedbrk.view;
 
-import com.mammedbrk.listener.Listener;
-import com.mammedbrk.listener.LoginFormListener;
-import com.mammedbrk.listener.RankingListListener;
-import com.mammedbrk.listener.RegistrationFormListener;
+import com.mammedbrk.listener.*;
 import com.mammedbrk.view.auth.LoginView;
 import com.mammedbrk.view.auth.RegistrationView;
 import com.mammedbrk.view.menu.MainMenuHeaderView;
 import com.mammedbrk.view.menu.MainMenuView;
 import com.mammedbrk.view.ranking.RankingView;
+import com.mammedbrk.view.shop.ShopView;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.BorderPane;
 
@@ -21,6 +19,7 @@ public class MainView extends BorderPane {
     private FXMLLoader mainMenuViewLoader;
     private FXMLLoader mainMenuHeaderViewLoader;
     private FXMLLoader rankingViewLoader;
+    private FXMLLoader shopViewLoader;
 
     public MainView() throws IOException {
         loginView();
@@ -106,6 +105,7 @@ public class MainView extends BorderPane {
         MainMenuHeaderView mainMenuHeaderView = mainMenuHeaderViewLoader.getController();
         MainMenuView mainMenuView = mainMenuViewLoader.getController();
 
+
         mainMenuView.addListener(new Listener<String>() {
             @Override
             public boolean listen(String s) {
@@ -139,7 +139,11 @@ public class MainView extends BorderPane {
                     // todo
                 }
                 if (s.equals("ShopView")) {
-                    // todo
+                    try {
+                        shopView();
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
                 }
                 return true;
             }
@@ -161,6 +165,24 @@ public class MainView extends BorderPane {
                     } catch (IOException e) {
                         throw new RuntimeException(e);
                     }
+                }
+                return true;
+            }
+        });
+    }
+
+    private void shopView() throws IOException {
+        resetPane();
+        shopViewLoader = new FXMLLoader(getClass().getResource(dir + "shop/shop-view.fxml"));
+        this.setCenter(shopViewLoader.load());
+        ShopView shopView = shopViewLoader.getController();
+        shopView.addListener(new Listener<String>() {
+            @Override
+            public boolean listen(String s) {
+                try {
+                    mainMenu();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
                 }
                 return true;
             }
