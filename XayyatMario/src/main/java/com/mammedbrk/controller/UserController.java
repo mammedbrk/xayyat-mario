@@ -10,24 +10,23 @@ import java.util.Comparator;
 import java.util.List;
 
 public class UserController {
-    UserAccess userAccess = new UserAccess();
-    CharacterAccess characterAccess = new CharacterAccess();
+    private final UserAccess access = new UserAccess();
 
     public User register(FormEvent e) {
-        if (userAccess.get(e.getUsername()) != null) {
+        if (access.get(e.getUsername()) != null) {
             return null;
         }
-        User user = new User(userAccess.lastId() + 1, e.getUsername(), e.getPassword());
-        Character character = characterAccess.get("OrdinaryXayyat");
-        Character newCharacter = new Character(character.getName(), character.getImageAddress(), character.getSpeed(), character.getJumpAbility(), character.getCollectAbility(), character.getShootAbility());
+        User user = new User(access.lastId() + 1, e.getUsername(), e.getPassword());
+        Character character = new CharacterAccess().get("OrdinaryXayyat");
+        Character newCharacter = new Character(character.getName(), character.getImageAddress(), character.getSpeed(), character.getJumpAbility(), character.getCollectAbility(), character.getShootAbility(), character.getPrice());
         newCharacter.setChosen(true);
         user.addCharacter(newCharacter);
-        userAccess.add(user);
+        access.add(user);
         return user;
     }
 
     public User login(FormEvent e) {
-        User user = userAccess.get(e.getUsername());
+        User user = access.get(e.getUsername());
         if (user != null && user.getPassword().equals(e.getPassword())) {
             return user;
         }
@@ -35,8 +34,15 @@ public class UserController {
     }
 
     public List<User> getSortedUsersList() {
-        List<User> users = userAccess.getAll();
+        List<User> users = access.getAll();
         users.sort(Comparator.comparing(User::getMaxScore).reversed());
         return users;
+    }
+
+    public void buyCharacter(User user, Character character) {
+        Character newCharacter = new Character(character.getName(), character.getImageAddress(), character.getSpeed(), character.getJumpAbility(), character.getCollectAbility(), character.getShootAbility(), character.getPrice());
+        newCharacter.setChosen(true);
+        user.addCharacter(newCharacter);
+        access.add(user);
     }
 }

@@ -7,6 +7,7 @@ public class Character {
     private int jumpAbility;
     private int collectAbility;
     private int shootAbility;
+    private int price;
     private boolean chosen;
 
     public Character() {
@@ -17,13 +18,14 @@ public class Character {
         this.imageAddress = imageAddress;
     }
 
-    public Character(String name, String imageAddress, int speed, int jumpAbility, int collectAbility, int shootAbility) {
+    public Character(String name, String imageAddress, int speed, int jumpAbility, int collectAbility, int shootAbility, int price) {
         this.name = name;
         this.imageAddress = imageAddress;
         this.speed = speed;
         this.jumpAbility = jumpAbility;
         this.collectAbility = collectAbility;
         this.shootAbility = shootAbility;
+        this.price = price;
     }
 
 
@@ -75,6 +77,14 @@ public class Character {
 
     public void setShootAbility(int shootAbility) {
         this.shootAbility = shootAbility;
+    }
+
+    public int getPrice() {
+        return price;
+    }
+
+    public void setPrice(int price) {
+        this.price = price;
     }
 
     public boolean isChosen() {
