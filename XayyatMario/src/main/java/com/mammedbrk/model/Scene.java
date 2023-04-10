@@ -1,6 +1,6 @@
 package com.mammedbrk.model;
 
-import com.mammedbrk.model.tile.Tile;
+import com.mammedbrk.model.gamecomponent.tile.Tile;
 
 import java.util.List;
 

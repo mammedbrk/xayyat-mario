@@ -12,8 +12,8 @@ public class Main extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        MainView mainView = new MainView();
-        stage.setScene(new Scene(mainView));
+        stage.setScene(new Scene(new MainView()));
+        stage.setFullScreen(true);
         stage.show();
     }
 }

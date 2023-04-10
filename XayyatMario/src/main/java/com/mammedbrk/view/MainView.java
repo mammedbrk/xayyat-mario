@@ -22,7 +22,9 @@ public class MainView extends BorderPane {
     private FXMLLoader shopViewLoader;
 
     public MainView() throws IOException {
-        loginView();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource(dir + "tmp.fxml"));
+        this.setCenter(loader.load());
+//        loginView();
     }
 
 
