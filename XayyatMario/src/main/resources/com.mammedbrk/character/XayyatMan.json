@@ -1,0 +1,10 @@
+{
+  "name": "Xayyat Man",
+  "imageAddress": "src/main/resources/com.mammedbrk/image/character/xayyat-man.png",
+  "speed": 2,
+  "jumpAbility": 2,
+  "collectAbility": 1,
+  "shootAbility": 2,
+  "price": 400,
+  "chosen": false
+}
