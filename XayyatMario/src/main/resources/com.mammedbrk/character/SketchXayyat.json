@@ -1,0 +1,10 @@
+{
+  "name": "Scetch Xayyat",
+  "imageAddress": "src/main/resources/com.mammedbrk/image/character/sketch-xayyat.png",
+  "speed": 2,
+  "jumpAbility": 2,
+  "collectAbility": 2,
+  "shootAbility": 2,
+  "price": 200,
+  "chosen": false
+}
