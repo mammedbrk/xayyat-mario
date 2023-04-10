@@ -2,11 +2,12 @@ package com.mammedbrk.model.gamecomponent;
 
 import com.mammedbrk.model.tile.Tile;
 
-public class Coin extends GameComponent {
+public class Coin extends Tile {
     private int value;
 
-    public Coin(Tile tile) {
-        super(tile);
+    public Coin(int x, int y, int value) {
+        super(x, y);
+        this.value = value;
     }
 
     public int getValue() {

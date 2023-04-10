@@ -68,11 +68,11 @@ public class Game {
         this.character = character;
     }
 
-    public List<Level> getSections() {
+    public List<Level> getLevels() {
         return levels;
     }
 
-    public void setSections(List<Level> levels) {
+    public void setLevels(List<Level> levels) {
         this.levels = levels;
     }
 }

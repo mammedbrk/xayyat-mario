@@ -1,16 +1,15 @@
 package com.mammedbrk.model.gamecomponent.block;
 
-import com.mammedbrk.model.tile.Tile;
-
 public class CoinBlock extends Block {
     private int value;
-    public CoinBlock(Tile tile) {
-        super(tile);
-        value = 1;
+
+    public CoinBlock(int x, int y) {
+        super(x, y);
+        this.value = 1;
     }
 
-    public CoinBlock(Tile tile, int value) {
-        super(tile);
+    public CoinBlock(int x, int y, int value) {
+        super(x, y);
         this.value = value;
     }
 
