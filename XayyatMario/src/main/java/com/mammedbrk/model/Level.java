@@ -4,6 +4,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class Level {
+    private int no;
     transient private Game game;
     private List<Section> sections;
 
@@ -50,5 +51,13 @@ public class Level {
 
     public void setSections(List<Section> sections) {
         this.sections = sections;
+    }
+
+    public int getNo() {
+        return no;
+    }
+
+    public void setNo(int no) {
+        this.no = no;
     }
 }

@@ -4,6 +4,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class Section {
+    private int no;
     transient private Level level;
     private int time;
     private int score;
@@ -77,5 +78,13 @@ public class Section {
 
     public void setScenes(List<Scene> scenes) {
         this.scenes = scenes;
+    }
+
+    public int getNo() {
+        return no;
+    }
+
+    public void setNo(int no) {
+        this.no = no;
     }
 }

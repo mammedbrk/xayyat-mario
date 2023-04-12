@@ -1,6 +1,6 @@
 package com.mammedbrk.model.gamecomponent;
 
-public abstract class GameComponent {
+public class GameComponent {
     public static final int TILE_SIZE = 60;
     protected final int x, y;
     protected final String imageAddress;

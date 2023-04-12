@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Scene {
+    private int no;
     transient private Section section;
     private List<GameComponent> components;
 
@@ -35,5 +36,13 @@ public class Scene {
 
     public void setComponents(List<GameComponent> components) {
         this.components = components;
+    }
+
+    public int getNo() {
+        return no;
+    }
+
+    public void setNo(int no) {
+        this.no = no;
     }
 }
