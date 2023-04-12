@@ -6,5 +6,5 @@
   "collectAbility": 1,
   "shootAbility": 1,
   "price": 0,
-  "chosen": false
+  "chosen": true
 }
