@@ -19,9 +19,7 @@ public class UserController {
         }
         User user = new User(access.lastId() + 1, e.getUsername(), e.getPassword());
         Character character = new CharacterAccess().get("OrdinaryXayyat");
-        Character newCharacter = new Character(character.getName(), character.getImageAddress(), character.getSpeed(), character.getJumpAbility(), character.getCollectAbility(), character.getShootAbility(), character.getPrice());
-        newCharacter.setChosen(true);
-        user.addCharacter(newCharacter);
+        user.addCharacter(character);
         access.add(user);
         return Current.user = user;
     }
