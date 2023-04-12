@@ -1,6 +1,6 @@
 package com.mammedbrk.model;
 
-import com.mammedbrk.model.gamecomponent.GameComponent;
+import com.mammedbrk.model.gamecomponent.Tile;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,7 +8,7 @@ import java.util.List;
 public class Scene {
     private int no;
     transient private Section section;
-    private List<GameComponent> components;
+    private List<Tile> components;
 
     public Scene() {
         components = new ArrayList<>();
@@ -16,11 +16,20 @@ public class Scene {
 
     // Methods
 
-    public void addComponent(GameComponent component) {
+    public void addComponent(Tile component) {
         components.add(component);
     }
 
     // Getters and setters
+
+
+    public int getNo() {
+        return no;
+    }
+
+    public void setNo(int no) {
+        this.no = no;
+    }
 
     public Section getSection() {
         return section;
@@ -30,19 +39,11 @@ public class Scene {
         this.section = section;
     }
 
-    public List<GameComponent> getComponents() {
+    public List<Tile> getComponents() {
         return components;
     }
 
-    public void setComponents(List<GameComponent> components) {
+    public void setComponents(List<Tile> components) {
         this.components = components;
-    }
-
-    public int getNo() {
-        return no;
-    }
-
-    public void setNo(int no) {
-        this.no = no;
     }
 }

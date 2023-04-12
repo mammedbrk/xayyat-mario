@@ -1,6 +1,6 @@
 package com.mammedbrk.model.gamecomponent;
 
-public class Coin extends GameComponent {
+public class Coin extends Tile {
     private int value;
 
     public Coin(int x, int y) {
@@ -15,12 +15,12 @@ public class Coin extends GameComponent {
 
     @Override
     public double getScaleX() {
-        return 0.4;
+        return 0.6;
     }
 
     @Override
     public double getScaleY() {
-        return 0.4;
+        return 0.6;
     }
 
     public int getValue() {
