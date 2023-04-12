@@ -45,9 +45,7 @@ public class UserController {
             return false;
         }
         user.changeNumOfCoinsBy(character.getPrice() * -1);
-        Character newCharacter = new Character(character.getName(), character.getImageAddress(), character.getSpeed(), character.getJumpAbility(), character.getCollectAbility(), character.getShootAbility(), character.getPrice());
-        newCharacter.setChosen(true);
-        user.addCharacter(newCharacter);
+        user.addCharacter(character);
         access.add(user);
         Current.user = user;
         return true;
