@@ -1,63 +1,54 @@
 package com.mammedbrk.model;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 public class Game {
-    private int numOfLives;
-    private int totalScore;
-    private int numOfCoins;
+    private int lives;
     private Character character;
     private List<Level> levels;
+    private Scene scene;
 
     public Game() {
-        numOfLives = 3;
+        lives = 3;
         character = new Character();
-        levels = new ArrayList<>();
+        levels = new LinkedList<>();
     }
 
     // Methods
 
-    public void reduceNumOfLives() {
-        numOfLives -= 1;
+    public int getCoins() {
+        int coins = 0;
+        for (Level level: levels) {
+            coins += level.getCoins();
+        }
+        return coins;
     }
 
-    public void addScore(int score) {
-        totalScore += score;
+    public int getScore() {
+        int score = 0;
+        for (Level level: levels) {
+            score += level.getScore();
+        }
+        return score;
     }
 
-    public void addNumOfCoins(int coin) {
-        numOfCoins += coin;
+    public void reduceLives() {
+        lives -= 1;
     }
 
-    public void addSection(Level level) {
+    public void addLevel(Level level) {
         levels.add(level);
     }
 
     // Getters and setters
 
-    public int getNumOfLives() {
-        return numOfLives;
+    public int getLives() {
+        return lives;
     }
 
-    public void setNumOfLives(int numOfLives) {
-        this.numOfLives = numOfLives;
-    }
-
-    public int getTotalScore() {
-        return totalScore;
-    }
-
-    public void setTotalScore(int totalScore) {
-        this.totalScore = totalScore;
-    }
-
-    public int getNumOfCoins() {
-        return numOfCoins;
-    }
-
-    public void setNumOfCoins(int numOfCoins) {
-        this.numOfCoins = numOfCoins;
+    public void setLives(int lives) {
+        this.lives = lives;
     }
 
     public Character getCharacter() {
@@ -74,5 +65,13 @@ public class Game {
 
     public void setLevels(List<Level> levels) {
         this.levels = levels;
+    }
+
+    public Scene getScene() {
+        return scene;
+    }
+
+    public void setScene(Scene scene) {
+        this.scene = scene;
     }
 }

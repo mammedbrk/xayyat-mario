@@ -1,29 +1,39 @@
 package com.mammedbrk.model;
 
-import com.mammedbrk.model.gamecomponent.tile.Tile;
+import com.mammedbrk.model.gamecomponent.GameComponent;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Scene {
-    private List<Tile> tiles;
+    transient private Section section;
+    private List<GameComponent> components;
 
-    public Scene(List<Tile> tiles) {
-        this.tiles = tiles;
+    public Scene() {
+        components = new ArrayList<>();
     }
 
     // Methods
 
-    public void addTile(Tile tile) {
-        tiles.add(tile);
+    public void addComponent(GameComponent component) {
+        components.add(component);
     }
 
     // Getters and setters
 
-    public List<Tile> getTiles() {
-        return tiles;
+    public Section getSection() {
+        return section;
     }
 
-    public void setTiles(List<Tile> tiles) {
-        this.tiles = tiles;
+    public void setSection(Section section) {
+        this.section = section;
+    }
+
+    public List<GameComponent> getComponents() {
+        return components;
+    }
+
+    public void setComponents(List<GameComponent> components) {
+        this.components = components;
     }
 }

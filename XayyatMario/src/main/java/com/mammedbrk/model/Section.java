@@ -1,35 +1,36 @@
 package com.mammedbrk.model;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 public class Section {
-    private int timeLeft;
+    transient private Level level;
+    private int time;
     private int score;
-    private int numOfCoins;
+    private int coins;
     private List<Scene> scenes;
 
     public Section() {
-        scenes = new ArrayList<>();
+        scenes = new LinkedList<>();
     }
 
     public Section(int timeLeft) {
         this();
-        this.timeLeft = timeLeft;
+        this.time = timeLeft;
     }
 
     // Methods
 
-    public void reduceTileLeft() {
-        timeLeft -= 1;
+    public void reduceTimeByOne() {
+        time -= 1;
     }
 
-    public void addScore(int score) {
-        this.score += score;
+    public void addScore(int value) {
+        score += value;
     }
 
-    public void addNumOfCoins(int coin) {
-        numOfCoins += coin;
+    public void changeCoinsBy(int value) {
+        coins += value;
     }
 
     public void addScene(Scene scene) {
@@ -38,12 +39,20 @@ public class Section {
 
     // Getter and setters
 
-    public int getTimeLeft() {
-        return timeLeft;
+    public Level getLevel() {
+        return level;
     }
 
-    public void setTimeLeft(int timeLeft) {
-        this.timeLeft = timeLeft;
+    public void setLevel(Level level) {
+        this.level = level;
+    }
+
+    public int getTime() {
+        return time;
+    }
+
+    public void setTime(int time) {
+        this.time = time;
     }
 
     public int getScore() {
@@ -54,12 +63,12 @@ public class Section {
         this.score = score;
     }
 
-    public int getNumOfCoins() {
-        return numOfCoins;
+    public int getCoins() {
+        return coins;
     }
 
-    public void setNumOfCoins(int numOfCoins) {
-        this.numOfCoins = numOfCoins;
+    public void setCoins(int coins) {
+        this.coins = coins;
     }
 
     public List<Scene> getScenes() {

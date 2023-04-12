@@ -1,11 +1,11 @@
-package com.mammedbrk.model.gamecomponent.tile;
+package com.mammedbrk.model.gamecomponent;
 
-public abstract class Tile {
-    public static final int TILE_SIZE = 50;
+public abstract class GameComponent {
+    public static final int TILE_SIZE = 60;
     protected final int x, y;
     protected final String imageAddress;
 
-    public Tile(int x, int y, String imageAddress) {
+    public GameComponent(int x, int y, String imageAddress) {
         this.x = x;
         this.y = y;
         this.imageAddress = imageAddress;
