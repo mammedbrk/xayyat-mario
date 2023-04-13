@@ -3,6 +3,9 @@ package com.mammedbrk.model.gamecomponent;
 public class Coin extends Tile {
     private int value;
 
+    public Coin() {
+    }
+
     public Coin(int x, int y) {
         super(x, y, "src/main/resources/com.mammedbrk/image/game/coin.png");
         this.value = 1;
@@ -14,12 +17,12 @@ public class Coin extends Tile {
     }
 
     @Override
-    public double getScaleX() {
+    public double scaleX() {
         return 0.6;
     }
 
     @Override
-    public double getScaleY() {
+    public double scaleY() {
         return 0.6;
     }
 

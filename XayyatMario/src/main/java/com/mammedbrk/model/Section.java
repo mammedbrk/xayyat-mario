@@ -1,18 +1,20 @@
 package com.mammedbrk.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.LinkedList;
 import java.util.List;
 
 public class Section {
     private int no;
-    transient private Level level;
+    @JsonIgnore
+    private Level level;
     private int time;
     private int score;
     private int coins;
     private List<Scene> scenes;
 
     public Section() {
-        scenes = new LinkedList<>();
     }
 
     public Section(int timeLeft) {

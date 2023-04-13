@@ -10,9 +10,6 @@ public class Game {
     private Scene scene;
 
     public Game() {
-        lives = 3;
-        character = new Character();
-        levels = new LinkedList<>();
     }
 
     // Methods

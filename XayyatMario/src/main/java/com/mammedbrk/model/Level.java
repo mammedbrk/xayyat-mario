@@ -1,15 +1,17 @@
 package com.mammedbrk.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.LinkedList;
 import java.util.List;
 
 public class Level {
     private int no;
-    transient private Game game;
+    @JsonIgnore
+    private Game game;
     private List<Section> sections;
 
     public Level() {
-        sections = new LinkedList<>();
     }
 
     // Methods

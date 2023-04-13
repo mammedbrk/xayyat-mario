@@ -1,5 +1,6 @@
 package com.mammedbrk.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.mammedbrk.model.gamecomponent.Tile;
 
 import java.util.ArrayList;
@@ -7,11 +8,11 @@ import java.util.List;
 
 public class Scene {
     private int no;
-    transient private Section section;
+    @JsonIgnore
+    private Section section;
     private List<Tile> components;
 
     public Scene() {
-        components = new ArrayList<>();
     }
 
     // Methods

@@ -4,13 +4,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class User {
-    private final int id;
-    private final String username;
-    private final String password;
+    private int id;
+    private String username;
+    private String password;
     private int maxScore;
     private int numOfCoins;
     private List<Game> games;
     private List<Character> characters;
+
+    public User() {
+    }
 
     public User(int id, String username, String password) {
         this.id = id;
