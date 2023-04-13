@@ -1,17 +1,21 @@
 package com.mammedbrk.access;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import com.mammedbrk.model.Character;
 
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public class CharacterAccess {
-    private final Gson gson = new GsonBuilder().setPrettyPrinting().create();
+    private final ObjectMapper mapper;
     private final String directory = "src/main/resources/com.mammedbrk/character/";
+
+    public CharacterAccess() {
+        mapper = new ObjectMapper();
+        mapper.enable(SerializationFeature.INDENT_OUTPUT);
+    }
 
     public Character get(String name) {
         File file = new File(directory + name + ".json");
@@ -19,9 +23,8 @@ public class CharacterAccess {
             return null;
         }
         try {
-            FileReader reader = new FileReader(file);
-            return gson.fromJson(reader, Character.class);
-        } catch (FileNotFoundException e) {
+            return mapper.readValue(file, Character.class);
+        } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
@@ -35,8 +38,8 @@ public class CharacterAccess {
         }
         for (File file: files) {
             try {
-                returnList.add(gson.fromJson(new FileReader(file), Character.class));
-            } catch (FileNotFoundException e) {
+                returnList.add(mapper.readValue(file, Character.class));
+            } catch (IOException e) {
                 throw new RuntimeException(e);
             }
         }

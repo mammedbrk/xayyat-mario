@@ -41,7 +41,7 @@ public class User {
         characters.add(character);
     }
 
-    public Character getChosenCharacter() {
+    public Character chosenCharacter() {
         for (Character character: characters) {
             if (character.isChosen())
                 return character;

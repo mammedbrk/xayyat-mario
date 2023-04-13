@@ -1,7 +1,7 @@
 package com.mammedbrk.access;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import com.mammedbrk.model.User;
 
 import java.io.*;
@@ -9,14 +9,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UserAccess {
-    private final Gson gson = new GsonBuilder().setPrettyPrinting().create();
+    private final ObjectMapper mapper;
     private final String directory = "json/user/";
+
+    public UserAccess() {
+        mapper = new ObjectMapper();
+        mapper.enable(SerializationFeature.INDENT_OUTPUT);
+    }
 
     public void add(User user) {
         try {
-            FileWriter writer = new FileWriter(directory + user.getId() + ".json");
-            gson.toJson(user, writer);
-            writer.flush();
+            mapper.writeValue(new FileWriter(directory + user.getId() + ".json"), user);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -28,9 +31,8 @@ public class UserAccess {
             return null;
         }
         try {
-            FileReader reader = new FileReader(file);
-            return gson.fromJson(reader, User.class);
-        } catch (FileNotFoundException e) {
+            return mapper.readValue(file, User.class);
+        } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
@@ -43,11 +45,11 @@ public class UserAccess {
         }
         for (File file : files) {
             try {
-                User user = gson.fromJson(new FileReader(file), User.class);
+                User user = mapper.readValue(file, User.class);
                 if (user.getUsername().equals(username)) {
                     return user;
                 }
-            } catch (FileNotFoundException e) {
+            } catch (IOException e) {
                 throw new RuntimeException(e);
             }
         }
@@ -63,8 +65,8 @@ public class UserAccess {
         }
         for (File file: files) {
             try {
-                returnList.add(gson.fromJson(new FileReader(file), User.class));
-            } catch (FileNotFoundException e) {
+                returnList.add(mapper.readValue(file, User.class));
+            } catch (IOException e) {
                 throw new RuntimeException(e);
             }
         }
