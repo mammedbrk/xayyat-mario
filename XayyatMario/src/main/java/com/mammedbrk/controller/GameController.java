@@ -1,11 +1,15 @@
 package com.mammedbrk.controller;
 
 import com.mammedbrk.current.Current;
+import com.mammedbrk.event.CharacterCollisionEvent;
 import com.mammedbrk.event.CharacterMovementEvent;
 import com.mammedbrk.model.Game;
 import com.mammedbrk.model.Scene;
 import com.mammedbrk.model.Section;
+import com.mammedbrk.model.gamecomponent.Coin;
 import com.mammedbrk.model.gamecomponent.Tile;
+import com.mammedbrk.model.gamecomponent.block.Block;
+import com.mammedbrk.model.gamecomponent.enemy.Enemy;
 import com.mammedbrk.view.game.TileImages;
 import javafx.scene.image.ImageView;
 
@@ -23,7 +27,6 @@ public class GameController {
     private int sectionNo;
     private TileImages tileImages;
     private Tile[][] tiles;
-    private ImageView[][] gTiles;
 
     public GameController() {
         this.game = Current.game;
@@ -36,7 +39,6 @@ public class GameController {
 
     public List<ImageView> loadNextSection() {
         tiles = new Tile[(int) (WIDTH/Tile.TILE_SIZE)][(int) (HEIGHT/Tile.TILE_SIZE)];
-        gTiles = new ImageView[(int) (WIDTH/Tile.TILE_SIZE)][(int) (HEIGHT/Tile.TILE_SIZE)];
 
         if (sectionNo > game.getLevels().get(levelNo - 1).getSections().size()) {
             levelNo++;
@@ -64,7 +66,6 @@ public class GameController {
                 imgView.setVisible(true);
 
                 tiles[x / Tile.TILE_SIZE][y / Tile.TILE_SIZE] = tile;
-                gTiles[x / Tile.TILE_SIZE][y / Tile.TILE_SIZE] = imgView;
 
                 list.add(imgView);
             }
@@ -73,8 +74,47 @@ public class GameController {
     }
 
 
-    public boolean moveAndCollision(CharacterMovementEvent characterMovementEvent) {
-        return false;
+    public CharacterMovementEvent moveAndCollision(CharacterCollisionEvent characterCollisionEvent) {
+        double dx = characterCollisionEvent.getDx();
+        double dy = characterCollisionEvent.getDy();
+        double xFront = characterCollisionEvent.getxFront();
+        double xBack = characterCollisionEvent.getxBack();
+        double yFront = characterCollisionEvent.getyFront();
+        double yBack = characterCollisionEvent.getyBack();
+
+        CharacterMovementEvent characterMovementEvent = new CharacterMovementEvent();
+        characterMovementEvent.setVisible(true);
+
+        if (occupied(xFront, yFront + dy) instanceof Block
+                || occupied(xBack, yFront + dy) instanceof Block) {
+            characterMovementEvent.setDy(0);
+            characterMovementEvent.setCanJump(true);
+        }
+
+        if (occupied(xFront + dx, yFront + dy) instanceof Block
+                || occupied(xFront + dx, yBack + dy) instanceof Block) {
+            characterMovementEvent.setDx(0);
+        }
+
+        if (occupied((xBack + xFront) / 2 + dx, (yBack + yFront) / 2 + dy) instanceof Coin) {
+            // todo add coin, change coin value to 0
+            System.out.println(((Coin)tiles[(int) (((xBack + xFront) / 2 + dx) / Tile.TILE_SIZE)][(int) (((yBack + yFront) / 2 + dy) / Tile.TILE_SIZE)]).getValue());
+            characterMovementEvent.setVisible(false);
+        }
+
+        if (occupied(xBack + dx, yBack + dy) instanceof Enemy
+                || occupied(xFront + dx, yBack + dy) instanceof Enemy
+                || occupied(xBack + dx, yFront + dy) instanceof Enemy
+                || occupied(xFront + dx, yFront + dy) instanceof Enemy) {
+            // todo you lose
+            System.out.println("you lose!");
+            characterMovementEvent.setKilled(true);
+        }
+        return characterMovementEvent;
+    }
+
+    private Tile occupied(double x, double y) {
+        return tiles[(int) (x/ Tile.TILE_SIZE)][(int) (y/ Tile.TILE_SIZE)];
     }
 
 

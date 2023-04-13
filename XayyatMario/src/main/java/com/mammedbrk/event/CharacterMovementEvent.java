@@ -1,24 +1,18 @@
 package com.mammedbrk.event;
 
-import java.util.EventObject;
+public class CharacterMovementEvent {
+    private double dx, dy;
+    private boolean visible, canJump, killed;
 
-public class CharacterMovementEvent extends EventObject {
-    private double dx, dy, xFront, xBack, yFront, yBack, width, height;
-
-    public CharacterMovementEvent(Object source) {
-        super(source);
+    public CharacterMovementEvent() {
     }
 
-    public CharacterMovementEvent(Object source, double dx, double dy, double xFront, double xBack, double yFront, double yBack, double width, double height) {
-        super(source);
+    public CharacterMovementEvent(double dx, double dy, boolean visible, boolean canJump, boolean killed) {
         this.dx = dx;
         this.dy = dy;
-        this.xFront = xFront;
-        this.xBack = xBack;
-        this.yFront = yFront;
-        this.yBack = yBack;
-        this.width = width;
-        this.height = height;
+        this.visible = visible;
+        this.canJump = canJump;
+        this.killed = killed;
     }
 
     public double getDx() {
@@ -37,51 +31,27 @@ public class CharacterMovementEvent extends EventObject {
         this.dy = dy;
     }
 
-    public double getxFront() {
-        return xFront;
+    public boolean isVisible() {
+        return visible;
     }
 
-    public void setxFront(double xFront) {
-        this.xFront = xFront;
+    public void setVisible(boolean visible) {
+        this.visible = visible;
     }
 
-    public double getxBack() {
-        return xBack;
+    public boolean isCanJump() {
+        return canJump;
     }
 
-    public void setxBack(double xBack) {
-        this.xBack = xBack;
+    public void setCanJump(boolean canJump) {
+        this.canJump = canJump;
     }
 
-    public double getyFront() {
-        return yFront;
+    public boolean isKilled() {
+        return killed;
     }
 
-    public void setyFront(double yFront) {
-        this.yFront = yFront;
-    }
-
-    public double getyBack() {
-        return yBack;
-    }
-
-    public void setyBack(double yBack) {
-        this.yBack = yBack;
-    }
-
-    public double getWidth() {
-        return width;
-    }
-
-    public void setWidth(double width) {
-        this.width = width;
-    }
-
-    public double getHeight() {
-        return height;
-    }
-
-    public void setHeight(double height) {
-        this.height = height;
+    public void setKilled(boolean killed) {
+        this.killed = killed;
     }
 }
