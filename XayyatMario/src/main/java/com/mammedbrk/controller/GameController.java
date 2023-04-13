@@ -9,6 +9,7 @@ import com.mammedbrk.model.Section;
 import com.mammedbrk.model.gamecomponent.Coin;
 import com.mammedbrk.model.gamecomponent.Tile;
 import com.mammedbrk.model.gamecomponent.block.Block;
+import com.mammedbrk.model.gamecomponent.block.PowerUpBlock;
 import com.mammedbrk.model.gamecomponent.enemy.Enemy;
 import com.mammedbrk.view.game.TileImages;
 import javafx.scene.image.ImageView;
@@ -21,7 +22,7 @@ public class GameController {
     // todo create an iterator on sections/levels
 
     private static final double WIDTH = 1300;
-    private static final double HEIGHT = 800;
+    private static final double HEIGHT = 1000;
     private Game game;
     private int levelNo;
     private int sectionNo;
@@ -30,23 +31,26 @@ public class GameController {
 
     public GameController() {
         this.game = Current.game;
-        levelNo = game.getScene().getSection().getLevel().getNo();
-        sectionNo = game.getScene().getSection().getNo();
+//        levelNo = game.getScene().getSection().getLevel().getNo();
+//        sectionNo = game.getScene().getSection().getNo();
         tileImages = new TileImages();
+        levelNo = 1;
+        sectionNo = 1;
     }
 
     // Methods
 
     public List<ImageView> loadNextSection() {
-        tiles = new Tile[(int) (WIDTH/Tile.TILE_SIZE)][(int) (HEIGHT/Tile.TILE_SIZE)];
+        tiles = new Tile[5*(int) (WIDTH/Tile.TILE_SIZE)][(int) (HEIGHT/Tile.TILE_SIZE)];
 
-        if (sectionNo > game.getLevels().get(levelNo - 1).getSections().size()) {
-            levelNo++;
-            sectionNo = 1;
-            if (levelNo > game.getLevels().size())
-                return null;
-        }
-        Section section = game.getLevels().get(levelNo - 1).getSections().get(sectionNo - 1);
+//        if (sectionNo > game.getLevels().get(levelNo - 1).getSections().size()) {
+//            levelNo++;
+//            sectionNo = 1;
+//            if (levelNo > game.getLevels().size())
+//                return null;
+//        }
+//        Section section = game.getLevels().get(levelNo - 1).getSections().get(sectionNo - 1);
+        Section section = Current.game.getScene().getSection();
 
         List<ImageView> list = new ArrayList<>();
         for (int i = 0; i < section.getScenes().size(); i++) {
@@ -83,33 +87,49 @@ public class GameController {
         double yBack = characterCollisionEvent.getyBack();
 
         CharacterMovementEvent characterMovementEvent = new CharacterMovementEvent();
+        characterMovementEvent.setDx(dx);
+        characterMovementEvent.setDy(dy);
         characterMovementEvent.setVisible(true);
 
-        if (occupied(xFront, yFront + dy) instanceof Block
-                || occupied(xBack, yFront + dy) instanceof Block) {
+        if (characterMovementEvent.getDy() < 0
+                && (occupied(xFront, yFront + characterCollisionEvent.getDy()) instanceof PowerUpBlock
+                || occupied(xBack, yFront + characterMovementEvent.getDy()) instanceof PowerUpBlock)) {
+            // todo power up enabled
+            characterMovementEvent.setPowerUp(true);
+            characterMovementEvent.setVisible(false);
+            System.out.println("PowerUp");
+        }
+
+        if (occupied(xFront, yFront + characterCollisionEvent.getDy()) instanceof Block
+                || occupied(xBack, yFront + characterMovementEvent.getDy()) instanceof Block) {
             characterMovementEvent.setDy(0);
             characterMovementEvent.setCanJump(true);
         }
 
-        if (occupied(xFront + dx, yFront + dy) instanceof Block
-                || occupied(xFront + dx, yBack + dy) instanceof Block) {
+        if (occupied(xFront + characterMovementEvent.getDx(), yFront + characterMovementEvent.getDy()) instanceof Block
+                || occupied(xFront + characterMovementEvent.getDx(), yBack + characterMovementEvent.getDy()) instanceof Block) {
             characterMovementEvent.setDx(0);
         }
 
-        if (occupied((xBack + xFront) / 2 + dx, (yBack + yFront) / 2 + dy) instanceof Coin) {
+        if (occupied((xBack + xFront) / 2 + characterMovementEvent.getDx(), (yBack + yFront) / 2 + characterMovementEvent.getDy()) instanceof Coin) {
             // todo add coin, change coin value to 0
-            System.out.println(((Coin)tiles[(int) (((xBack + xFront) / 2 + dx) / Tile.TILE_SIZE)][(int) (((yBack + yFront) / 2 + dy) / Tile.TILE_SIZE)]).getValue());
+            System.out.println(((Coin)tiles[(int) (((xBack + xFront) / 2 + characterMovementEvent.getDx()) / Tile.TILE_SIZE)][(int) (((yBack + yFront) / 2 + characterMovementEvent.getDy()) / Tile.TILE_SIZE)]).getValue());
             characterMovementEvent.setVisible(false);
         }
 
-        if (occupied(xBack + dx, yBack + dy) instanceof Enemy
-                || occupied(xFront + dx, yBack + dy) instanceof Enemy
-                || occupied(xBack + dx, yFront + dy) instanceof Enemy
-                || occupied(xFront + dx, yFront + dy) instanceof Enemy) {
+        if (occupied(xBack + characterMovementEvent.getDx(), yBack + characterMovementEvent.getDy()) instanceof Enemy
+                || occupied(xFront + characterMovementEvent.getDx(), yBack + characterMovementEvent.getDy()) instanceof Enemy
+                || occupied(xBack + characterMovementEvent.getDx(), yFront + characterMovementEvent.getDy()) instanceof Enemy
+                || occupied(xFront + characterMovementEvent.getDx(), yFront + characterMovementEvent.getDy()) instanceof Enemy) {
             // todo you lose
-            System.out.println("you lose!");
             characterMovementEvent.setKilled(true);
         }
+
+        if (yFront > 15*Tile.TILE_SIZE) {
+            characterMovementEvent.setDy(0);
+            characterMovementEvent.setKilled(true);
+        }
+
         return characterMovementEvent;
     }
 

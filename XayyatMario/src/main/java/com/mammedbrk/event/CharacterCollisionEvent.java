@@ -3,13 +3,13 @@ package com.mammedbrk.event;
 import java.util.EventObject;
 
 public class CharacterCollisionEvent extends EventObject {
-    private double dx, dy, xFront, xBack, yFront, yBack, width, height;
+    private double dx, dy, xFront, xBack, yFront, yBack;
 
     public CharacterCollisionEvent(Object source) {
         super(source);
     }
 
-    public CharacterCollisionEvent(Object source, double dx, double dy, double xFront, double xBack, double yFront, double yBack, double width, double height) {
+    public CharacterCollisionEvent(Object source, double dx, double dy, double xFront, double xBack, double yFront, double yBack) {
         super(source);
         this.dx = dx;
         this.dy = dy;
@@ -17,8 +17,6 @@ public class CharacterCollisionEvent extends EventObject {
         this.xBack = xBack;
         this.yFront = yFront;
         this.yBack = yBack;
-        this.width = width;
-        this.height = height;
     }
 
     public double getDx() {
@@ -67,21 +65,5 @@ public class CharacterCollisionEvent extends EventObject {
 
     public void setyBack(double yBack) {
         this.yBack = yBack;
-    }
-
-    public double getWidth() {
-        return width;
-    }
-
-    public void setWidth(double width) {
-        this.width = width;
-    }
-
-    public double getHeight() {
-        return height;
-    }
-
-    public void setHeight(double height) {
-        this.height = height;
     }
 }

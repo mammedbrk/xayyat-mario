@@ -1,20 +1,16 @@
 package com.mammedbrk.view.game;
 
+import com.mammedbrk.access.SceneAccess;
+import com.mammedbrk.controller.GameController;
 import com.mammedbrk.current.Current;
 import com.mammedbrk.event.CharacterCollisionEvent;
 import com.mammedbrk.event.CharacterMovementEvent;
 import com.mammedbrk.listener.CharacterCollisionListener;
 import com.mammedbrk.listener.SectionLoadListener;
-import com.mammedbrk.model.Character;
 import com.mammedbrk.model.Game;
 import com.mammedbrk.model.Scene;
 import com.mammedbrk.model.Section;
-import com.mammedbrk.model.gamecomponent.Coin;
 import com.mammedbrk.model.gamecomponent.Tile;
-import com.mammedbrk.model.gamecomponent.block.Block;
-import com.mammedbrk.model.gamecomponent.block.CoinBlock;
-import com.mammedbrk.model.gamecomponent.block.OrdinaryBlock;
-import com.mammedbrk.model.gamecomponent.block.PowerUpBlock;
 import javafx.animation.AnimationTimer;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -29,23 +25,40 @@ import javafx.scene.layout.Pane;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 public class GameView extends Pane {
     private static final double WIDTH = 1300;
-    private static final double HEIGHT = 800;
+    private static final double HEIGHT = 1000;
     private final ImageView character;
     private ImageView[][] gTiles;
     private double dx, dy;
     private double xFront, xBack;
     private double yFront, yBack;
-    private final static double gravity = 0.15;
+    private static final double gravity = 0.15;
     private boolean left, right, up, canJump;
-    private final SectionLoadListener gameLoadListener = new SectionLoadListener();
-    private final CharacterCollisionListener characterMovementListener = new CharacterCollisionListener();
+    private final SectionLoadListener sectionLoadListener = new SectionLoadListener();
+    private final CharacterCollisionListener characterCollisionListener = new CharacterCollisionListener();
 
     public GameView() {
+        // -------------------------------------
+        Current.game = new Game();
+        Current.controller = new GameController();
+        sectionLoadListener.setController(Current.controller);
+        characterCollisionListener.setController(Current.controller);
+        Current.game.setCharacter(Current.user.chosenCharacter());
+
+        Section section = new Section(100);
+        section.setScenes(new ArrayList<>());
+        section.setNo(1);
+
+        Scene scene = new SceneAccess().get(1, 1, 1);
+        scene.setSection(section);
+        section.addScene(scene);
+        Current.game.setScene(scene);
+
+        // -------------------------------------
+
         this.setStyle("-fx-background-color: #282828;");
         try {
             character = new ImageView(new Image(new FileInputStream(Current.game.getCharacter().getImageAddress())));
@@ -84,11 +97,12 @@ public class GameView extends Pane {
         });
 
         loadSectionGraphics();
+        timer.start();
     }
 
     private void loadSectionGraphics() {
-        gTiles = new ImageView[(int) (WIDTH/Tile.TILE_SIZE)][(int) (HEIGHT/Tile.TILE_SIZE)];
-        List<ImageView> list = gameLoadListener.listen();
+        gTiles = new ImageView[5*(int) (WIDTH/Tile.TILE_SIZE)][(int) (HEIGHT/Tile.TILE_SIZE)];
+        List<ImageView> list = sectionLoadListener.listen();
         this.getChildren().clear();
         if (list == null) {
             // todo game finished
@@ -135,23 +149,37 @@ public class GameView extends Pane {
             }
 
             CharacterMovementEvent characterMovementEvent
-                    = characterMovementListener.listen(new CharacterCollisionEvent(
+                    = characterCollisionListener.listen(new CharacterCollisionEvent(
                     this,
                     dx, dy,
                     xFront, xBack,
-                    yFront, yBack,
-                    character.getFitWidth(),
-                    character.getFitHeight()));
+                    yFront, yBack));
 
             canJump = characterMovementEvent.isCanJump();
 
-            gTiles[(int) ((xFront + xBack) / 2 / Tile.TILE_SIZE)][(int) ((yFront + yBack) / 2 / Tile.TILE_SIZE)]
-                    .setVisible(characterMovementEvent.isVisible());
+            if (!characterMovementEvent.isVisible()
+                    && gTiles[(int) ((xFront + xBack) / 2 / Tile.TILE_SIZE)][(int) ((yFront + yBack) / 2 / Tile.TILE_SIZE)] != null) {
+                gTiles[(int) ((xFront + xBack) / 2 / Tile.TILE_SIZE)][(int) ((yFront + yBack) / 2 / Tile.TILE_SIZE)]
+                        .setVisible(characterMovementEvent.isVisible());
+            }
 
-            // todo collision with enemy
+            if (characterMovementEvent.isPowerUp()) {
+                gTiles[(int) ((xFront + xBack) / 2 / Tile.TILE_SIZE)][(int) ((yFront + dy) / Tile.TILE_SIZE)]
+                        .setVisible(characterMovementEvent.isVisible());
+            }
 
-            character.setX(character.getX() + characterMovementEvent.getDx());
-            character.setY(character.getY() + characterMovementEvent.getDy());
+
+            if (characterMovementEvent.isKilled()) {
+                // todo collision with enemy
+                // todo falling down
+                System.out.println("you lose");
+            }
+
+            dx = characterMovementEvent.getDx();
+            dy = characterMovementEvent.getDy();
+
+            character.setX(character.getX() + dx);
+            character.setY(character.getY() + dy);
 
             if (dx > 0 && character.getBoundsInParent().getCenterX() > WIDTH/2) {
                 for (Node node : GameView.this.getChildren()) {

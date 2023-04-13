@@ -2,17 +2,18 @@ package com.mammedbrk.event;
 
 public class CharacterMovementEvent {
     private double dx, dy;
-    private boolean visible, canJump, killed;
+    private boolean visible, canJump, killed, powerUp;
 
     public CharacterMovementEvent() {
     }
 
-    public CharacterMovementEvent(double dx, double dy, boolean visible, boolean canJump, boolean killed) {
+    public CharacterMovementEvent(double dx, double dy, boolean visible, boolean canJump, boolean killed, boolean powerUp) {
         this.dx = dx;
         this.dy = dy;
         this.visible = visible;
         this.canJump = canJump;
         this.killed = killed;
+        this.powerUp = powerUp;
     }
 
     public double getDx() {
@@ -53,5 +54,13 @@ public class CharacterMovementEvent {
 
     public void setKilled(boolean killed) {
         this.killed = killed;
+    }
+
+    public boolean isPowerUp() {
+        return powerUp;
+    }
+
+    public void setPowerUp(boolean powerUp) {
+        this.powerUp = powerUp;
     }
 }
