@@ -3,6 +3,7 @@ package com.mammedbrk.view;
 import com.mammedbrk.listener.*;
 import com.mammedbrk.view.auth.LoginView;
 import com.mammedbrk.view.auth.RegistrationView;
+import com.mammedbrk.view.game.GameView;
 import com.mammedbrk.view.menu.MainMenuHeaderView;
 import com.mammedbrk.view.menu.MainMenuView;
 import com.mammedbrk.view.ranking.RankingView;
@@ -20,11 +21,10 @@ public class MainView extends BorderPane {
     private FXMLLoader mainMenuHeaderViewLoader;
     private FXMLLoader rankingViewLoader;
     private FXMLLoader shopViewLoader;
+    private FXMLLoader gameViewLoader;
 
     public MainView() throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource(dir + "tmp.fxml"));
-        this.setCenter(loader.load());
-//        loginView();
+        loginView();
     }
 
 
@@ -41,9 +41,9 @@ public class MainView extends BorderPane {
             loginView.setPassword(registrationView.getPassword());
         }
 
-        loginView.addListener(new Listener<String>() {
+        loginView.addListener(new StringListener() {
             @Override
-            public boolean listen(String s) {
+            public void listen(String s) {
                 if (s.equals("MainMenu")) {
                     try {
                         mainMenu();
@@ -58,7 +58,6 @@ public class MainView extends BorderPane {
                         throw new RuntimeException(e);
                     }
                 }
-                return true;
             }
         });
     }
@@ -76,9 +75,9 @@ public class MainView extends BorderPane {
             registrationView.setPassword(loginView.getPassword());
         }
 
-        registrationView.addListener(new Listener<String>() {
+        registrationView.addListener(new StringListener() {
             @Override
-            public boolean listen(String s) {
+            public void listen(String s) {
                 if (s.equals("LoginView")) {
                     try {
                         loginView();
@@ -93,7 +92,6 @@ public class MainView extends BorderPane {
                         throw new RuntimeException(e);
                     }
                 }
-                return true;
             }
         });
     }
@@ -108,9 +106,9 @@ public class MainView extends BorderPane {
         MainMenuView mainMenuView = mainMenuViewLoader.getController();
 
 
-        mainMenuView.addListener(new Listener<String>() {
+        mainMenuView.addListener(new StringListener() {
             @Override
-            public boolean listen(String s) {
+            public void listen(String s) {
                 if (s.equals("LoginView")) {
                     try {
                         loginView();
@@ -127,16 +125,20 @@ public class MainView extends BorderPane {
                 }
                 if (s.equals("NewGameSetupView")) {
                     // todo
+                    try {
+                        startNewGame();
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
                 }
                 if (s.equals("PreGameSetupView")) {
                     // todo
                 }
-                return true;
             }
         });
-        mainMenuHeaderView.addListener(new Listener<String>() {
+        mainMenuHeaderView.addListener(new StringListener() {
             @Override
-            public boolean listen(String s) {
+            public void listen(String s) {
                 if (s.equals("ProfileView")) {
                     // todo
                 }
@@ -147,7 +149,6 @@ public class MainView extends BorderPane {
                         throw new RuntimeException(e);
                     }
                 }
-                return true;
             }
         });
     }
@@ -158,9 +159,9 @@ public class MainView extends BorderPane {
         this.setCenter(rankingViewLoader.load());
         RankingView rankingView = rankingViewLoader.getController();
 
-        rankingView.addListener(new Listener<String>() {
+        rankingView.addListener(new StringListener() {
             @Override
-            public boolean listen(String s) {
+            public void listen(String s) {
                 if (s.equals("MainMenu")) {
                     try {
                         mainMenu();
@@ -168,7 +169,6 @@ public class MainView extends BorderPane {
                         throw new RuntimeException(e);
                     }
                 }
-                return true;
             }
         });
     }
@@ -179,17 +179,28 @@ public class MainView extends BorderPane {
         this.setCenter(shopViewLoader.load());
         ShopView shopView = shopViewLoader.getController();
         shopView.setCharacterBuyListener(new CharacterBuyListener());
-        shopView.addListener(new Listener<String>() {
+        shopView.addListener(new StringListener() {
             @Override
-            public boolean listen(String s) {
+            public void listen(String s) {
                 try {
                     mainMenu();
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
-                return true;
             }
         });
+    }
+
+    public void startNewGame() throws IOException {
+        /* todo this is not start new game function, just something to test game :)
+        * Call GameController,
+        *   GameController will initialize GameView
+        *       after that, this.setCenter();
+        * */
+        resetPane();
+        GameView gameView = new GameView();
+        this.setCenter(gameView);
+//        gameView.setGameLoadListener(new GameLoadListener());
     }
 
     private void resetPane() {

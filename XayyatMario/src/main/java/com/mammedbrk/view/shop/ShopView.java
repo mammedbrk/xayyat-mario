@@ -5,7 +5,7 @@ import com.mammedbrk.event.CharacterEvent;
 import com.mammedbrk.event.CharacterListEvent;
 import com.mammedbrk.listener.CharacterBuyListener;
 import com.mammedbrk.listener.CharacterListListener;
-import com.mammedbrk.listener.Listener;
+import com.mammedbrk.listener.StringListener;
 import com.mammedbrk.model.Character;
 import com.mammedbrk.view.character.CharacterCardView;
 import javafx.event.ActionEvent;
@@ -46,12 +46,12 @@ public class ShopView implements Initializable {
     private Label username;
 
     private CharacterListListener characterListListener = new CharacterListListener();
-    private List<Listener<String>> listeners = new LinkedList<>();
+    private List<StringListener> listeners = new LinkedList<>();
     private CharacterBuyListener characterBuyListener;
 
     // Methods
 
-    public void addListener(Listener<String> listener) {
+    public void addListener(StringListener listener) {
         listeners.add(listener);
     }
 
@@ -158,7 +158,7 @@ public class ShopView implements Initializable {
 
 
     public void backBtnClicked(ActionEvent event) {
-        for (Listener<String> listener: listeners) {
+        for (StringListener listener: listeners) {
             listener.listen("MainMenu");
         }
     }
@@ -173,11 +173,11 @@ public class ShopView implements Initializable {
         this.characterListListener = characterListListener;
     }
 
-    public List<Listener<String>> getListeners() {
+    public List<StringListener> getListeners() {
         return listeners;
     }
 
-    public void setListeners(List<Listener<String>> listeners) {
+    public void setListeners(List<StringListener> listeners) {
         this.listeners = listeners;
     }
 

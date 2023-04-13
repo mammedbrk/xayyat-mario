@@ -1,38 +1,38 @@
 package com.mammedbrk.view.menu;
 
-import com.mammedbrk.listener.Listener;
+import com.mammedbrk.listener.StringListener;
 import javafx.event.ActionEvent;
 
 import java.util.LinkedList;
 import java.util.List;
 
 public class MainMenuView {
-    private List<Listener<String>> listeners = new LinkedList<>();
+    private List<StringListener> listeners = new LinkedList<>();
 
-    public void addListener(Listener<String> listener) {
+    public void addListener(StringListener listener) {
         listeners.add(listener);
     }
 
     public void startBtnClicked(ActionEvent event) {
-        for (Listener<String> listener: listeners) {
+        for (StringListener listener: listeners) {
             listener.listen("NewGameSetupView");
         }
     }
 
     public void continueBtnClicked(ActionEvent event) {
-        for (Listener<String> listener: listeners) {
+        for (StringListener listener: listeners) {
             listener.listen("PreGameSetupView");
         }
     }
 
     public void rankingBtnClicked(ActionEvent event) {
-        for (Listener<String> listener: listeners) {
+        for (StringListener listener: listeners) {
             listener.listen("RankingView");
         }
     }
 
     public void logoutBtnClicked(ActionEvent event) {
-        for (Listener<String> listener: listeners) {
+        for (StringListener listener: listeners) {
             listener.listen("LoginView");
         }
     }
@@ -40,11 +40,11 @@ public class MainMenuView {
 
     // Getters and setters
 
-    public List<Listener<String>> getListeners() {
+    public List<StringListener> getListeners() {
         return listeners;
     }
 
-    public void setListeners(List<Listener<String>> listeners) {
+    public void setListeners(List<StringListener> listeners) {
         this.listeners = listeners;
     }
 }

@@ -1,7 +1,7 @@
 package com.mammedbrk.view.menu;
 
 import com.mammedbrk.current.Current;
-import com.mammedbrk.listener.Listener;
+import com.mammedbrk.listener.StringListener;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -29,7 +29,7 @@ public class MainMenuHeaderView implements Initializable {
     private Pane profileBtn;
     @FXML
     private ImageView characterImg;
-    private List<Listener<String>> listeners = new LinkedList<>();
+    private List<StringListener> listeners = new LinkedList<>();
 
     // Methods
 
@@ -45,29 +45,29 @@ public class MainMenuHeaderView implements Initializable {
         }
     }
 
-    public void addListener(Listener<String> listener) {
+    public void addListener(StringListener listener) {
         listeners.add(listener);
     }
 
     public void profileBtnClicked(MouseEvent mouseEvent) {
-        for (Listener<String> listener : listeners) {
+        for (StringListener listener : listeners) {
             listener.listen("ProfileView");
         }
     }
 
     public void shopBtnClicked(ActionEvent event) {
-        for (Listener<String> listener : listeners) {
+        for (StringListener listener : listeners) {
             listener.listen("ShopView");
         }
     }
 
     // Getters and setters
 
-    public List<Listener<String>> getListeners() {
+    public List<StringListener> getListeners() {
         return listeners;
     }
 
-    public void setListeners(List<Listener<String>> listeners) {
+    public void setListeners(List<StringListener> listeners) {
         this.listeners = listeners;
     }
 }

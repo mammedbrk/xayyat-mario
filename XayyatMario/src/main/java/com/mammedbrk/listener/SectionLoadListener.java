@@ -7,11 +7,9 @@ import javafx.scene.image.ImageView;
 
 import java.util.List;
 
-public class SectionLoadListener implements Listener<SectionLoadEvent> {
+public class SectionLoadListener {
     private final GameController controller = Current.controller;
 
-
-    @Override
     public boolean listen(SectionLoadEvent gameEvent) {
         List<ImageView> gTiles = controller.loadNextSection();
         gameEvent.getGameView().getChildren().clear();

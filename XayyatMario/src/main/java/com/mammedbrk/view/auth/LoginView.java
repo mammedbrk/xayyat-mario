@@ -1,8 +1,8 @@
 package com.mammedbrk.view.auth;
 
 import com.mammedbrk.event.FormEvent;
-import com.mammedbrk.listener.Listener;
 import com.mammedbrk.listener.LoginFormListener;
+import com.mammedbrk.listener.StringListener;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.PasswordField;
@@ -17,9 +17,9 @@ public class LoginView {
     @FXML
     private PasswordField password;
     private LoginFormListener loginFormListener;
-    private List<Listener<String>> listeners = new LinkedList<>();
+    private List<StringListener> listeners = new LinkedList<>();
 
-    public void addListener(Listener<String> listener) {
+    public void addListener(StringListener listener) {
         listeners.add(listener);
     }
 
@@ -39,7 +39,7 @@ public class LoginView {
         if (!getUsername().isEmpty() && !getPassword().isEmpty()) {
             FormEvent formEvent = new FormEvent(this, getUsername(), getPassword());
             if (loginFormListener.listen(formEvent)) {
-                for (Listener<String> listener: listeners) {
+                for (StringListener listener: listeners) {
                     listener.listen("MainMenu");
                 }
                 // System.out.println("Logged in!");
@@ -52,7 +52,7 @@ public class LoginView {
     }
 
     public void signUpClicked(ActionEvent e) {
-        for (Listener<String> listener: listeners) {
+        for (StringListener listener: listeners) {
             listener.listen("RegistrationView");
         }
     }
@@ -67,11 +67,11 @@ public class LoginView {
         this.loginFormListener = loginFormListener;
     }
 
-    public List<Listener<String>> getListeners() {
+    public List<StringListener> getListeners() {
         return listeners;
     }
 
-    public void setListeners(List<Listener<String>> listeners) {
+    public void setListeners(List<StringListener> listeners) {
         this.listeners = listeners;
     }
 

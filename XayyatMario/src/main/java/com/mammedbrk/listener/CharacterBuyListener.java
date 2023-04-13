@@ -4,9 +4,9 @@ import com.mammedbrk.controller.UserController;
 import com.mammedbrk.current.Current;
 import com.mammedbrk.event.CharacterEvent;
 
-public class CharacterBuyListener implements Listener<CharacterEvent> {
+public class CharacterBuyListener {
     private final UserController controller = new UserController();
-    @Override
+
     public boolean listen(CharacterEvent characterEvent) {
         return controller.buyCharacter(Current.user, characterEvent.getCharacter());
     }

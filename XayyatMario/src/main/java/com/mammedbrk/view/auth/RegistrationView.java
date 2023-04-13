@@ -1,8 +1,8 @@
 package com.mammedbrk.view.auth;
 
 import com.mammedbrk.event.FormEvent;
-import com.mammedbrk.listener.Listener;
 import com.mammedbrk.listener.RegistrationFormListener;
+import com.mammedbrk.listener.StringListener;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.PasswordField;
@@ -19,15 +19,15 @@ public class RegistrationView {
     @FXML
     private PasswordField confirmPassword;
     private RegistrationFormListener registrationFormListener;
-    private List<Listener<String>> listeners = new LinkedList<>();
+    private List<StringListener> listeners = new LinkedList<>();
 
 
-    public void addListener(Listener<String> listener) {
+    public void addListener(StringListener listener) {
         listeners.add(listener);
     }
 
     public void backClicked(ActionEvent e) {
-        for (Listener<String> listener: listeners) {
+        for (StringListener listener: listeners) {
             listener.listen("LoginView");
         }
     }
@@ -54,7 +54,7 @@ public class RegistrationView {
         if (!getUsername().isEmpty() && !getPassword().isEmpty() && getConfirmPassword().equals(getPassword())) {
             FormEvent formEvent = new FormEvent(this, getUsername(), getPassword());
             if (registrationFormListener.listen(formEvent)) {
-                for (Listener<String> listener: listeners) {
+                for (StringListener listener: listeners) {
                     listener.listen("MainMenu");
                 }
             }
@@ -96,5 +96,13 @@ public class RegistrationView {
 
     public void setConfirmPassword(String confirmPassword) {
         this.confirmPassword.setText(confirmPassword);
+    }
+
+    public List<StringListener> getListeners() {
+        return listeners;
+    }
+
+    public void setListeners(List<StringListener> listeners) {
+        this.listeners = listeners;
     }
 }

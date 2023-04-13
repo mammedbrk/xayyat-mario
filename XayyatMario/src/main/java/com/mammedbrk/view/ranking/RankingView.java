@@ -1,8 +1,8 @@
 package com.mammedbrk.view.ranking;
 
 import com.mammedbrk.event.ListEvent;
-import com.mammedbrk.listener.Listener;
 import com.mammedbrk.listener.RankingListListener;
+import com.mammedbrk.listener.StringListener;
 import com.mammedbrk.model.User;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -23,7 +23,7 @@ import java.util.ResourceBundle;
 public class RankingView implements Initializable {
     @FXML
     private VBox vBox;
-    private List<Listener<String>> listeners = new LinkedList<>();
+    private List<StringListener> listeners = new LinkedList<>();
     private RankingListListener rankingListListener = new RankingListListener();
 
     @Override
@@ -51,12 +51,12 @@ public class RankingView implements Initializable {
         }
     }
 
-    public void addListener(Listener<String> listener) {
+    public void addListener(StringListener listener) {
         listeners.add(listener);
     }
 
     public void backBtnClicked(ActionEvent event) {
-        for (Listener<String> listener: listeners) {
+        for (StringListener listener: listeners) {
             listener.listen("MainMenu");
         }
     }
@@ -71,11 +71,11 @@ public class RankingView implements Initializable {
         this.rankingListListener = rankingListListener;
     }
 
-    public List<Listener<String>> getListeners() {
+    public List<StringListener> getListeners() {
         return listeners;
     }
 
-    public void setListeners(List<Listener<String>> listeners) {
+    public void setListeners(List<StringListener> listeners) {
         this.listeners = listeners;
     }
 }
