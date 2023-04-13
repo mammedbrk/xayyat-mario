@@ -136,7 +136,7 @@ public class ShopView implements Initializable {
         username.setText(Current.user.getUsername());
         coin.setText(String.valueOf(Current.user.getNumOfCoins()));
         try {
-            characterImg.setImage(new Image(new FileInputStream(Current.user.getChosenCharacter().getImageAddress())));
+            characterImg.setImage(new Image(new FileInputStream(Current.user.chosenCharacter().getImageAddress())));
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }

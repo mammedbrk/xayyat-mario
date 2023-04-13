@@ -11,7 +11,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.image.Image;
 import javafx.scene.layout.VBox;
 
-import java.awt.*;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -43,7 +42,7 @@ public class RankingView implements Initializable {
             UserRankingCardView userRankingCardView = loader.getController();
             userRankingCardView.setRankLabel(String.valueOf(++rank));
             try {
-                userRankingCardView.getCharacterImg().setImage(new Image(new FileInputStream(user.getChosenCharacter().getImageAddress())));
+                userRankingCardView.getCharacterImg().setImage(new Image(new FileInputStream(user.chosenCharacter().getImageAddress())));
             } catch (FileNotFoundException e) {
                 throw new RuntimeException(e);
             }

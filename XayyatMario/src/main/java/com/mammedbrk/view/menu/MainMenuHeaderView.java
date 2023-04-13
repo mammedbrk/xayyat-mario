@@ -2,7 +2,6 @@ package com.mammedbrk.view.menu;
 
 import com.mammedbrk.current.Current;
 import com.mammedbrk.listener.Listener;
-import com.mammedbrk.model.Character;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -40,7 +39,7 @@ public class MainMenuHeaderView implements Initializable {
         score.setText(String.valueOf(Current.user.getMaxScore()));
         coin.setText(String.valueOf(Current.user.getNumOfCoins()));
         try {
-            characterImg.setImage(new Image(new FileInputStream(Current.user.getChosenCharacter().getImageAddress())));
+            characterImg.setImage(new Image(new FileInputStream(Current.user.chosenCharacter().getImageAddress())));
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }
