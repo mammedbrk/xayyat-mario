@@ -1,17 +1,18 @@
 package com.mammedbrk.listener;
 
 import com.mammedbrk.controller.GameController;
-import com.mammedbrk.event.GameLoadEvent;
+import com.mammedbrk.current.Current;
+import com.mammedbrk.event.SectionLoadEvent;
 import javafx.scene.image.ImageView;
 
 import java.util.List;
 
-public class GameLoadListener implements Listener<GameLoadEvent> {
-    private final GameController controller = new GameController();
+public class SectionLoadListener implements Listener<SectionLoadEvent> {
+    private final GameController controller = Current.controller;
 
 
     @Override
-    public boolean listen(GameLoadEvent gameEvent) {
+    public boolean listen(SectionLoadEvent gameEvent) {
         List<ImageView> gTiles = controller.loadNextSection();
         gameEvent.getGameView().getChildren().clear();
         if (gTiles == null) return false;
