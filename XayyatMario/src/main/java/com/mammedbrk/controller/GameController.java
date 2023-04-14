@@ -67,7 +67,6 @@ public class GameController {
                 imgView.setY(y);
                 imgView.setVisible(true);
 
-//                System.out.println(tile.getClass() + " " + x + " " + y);
                 tiles[x / Tile.TILE_SIZE][y / Tile.TILE_SIZE] = tile;
                 tile.setX(x / Tile.TILE_SIZE);
                 tile.setY(y / Tile.TILE_SIZE);

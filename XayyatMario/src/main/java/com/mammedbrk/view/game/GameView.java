@@ -11,6 +11,7 @@ import com.mammedbrk.model.Game;
 import com.mammedbrk.model.Scene;
 import com.mammedbrk.model.Section;
 import com.mammedbrk.model.gamecomponent.Tile;
+import com.mammedbrk.model.gamecomponent.enemy.Enemy;
 import javafx.animation.AnimationTimer;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -58,7 +59,7 @@ public class GameView extends Pane {
         Scene scene2 = new SceneAccess().get(1, 1, 2);
         scene2.setSection(section);
         section.addScene(scene2);
-        Current.game.setScene(scene2);
+        Current.game.setScene(scene);
 
         // -------------------------------------
 
@@ -108,14 +109,14 @@ public class GameView extends Pane {
     }
 
     private void loadSectionGraphics() {
-        gTiles = new ImageView[5*(int) (WIDTH/Tile.TILE_SIZE)][(int) (HEIGHT/Tile.TILE_SIZE)];
+        gTiles = new ImageView[5 * (int) (WIDTH / Tile.TILE_SIZE)][(int) (HEIGHT / Tile.TILE_SIZE)];
         List<ImageView> list = sectionLoadListener.listen();
         this.getChildren().clear();
         if (list == null) {
             // todo game finished
             return;
         }
-        for (ImageView gTile: list) {
+        for (ImageView gTile : list) {
             this.getChildren().add(gTile);
             gTiles[(int) gTile.getX() / Tile.TILE_SIZE][(int) gTile.getY() / Tile.TILE_SIZE] = gTile;
         }
@@ -129,44 +130,41 @@ public class GameView extends Pane {
     private final AnimationTimer timer = new AnimationTimer() {
         @Override
         public void handle(long now) {
-        dx = 0;
-        if (right) dx += Current.game.getCharacter().getSpeed();
-        if (left && character.getBoundsInParent().getMinX() > 0) dx -= Current.game.getCharacter().getSpeed();
-        if (up) {
-            up = false;
-            dy = Current.game.getCharacter().getJumpAbility() *-1;
-        }
-        else dy += gravity;
+            dx = 0;
+            if (right) dx += Current.game.getCharacter().getSpeed();
+            if (left && character.getBoundsInParent().getMinX() > 0) dx -= Current.game.getCharacter().getSpeed();
+            if (up) {
+                up = false;
+                dy = Current.game.getCharacter().getJumpAbility() * -1;
+            } else dy += gravity;
 
-        if (dy > 0) {
-            yFront = character.getY() + character.getFitHeight();
-            yBack = character.getY();
-        }
-        else if (dy < 0){
-            yFront = character.getY();
-            yBack = character.getY() + character.getFitHeight();
-        }
-        if (dx > 0) {
-            xFront = character.getX() + character.getFitWidth();
-            xBack = character.getX();
-        }
-        else if (dx < 0){
-            xFront = character.getX();
-            xBack = character.getX() + character.getFitWidth();
-        }
+            if (dy > 0) {
+                yFront = character.getY() + character.getFitHeight();
+                yBack = character.getY();
+            } else if (dy < 0) {
+                yFront = character.getY();
+                yBack = character.getY() + character.getFitHeight();
+            }
+            if (dx > 0) {
+                xFront = character.getX() + character.getFitWidth();
+                xBack = character.getX();
+            } else if (dx < 0) {
+                xFront = character.getX();
+                xBack = character.getX() + character.getFitWidth();
+            }
 
-        CharacterMovementEvent characterMovementEvent
-                = characterCollisionListener.listen(new CharacterCollisionEvent(
-                this,
-                dx, dy,
-                xFront, xBack,
-                yFront, yBack));
+            CharacterMovementEvent characterMovementEvent
+                    = characterCollisionListener.listen(new CharacterCollisionEvent(
+                    this,
+                    dx, dy,
+                    xFront, xBack,
+                    yFront, yBack));
 
-        canJump = characterMovementEvent.isCanJump();
+            canJump = characterMovementEvent.isCanJump();
 
-        if (characterMovementEvent.getRemovedTile() != null) {
-            removeGTile(characterMovementEvent.getRemovedTile());
-        }
+            if (characterMovementEvent.getRemovedTile() != null) {
+                removeGTile(characterMovementEvent.getRemovedTile());
+            }
 
         /*if (characterMovementEvent.isPowerUp()) {
             GameView.this.getChildren().remove(gTiles[(int) ((xFront + xBack) / 2 / Tile.TILE_SIZE)][(int) ((yFront + dy) / Tile.TILE_SIZE)]);
@@ -174,25 +172,34 @@ public class GameView extends Pane {
         }*/
 
 
-        if (characterMovementEvent.isKilled()) {
-            // todo collision with enemy
-            // todo falling down
-            System.out.println("you lose");
-        }
-
-        dx = characterMovementEvent.getDx();
-        dy = characterMovementEvent.getDy();
-
-        character.setX(character.getX() + dx);
-        character.setY(character.getY() + dy);
-
-        if (dx > 0 && character.getBoundsInParent().getCenterX() > WIDTH/2) {
-            for (Node node : GameView.this.getChildren()) {
-                node.relocate(node.getBoundsInParent().getMinX() - dx, node.getBoundsInParent().getMinY());
+            if (characterMovementEvent.isKilled()) {
+                // todo collision with enemy
+                // todo falling down
+                System.out.println("you lose");
             }
-        }
 
-        moveEnemies();
+            dx = characterMovementEvent.getDx();
+            dy = characterMovementEvent.getDy();
+
+            character.setX(character.getX() + dx);
+            character.setY(character.getY() + dy);
+
+            if (dx > 0 && character.getBoundsInParent().getCenterX() > WIDTH / 2) {
+                for (Node node : GameView.this.getChildren()) {
+                    node.relocate(node.getBoundsInParent().getMinX() - dx, node.getBoundsInParent().getMinY());
+                }
+            }
+
+            for (Tile tile: Current.game.getScene().getComponents()) {
+                if (tile instanceof Enemy) {
+                    ImageView enemyImg = gTiles[tile.getX()][tile.getY()];
+                    enemyImg.setX(enemyImg.getX() + ((Enemy) tile).getxVelocity());
+                    enemyImg.setY(enemyImg.getY() + ((Enemy) tile).getyVelocity());
+                    ((Enemy) tile).setxCurrent((int) (enemyImg.getX() / Tile.TILE_SIZE));
+                    ((Enemy) tile).setyCurrent((int) (enemyImg.getY() / Tile.TILE_SIZE));
+                    ((Enemy) tile).modifySpeed();
+                }
+            }
         }
     };
 
@@ -203,6 +210,7 @@ public class GameView extends Pane {
 
     private void moveEnemies() {
         // todo
+
     }
 
 

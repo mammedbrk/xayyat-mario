@@ -3,9 +3,6 @@ package com.mammedbrk.model.gamecomponent.enemy;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.mammedbrk.model.gamecomponent.Tile;
-import com.mammedbrk.model.gamecomponent.block.CoinBlock;
-import com.mammedbrk.model.gamecomponent.block.OrdinaryBlock;
-import com.mammedbrk.model.gamecomponent.block.PowerUpBlock;
 
 @JsonTypeInfo(
         use = JsonTypeInfo.Id.NAME,
@@ -16,14 +13,52 @@ import com.mammedbrk.model.gamecomponent.block.PowerUpBlock;
         @JsonSubTypes.Type(value = Grave.class, name = "grave")
 })
 public abstract class Enemy extends Tile {
+    protected int xCurrent, yCurrent;
+    protected double xVelocity, yVelocity;
+
     public Enemy() {
     }
 
-    public Enemy(int x, int y, String imageAddress) {
+    public Enemy(int x, int y, String imageAddress, double xVelocity, double yVelocity) {
         super(x, y, imageAddress);
+        this.xVelocity = xVelocity;
+        this.yVelocity = yVelocity;
+        this.xCurrent = x;
+        this.yCurrent = y;
     }
 
-    public void move() {
+    public abstract void modifySpeed();
 
+
+    public double getxVelocity() {
+        return xVelocity;
+    }
+
+    public void setxVelocity(double xVelocity) {
+        this.xVelocity = xVelocity;
+    }
+
+    public double getyVelocity() {
+        return yVelocity;
+    }
+
+    public void setyVelocity(double yVelocity) {
+        this.yVelocity = yVelocity;
+    }
+
+    public int getxCurrent() {
+        return xCurrent;
+    }
+
+    public void setxCurrent(int xCurrent) {
+        this.xCurrent = xCurrent;
+    }
+
+    public int getyCurrent() {
+        return yCurrent;
+    }
+
+    public void setyCurrent(int yCurrent) {
+        this.yCurrent = yCurrent;
     }
 }
