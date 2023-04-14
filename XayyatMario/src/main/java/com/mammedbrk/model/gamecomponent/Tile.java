@@ -3,6 +3,7 @@ package com.mammedbrk.model.gamecomponent;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.mammedbrk.model.gamecomponent.block.Block;
+import com.mammedbrk.model.gamecomponent.block.Pipe;
 import com.mammedbrk.model.gamecomponent.enemy.Enemy;
 
 @JsonTypeInfo(
@@ -22,6 +23,11 @@ public abstract class Tile {
     protected String imageAddress;
 
     public Tile() {
+    }
+
+    public Tile(int x, int y) {
+        this.x = x;
+        this.y = y;
     }
 
     public Tile(int x, int y, String imageAddress) {

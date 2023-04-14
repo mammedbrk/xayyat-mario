@@ -13,6 +13,7 @@ import java.nio.channels.Pipe;
 )
 @JsonSubTypes({
         @JsonSubTypes.Type(value = OrdinaryBlock.class, name = "ordinaryBlock"),
+        @JsonSubTypes.Type(value = EarthBlock.class, name = "earthBlock"),
         @JsonSubTypes.Type(value = CoinBlock.class, name = "coinBlock"),
         @JsonSubTypes.Type(value = PowerUpBlock.class, name = "powerUpBlock"),
         @JsonSubTypes.Type(value = Pipe.class, name = "pipe"),
