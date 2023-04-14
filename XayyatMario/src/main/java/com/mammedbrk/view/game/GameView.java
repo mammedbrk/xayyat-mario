@@ -55,7 +55,10 @@ public class GameView extends Pane {
         Scene scene = new SceneAccess().get(1, 1, 1);
         scene.setSection(section);
         section.addScene(scene);
-        Current.game.setScene(scene);
+        Scene scene2 = new SceneAccess().get(1, 1, 2);
+        scene2.setSection(section);
+        section.addScene(scene2);
+        Current.game.setScene(scene2);
 
         // -------------------------------------
 
@@ -66,6 +69,7 @@ public class GameView extends Pane {
             throw new RuntimeException(e);
         }
 
+        // Add KeyListener
         this.sceneProperty().addListener(new ChangeListener<javafx.scene.Scene>() {
             @Override
             public void changed(ObservableValue<? extends javafx.scene.Scene> observable, javafx.scene.Scene oldValue, javafx.scene.Scene newValue) {
@@ -96,7 +100,10 @@ public class GameView extends Pane {
             }
         });
 
+        // Load section graphics
         loadSectionGraphics();
+
+        // Start AnimationTimer
         timer.start();
     }
 
@@ -122,72 +129,81 @@ public class GameView extends Pane {
     private final AnimationTimer timer = new AnimationTimer() {
         @Override
         public void handle(long now) {
-            dx = 0;
-            if (right) dx += Current.game.getCharacter().getSpeed();
-            if (left && character.getBoundsInParent().getMinX() > 0) dx -= Current.game.getCharacter().getSpeed();
-            if (up) {
-                up = false;
-                dy = Current.game.getCharacter().getJumpAbility() *-1;
-            }
-            else dy += gravity;
+        dx = 0;
+        if (right) dx += Current.game.getCharacter().getSpeed();
+        if (left && character.getBoundsInParent().getMinX() > 0) dx -= Current.game.getCharacter().getSpeed();
+        if (up) {
+            up = false;
+            dy = Current.game.getCharacter().getJumpAbility() *-1;
+        }
+        else dy += gravity;
 
-            if (dy > 0) {
-                yFront = character.getY() + character.getFitHeight();
-                yBack = character.getY();
-            }
-            else if (dy < 0){
-                yFront = character.getY();
-                yBack = character.getY() + character.getFitHeight();
-            }
-            if (dx > 0) {
-                xFront = character.getX() + character.getFitWidth();
-                xBack = character.getX();
-            }
-            else if (dx < 0){
-                xFront = character.getX();
-                xBack = character.getX() + character.getFitWidth();
-            }
+        if (dy > 0) {
+            yFront = character.getY() + character.getFitHeight();
+            yBack = character.getY();
+        }
+        else if (dy < 0){
+            yFront = character.getY();
+            yBack = character.getY() + character.getFitHeight();
+        }
+        if (dx > 0) {
+            xFront = character.getX() + character.getFitWidth();
+            xBack = character.getX();
+        }
+        else if (dx < 0){
+            xFront = character.getX();
+            xBack = character.getX() + character.getFitWidth();
+        }
 
-            CharacterMovementEvent characterMovementEvent
-                    = characterCollisionListener.listen(new CharacterCollisionEvent(
-                    this,
-                    dx, dy,
-                    xFront, xBack,
-                    yFront, yBack));
+        CharacterMovementEvent characterMovementEvent
+                = characterCollisionListener.listen(new CharacterCollisionEvent(
+                this,
+                dx, dy,
+                xFront, xBack,
+                yFront, yBack));
 
-            canJump = characterMovementEvent.isCanJump();
+        canJump = characterMovementEvent.isCanJump();
 
-            if (!characterMovementEvent.isVisible()
-                    && gTiles[(int) ((xFront + xBack) / 2 / Tile.TILE_SIZE)][(int) ((yFront + yBack) / 2 / Tile.TILE_SIZE)] != null) {
-                gTiles[(int) ((xFront + xBack) / 2 / Tile.TILE_SIZE)][(int) ((yFront + yBack) / 2 / Tile.TILE_SIZE)]
-                        .setVisible(characterMovementEvent.isVisible());
-            }
+        if (characterMovementEvent.getRemovedTile() != null) {
+            removeGTile(characterMovementEvent.getRemovedTile());
+        }
 
-            if (characterMovementEvent.isPowerUp()) {
-                gTiles[(int) ((xFront + xBack) / 2 / Tile.TILE_SIZE)][(int) ((yFront + dy) / Tile.TILE_SIZE)]
-                        .setVisible(characterMovementEvent.isVisible());
-            }
+        /*if (characterMovementEvent.isPowerUp()) {
+            GameView.this.getChildren().remove(gTiles[(int) ((xFront + xBack) / 2 / Tile.TILE_SIZE)][(int) ((yFront + dy) / Tile.TILE_SIZE)]);
+            gTiles[(int) ((xFront + xBack) / 2 / Tile.TILE_SIZE)][(int) ((yFront + dy) / Tile.TILE_SIZE)] = null;
+        }*/
 
 
-            if (characterMovementEvent.isKilled()) {
-                // todo collision with enemy
-                // todo falling down
-                System.out.println("you lose");
-            }
+        if (characterMovementEvent.isKilled()) {
+            // todo collision with enemy
+            // todo falling down
+            System.out.println("you lose");
+        }
 
-            dx = characterMovementEvent.getDx();
-            dy = characterMovementEvent.getDy();
+        dx = characterMovementEvent.getDx();
+        dy = characterMovementEvent.getDy();
 
-            character.setX(character.getX() + dx);
-            character.setY(character.getY() + dy);
+        character.setX(character.getX() + dx);
+        character.setY(character.getY() + dy);
 
-            if (dx > 0 && character.getBoundsInParent().getCenterX() > WIDTH/2) {
-                for (Node node : GameView.this.getChildren()) {
-                    node.relocate(node.getBoundsInParent().getMinX() - dx, node.getBoundsInParent().getMinY());
-                }
+        if (dx > 0 && character.getBoundsInParent().getCenterX() > WIDTH/2) {
+            for (Node node : GameView.this.getChildren()) {
+                node.relocate(node.getBoundsInParent().getMinX() - dx, node.getBoundsInParent().getMinY());
             }
         }
+
+        moveEnemies();
+        }
     };
+
+    private void removeGTile(Tile tile) {
+        this.getChildren().remove(gTiles[tile.getX()][tile.getY()]);
+        gTiles[tile.getX()][tile.getY()] = null;
+    }
+
+    private void moveEnemies() {
+        // todo
+    }
 
 
     /*private Game game; // todo how to get game? :think
@@ -266,40 +282,6 @@ public class GameView extends Pane {
 
 
 
-
-        this.sceneProperty().addListener(new ChangeListener<javafx.scene.Scene>() {
-            @Override
-            public void changed(ObservableValue<? extends javafx.scene.Scene> observable, javafx.scene.Scene oldValue, javafx.scene.Scene newValue) {
-                if (newValue != null) {
-                    newValue.setOnKeyPressed(new EventHandler<KeyEvent>() {
-                        @Override
-                        public void handle(KeyEvent event) {
-                            if (event.getCode() == KeyCode.RIGHT)
-                                right = true;
-                            if (event.getCode() == KeyCode.LEFT)
-                                left = true;
-                            if (event.getCode() == KeyCode.UP && canJump) {
-                                up = true;
-                            }
-                        }
-                    });
-
-                    newValue.setOnKeyReleased(new EventHandler<KeyEvent>() {
-                        @Override
-                        public void handle(KeyEvent event) {
-                            if (event.getCode() == KeyCode.RIGHT)
-                                right = false;
-                            if (event.getCode() == KeyCode.LEFT)
-                                left = false;
-                        }
-                    });
-                }
-            }
-        });
-
-
-
-
 //        for (Level level: game.getLevels()) {
 //            if (level.getNo() < game.getScene().getSection().getLevel().getNo())
 //                continue;
@@ -310,133 +292,5 @@ public class GameView extends Pane {
 //                loadSection(section);
 //            }
 //        }
-
-        loadSection(section);
-        loadCharacter(game.getCharacter());
-
-        timer.start();
-    }
-
-    private final AnimationTimer timer = new AnimationTimer() {
-        @Override
-        public void handle(long now) {
-            double dx = 0;
-            canJump = false;
-            if (right) dx += game.getCharacter().getSpeed();
-            if (left  && characterImg.getBoundsInParent().getMinX() > 0) dx -= game.getCharacter().getSpeed();
-            if (up) {
-                up = false;
-                dy = game.getCharacter().getJumpAbility() *-1;
-            }
-            else dy += gravity;
-
-            if (dy > 0) {
-                yForward = characterImg.getY() + characterImg.getFitHeight();
-                yBackward = characterImg.getY();
-            }
-            else if (dy < 0){
-                yForward = characterImg.getY();
-                yBackward = characterImg.getY() + characterImg.getFitHeight();
-            }
-            if (dx > 0) {
-                xForward = characterImg.getX() + characterImg.getFitWidth();
-                xBackward = characterImg.getX();
-            }
-            else if (dx < 0){
-                xForward = characterImg.getX();
-                xBackward = characterImg.getX() + characterImg.getFitWidth();
-            }
-
-            if (occupiedByBlock(xBackward, yForward + dy) || occupiedByBlock(xForward, yForward + dy)) {
-                dy = 0;
-                canJump = true;
-            }
-            characterImg.setY(characterImg.getY() + dy);
-
-            if (occupiedByBlock(xForward + dx, yForward + dy) || occupiedByBlock(xForward + dx, yBackward + dy)) {
-                dx = 0;
-            }
-//            if (characterImg.getBoundsInParent().getMinX() + dx < 0) {
-//                dx = 0;
-//            }
-            characterImg.setX(characterImg.getX() + dx);
-
-            if (occupiedByCoin(xForward, yForward)
-                    && graphicTiles[(int) (xForward / Tile.TILE_SIZE)][(int) (yForward / Tile.TILE_SIZE)].isVisible()) {
-                // todo add coin
-                graphicTiles[(int) (xForward / Tile.TILE_SIZE)][(int) (yForward / Tile.TILE_SIZE)].setVisible(false);
-            }
-
-
-            System.out.println(xBackward + " " + characterImg.getBoundsInParent().getCenterX());
-
-            if (dx > 0 && characterImg.getBoundsInParent().getCenterX() >= 700) {
-                for (Node node : GameView.this.getChildren()) {
-                    node.relocate(node.getBoundsInParent().getMinX() - dx, node.getBoundsInParent().getMinY());
-                }
-            }
-        }
-    };
-
-    private boolean occupiedByBlock(double x, double y) {
-        return tiles[(int) (x/ Tile.TILE_SIZE)][(int) (y/ Tile.TILE_SIZE)] instanceof Block;
-    }
-
-    private boolean occupiedByCoin(double x, double y) {
-        return tiles[(int) (x/ Tile.TILE_SIZE)][(int) (y/ Tile.TILE_SIZE)] instanceof Coin
-                || tiles[(int) (x/ Tile.TILE_SIZE)][(int) (y/ Tile.TILE_SIZE)] instanceof CoinBlock;
-    }
-
-    private void loadSection(Section section) {
-        tiles = new Tile[5 * width / Tile.TILE_SIZE][height / Tile.TILE_SIZE];
-        graphicTiles = new ImageView[5 * width / Tile.TILE_SIZE][height / Tile.TILE_SIZE];
-        for (int idx = 0; idx < section.getScenes().size(); idx++) {
-            Scene scene = section.getScenes().get(idx);
-            for (Tile component: scene.getComponents()) {
-                ImageView imgView;
-                imgView = new ImageView(getImage(component.getImageAddress()));
-                imgView.setX(component.getX() * Tile.TILE_SIZE + idx * 21 * Tile.TILE_SIZE);
-                imgView.setY(component.getY() * Tile.TILE_SIZE);
-                imgView.setFitWidth(Tile.TILE_SIZE);
-                imgView.setFitHeight(Tile.TILE_SIZE);
-                imgView.setScaleX(component.scaleX());
-                imgView.setScaleY(component.scaleY());
-                imgView.setVisible(true);
-
-                tiles[(int) (imgView.getX() / Tile.TILE_SIZE)][(int) (imgView.getY() / Tile.TILE_SIZE)] = component;
-                graphicTiles[(int) (imgView.getX() / Tile.TILE_SIZE)][(int) (imgView.getY() / Tile.TILE_SIZE)] = imgView;
-                this.getChildren().add(imgView);
-
-//                switch (component.getCode()) {
-//                    case 'C': coins.put(new Pair(imgView.getX()))
-//                }
-            }
-        }
-    }
-
-    private void loadCharacter(Character character) {
-        try {
-            characterImg = new ImageView(new Image(new FileInputStream(game.getCharacter().getImageAddress())));
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
-        }
-        characterImg.setFitWidth(50);
-        characterImg.setFitHeight(50);
-        characterImg.setX(2 * Tile.TILE_SIZE);
-        characterImg.setY(5 * Tile.TILE_SIZE);
-        this.getChildren().add(characterImg);
-    }
-
-    private Image getImage(String address) {
-        Image image = images.get(address);
-        if (image == null) {
-            try {
-                image = new Image(new FileInputStream(address));
-                images.put(address, image);
-            } catch (FileNotFoundException e) {
-                throw new RuntimeException(e);
-            }
-        }
-        return image;
     }*/
 }

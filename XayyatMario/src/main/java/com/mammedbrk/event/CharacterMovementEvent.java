@@ -1,16 +1,18 @@
 package com.mammedbrk.event;
 
+import com.mammedbrk.model.gamecomponent.Tile;
+
 public class CharacterMovementEvent {
     private double dx, dy;
-    private boolean visible, canJump, killed, powerUp;
+    private boolean canJump, killed, powerUp;
+    private Tile removedTile;
 
     public CharacterMovementEvent() {
     }
 
-    public CharacterMovementEvent(double dx, double dy, boolean visible, boolean canJump, boolean killed, boolean powerUp) {
+    public CharacterMovementEvent(double dx, double dy, boolean canJump, boolean killed, boolean powerUp) {
         this.dx = dx;
         this.dy = dy;
-        this.visible = visible;
         this.canJump = canJump;
         this.killed = killed;
         this.powerUp = powerUp;
@@ -30,14 +32,6 @@ public class CharacterMovementEvent {
 
     public void setDy(double dy) {
         this.dy = dy;
-    }
-
-    public boolean isVisible() {
-        return visible;
-    }
-
-    public void setVisible(boolean visible) {
-        this.visible = visible;
     }
 
     public boolean isCanJump() {
@@ -62,5 +56,13 @@ public class CharacterMovementEvent {
 
     public void setPowerUp(boolean powerUp) {
         this.powerUp = powerUp;
+    }
+
+    public Tile getRemovedTile() {
+        return removedTile;
+    }
+
+    public void setRemovedTile(Tile removedTile) {
+        this.removedTile = removedTile;
     }
 }

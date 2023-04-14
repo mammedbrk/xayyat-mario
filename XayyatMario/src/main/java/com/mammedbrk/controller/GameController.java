@@ -9,8 +9,8 @@ import com.mammedbrk.model.Section;
 import com.mammedbrk.model.gamecomponent.Coin;
 import com.mammedbrk.model.gamecomponent.Tile;
 import com.mammedbrk.model.gamecomponent.block.Block;
+import com.mammedbrk.model.gamecomponent.block.CoinBlock;
 import com.mammedbrk.model.gamecomponent.block.PowerUpBlock;
-import com.mammedbrk.model.gamecomponent.enemy.Enemy;
 import com.mammedbrk.view.game.TileImages;
 import javafx.scene.image.ImageView;
 
@@ -61,15 +61,16 @@ public class GameController {
                 int x = tile.getX() * Tile.TILE_SIZE + i * ((int) (WIDTH / Tile.TILE_SIZE)) * Tile.TILE_SIZE;
                 int y = tile.getY() * Tile.TILE_SIZE;
 
+                imgView.setFitWidth(Tile.TILE_SIZE * tile.scaleX());
+                imgView.setFitHeight(Tile.TILE_SIZE * tile.scaleY());
                 imgView.setX(x);
                 imgView.setY(y);
-                imgView.setFitWidth(Tile.TILE_SIZE);
-                imgView.setFitHeight(Tile.TILE_SIZE);
-                imgView.setScaleX(tile.scaleX());
-                imgView.setScaleY(tile.scaleY());
                 imgView.setVisible(true);
 
+//                System.out.println(tile.getClass() + " " + x + " " + y);
                 tiles[x / Tile.TILE_SIZE][y / Tile.TILE_SIZE] = tile;
+                tile.setX(x / Tile.TILE_SIZE);
+                tile.setY(y / Tile.TILE_SIZE);
 
                 list.add(imgView);
             }
@@ -89,16 +90,6 @@ public class GameController {
         CharacterMovementEvent characterMovementEvent = new CharacterMovementEvent();
         characterMovementEvent.setDx(dx);
         characterMovementEvent.setDy(dy);
-        characterMovementEvent.setVisible(true);
-
-        if (characterMovementEvent.getDy() < 0
-                && (occupied(xFront, yFront + characterCollisionEvent.getDy()) instanceof PowerUpBlock
-                || occupied(xBack, yFront + characterMovementEvent.getDy()) instanceof PowerUpBlock)) {
-            // todo power up enabled
-            characterMovementEvent.setPowerUp(true);
-            characterMovementEvent.setVisible(false);
-            System.out.println("PowerUp");
-        }
 
         if (occupied(xFront, yFront + characterCollisionEvent.getDy()) instanceof Block
                 || occupied(xBack, yFront + characterMovementEvent.getDy()) instanceof Block) {
@@ -111,30 +102,73 @@ public class GameController {
             characterMovementEvent.setDx(0);
         }
 
-        if (occupied((xBack + xFront) / 2 + characterMovementEvent.getDx(), (yBack + yFront) / 2 + characterMovementEvent.getDy()) instanceof Coin) {
-            // todo add coin, change coin value to 0
-            System.out.println(((Coin)tiles[(int) (((xBack + xFront) / 2 + characterMovementEvent.getDx()) / Tile.TILE_SIZE)][(int) (((yBack + yFront) / 2 + characterMovementEvent.getDy()) / Tile.TILE_SIZE)]).getValue());
-            characterMovementEvent.setVisible(false);
+        // While jumping,
+        if (dy < 0) {
+            // Check if PowerUpBlock:
+            if (occupied(xFront, yFront + dy) instanceof PowerUpBlock) {
+                characterMovementEvent.setPowerUp(true);
+                characterMovementEvent.setRemovedTile(occupied(xFront, yFront + dy));
+                removeTile(occupied(xFront, yFront + dy));
+                System.out.println("pwrUp"); // todo
+            }
+            else if (occupied(xBack, yFront + dy) instanceof PowerUpBlock) {
+                characterMovementEvent.setPowerUp(true);
+                characterMovementEvent.setRemovedTile(occupied(xBack, yFront + dy));
+                removeTile(occupied(xBack, yFront + dy));
+                System.out.println("pwrUp"); // todo
+            }
+
+            // Check if CoinBlock:
+            if (occupied(xFront, yFront + dy) instanceof CoinBlock) {
+                System.out.println("coinBlock"); // todo
+            }
+            else if (occupied(xBack, yFront + dy) instanceof CoinBlock) {
+                System.out.println("coinBlock"); // todo
+            }
         }
 
+        // Check if Coin:
+        if (occupied((xBack + xFront) / 2 + characterMovementEvent.getDx(), (yBack + yFront) / 2 + characterMovementEvent.getDy()) instanceof Coin) {
+            game.getScene().getSection().changeCoinsBy(((Coin) occupied((xBack + xFront) / 2 + characterMovementEvent.getDx(), (yBack + yFront) / 2 + characterMovementEvent.getDy())).getValue());
+            System.out.println(game.getScene().getSection().getCoins()); // todo
+            characterMovementEvent.setRemovedTile(occupied((xBack + xFront) / 2 + characterMovementEvent.getDx(), (yBack + yFront) / 2 + characterMovementEvent.getDy()));
+            removeTile(occupied((xBack + xFront) / 2 + characterMovementEvent.getDx(), (yBack + yFront) / 2 + characterMovementEvent.getDy()));
+        }
+
+        /*
         if (occupied(xBack + characterMovementEvent.getDx(), yBack + characterMovementEvent.getDy()) instanceof Enemy
                 || occupied(xFront + characterMovementEvent.getDx(), yBack + characterMovementEvent.getDy()) instanceof Enemy
                 || occupied(xBack + characterMovementEvent.getDx(), yFront + characterMovementEvent.getDy()) instanceof Enemy
                 || occupied(xFront + characterMovementEvent.getDx(), yFront + characterMovementEvent.getDy()) instanceof Enemy) {
             // todo you lose
             characterMovementEvent.setKilled(true);
-        }
+        }*/
 
-        if (yFront > 15*Tile.TILE_SIZE) {
+        // Lose when fall down
+        if (yFront > HEIGHT - 100) {
             characterMovementEvent.setDy(0);
             characterMovementEvent.setKilled(true);
         }
+
+        // Move enemies todo
+//        for (GEnemy gEnemy: enemies) {
+//            gEnemy.getEnemy().changeYVelocity();
+//            if ((int) (gEnemy.getImage().getY() / Tile.TILE_SIZE) > )
+//            if (gEnemy.getImage().getY() / Tile.TILE_SIZE != gEnemy.getEnemy().getY()) {
+//                tiles[gEnemy.getEnemy().getX()][(int) (gEnemy.getImage().getY() / Tile.TILE_SIZE)] = gEnemy.getEnemy();
+//            }
+//        }
+//        characterMovementEvent.setEnemies(enemies);
 
         return characterMovementEvent;
     }
 
     private Tile occupied(double x, double y) {
         return tiles[(int) (x/ Tile.TILE_SIZE)][(int) (y/ Tile.TILE_SIZE)];
+    }
+
+    private void removeTile(Tile tile) {
+        tiles[tile.getX()][tile.getY()] = null;
     }
 
 
