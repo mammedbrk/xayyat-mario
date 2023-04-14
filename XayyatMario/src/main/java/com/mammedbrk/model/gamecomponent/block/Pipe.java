@@ -1,6 +1,6 @@
-package com.mammedbrk.model.gamecomponent;
+package com.mammedbrk.model.gamecomponent.block;
 
-public class Pipe extends Tile {
+public class Pipe extends Block {
     public Pipe() {
     }
 
