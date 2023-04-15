@@ -1,6 +1,5 @@
 package com.mammedbrk.view.ranking;
 
-import com.mammedbrk.event.ListEvent;
 import com.mammedbrk.listener.RankingListListener;
 import com.mammedbrk.listener.StringListener;
 import com.mammedbrk.model.User;
@@ -15,7 +14,6 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -28,8 +26,7 @@ public class RankingView implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        List<User> users = new ArrayList<>();
-        rankingListListener.listen(new ListEvent(this, users));
+        List<User> users = rankingListListener.listen();
         int rank = 0;
         for (User user: users) {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com.mammedbrk/fxml/ranking/user-ranking-card-view.fxml"));
