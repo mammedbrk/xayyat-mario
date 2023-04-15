@@ -49,4 +49,10 @@ public class UserController {
         Current.user = user;
         return true;
     }
+
+    public void chooseCharacter(User user, Character character) {
+        user.setChosenCharacter(character);
+        System.out.println("# " + character.getName());
+        access.add(user);
+    }
 }

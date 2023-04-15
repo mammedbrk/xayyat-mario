@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.TilePane?>
+
+<BorderPane id="main" prefHeight="580.0" prefWidth="900.0" stylesheets="@../../style/shop-profile.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mammedbrk.view.profile.ProfileView">
+    <center>
+        <GridPane alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="900.0" BorderPane.alignment="CENTER">
+            <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="600.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="300.0" />
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            </rowConstraints>
+            <children>
+                <BorderPane fx:id="cardPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="450.0">
+                    <bottom>
+                        <Button fx:id="chooseBtn" graphicTextGap="5.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="250.0" text="Chose!" textFill="WHITE" disable="true" BorderPane.alignment="CENTER" />
+                    </bottom>
+                    <top>
+                        <FlowPane alignment="CENTER_LEFT" hgap="20.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" BorderPane.alignment="CENTER">
+                            <children>
+                                <Button mnemonicParsing="false" onAction="#backBtnClicked" prefHeight="50.0" text="&lt; Back" textFill="WHITE">
+                                    <FlowPane.margin>
+                                        <Insets left="10.0" />
+                                    </FlowPane.margin>
+                                </Button>
+                                <FlowPane id="profilePane" alignment="CENTER_LEFT" hgap="10.0" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefHeight="60.0" prefWrapLength="150.0" style="-fx-background-color: #232323; -fx-background-radius: 5;">
+                                    <children>
+                                        <HBox alignment="CENTER" spacing="15.0">
+                                            <children>
+                                                <ImageView fx:id="characterImg" fitHeight="55.0" fitWidth="55.0" pickOnBounds="true" preserveRatio="true">
+                                                    <image>
+                                                        <Image url="@../../image/character/ordinary-xayyat.png" />
+                                                    </image>
+                                                </ImageView>
+                                                <Label fx:id="username" text="mammedbrk" textFill="WHITE" />
+                                    <Label fx:id="score" text="1200" textFill="WHITE" />
+                                                <Label fx:id="coin" alignment="TOP_LEFT" text="100" textFill="#ffe500">
+                                                    <graphic>
+                                                        <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                                                            <image>
+                                                                <Image url="@../../../../../../../../../../../Downloads/coin.png" />
+                                                            </image>
+                                                        </ImageView>
+                                                    </graphic>
+                                                </Label>
+                                            </children>
+                                            <FlowPane.margin>
+                                                <Insets />
+                                            </FlowPane.margin>
+                                 <padding>
+                                    <Insets left="5.0" right="5.0" />
+                                 </padding>
+                                        </HBox>
+                                    </children>
+                                    <FlowPane.margin>
+                                        <Insets right="10.0" />
+                                    </FlowPane.margin>
+                                </FlowPane>
+                            </children>
+                            <BorderPane.margin>
+                                <Insets />
+                            </BorderPane.margin>
+                        </FlowPane>
+                    </top>
+                    <padding>
+                        <Insets bottom="20.0" top="10.0" />
+                    </padding>
+                </BorderPane>
+                <ScrollPane fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="300.0" style="-fx-background-color: #252525; -fx-border-radius: 10;" GridPane.columnIndex="1">
+                    <content>
+                        <TilePane id="tilePane" fx:id="tilePane" alignment="CENTER" hgap="10.0" minHeight="-Infinity" minWidth="-Infinity" prefColumns="2" style="-fx-border-radius: 10;" vgap="10.0">
+                            <padding>
+                                <Insets bottom="10.0" top="10.0" />
+                            </padding>
+                        </TilePane>
+                    </content>
+                </ScrollPane>
+            </children>
+        </GridPane>
+    </center>
+</BorderPane>

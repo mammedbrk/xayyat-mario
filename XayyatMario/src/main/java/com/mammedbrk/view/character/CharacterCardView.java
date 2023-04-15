@@ -20,6 +20,12 @@ public class CharacterCardView {
     @FXML
     private Label speedLabel;
 
+    // Methods
+
+    public void makeCharacterPriceLabelInvisible() {
+        characterPriceLabel.setVisible(false);
+    }
+
     // Getters and setters
 
     public ImageView getCharacterImg() {

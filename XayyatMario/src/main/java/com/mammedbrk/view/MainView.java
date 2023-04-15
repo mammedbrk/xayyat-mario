@@ -6,6 +6,7 @@ import com.mammedbrk.view.auth.RegistrationView;
 import com.mammedbrk.view.game.GameView;
 import com.mammedbrk.view.menu.MainMenuHeaderView;
 import com.mammedbrk.view.menu.MainMenuView;
+import com.mammedbrk.view.profile.ProfileView;
 import com.mammedbrk.view.ranking.RankingView;
 import com.mammedbrk.view.shop.ShopView;
 import javafx.fxml.FXMLLoader;
@@ -22,6 +23,7 @@ public class MainView extends BorderPane {
     private FXMLLoader rankingViewLoader;
     private FXMLLoader shopViewLoader;
     private FXMLLoader gameViewLoader;
+    private FXMLLoader profileViewLoader;
 
     public MainView() throws IOException {
         loginView();
@@ -140,7 +142,11 @@ public class MainView extends BorderPane {
             @Override
             public void listen(String s) {
                 if (s.equals("ProfileView")) {
-                    // todo
+                    try {
+                        profileView();
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
                 }
                 if (s.equals("ShopView")) {
                     try {
@@ -182,10 +188,32 @@ public class MainView extends BorderPane {
         shopView.addListener(new StringListener() {
             @Override
             public void listen(String s) {
-                try {
-                    mainMenu();
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
+                if (s.equals("MainMenu")) {
+                    try {
+                        mainMenu();
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+            }
+        });
+    }
+
+    private void profileView() throws IOException {
+        resetPane();
+        profileViewLoader = new FXMLLoader(getClass().getResource(dir + "profile/profile-view.fxml"));
+        this.setCenter(profileViewLoader.load());
+        ProfileView profileView = profileViewLoader.getController();
+        profileView.setCharacterChooseListener(new CharacterChooseListener());
+        profileView.addListener(new StringListener() {
+            @Override
+            public void listen(String s) {
+                if (s.equals("MainMenu")) {
+                    try {
+                        mainMenu();
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
                 }
             }
         });
