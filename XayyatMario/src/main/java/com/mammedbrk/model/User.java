@@ -10,6 +10,7 @@ public class User {
     private int maxScore;
     private int numOfCoins;
     private List<Game> games;
+    private Character chosenCharacter;
     private List<Character> characters;
 
     public User() {
@@ -33,34 +34,39 @@ public class User {
         games.add(game);
     }
 
-    public void removeGame(Game game) {
-        games.remove(game);
+    public void removeGame(int index) {
+        games.remove(index);
     }
 
     public void addCharacter(Character character) {
         characters.add(character);
     }
 
-    public Character chosenCharacter() {
-        for (Character character: characters) {
-            if (character.isChosen())
-                return character;
-        }
-        return null;
-    }
-
     // Getters and setters
+
 
     public int getId() {
         return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getUsername() {
         return username;
     }
 
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
     public String getPassword() {
         return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public int getMaxScore() {
@@ -85,6 +91,14 @@ public class User {
 
     public void setGames(List<Game> games) {
         this.games = games;
+    }
+
+    public Character getChosenCharacter() {
+        return chosenCharacter;
+    }
+
+    public void setChosenCharacter(Character chosenCharacter) {
+        this.chosenCharacter = chosenCharacter;
     }
 
     public List<Character> getCharacters() {
