@@ -5,6 +5,7 @@ import com.mammedbrk.access.UserAccess;
 import com.mammedbrk.current.Current;
 import com.mammedbrk.event.FormEvent;
 import com.mammedbrk.model.Character;
+import com.mammedbrk.model.Game;
 import com.mammedbrk.model.User;
 
 import java.util.Comparator;
@@ -21,6 +22,8 @@ public class UserController {
         Character character = new CharacterAccess().get("OrdinaryXayyat");
         user.addCharacter(character);
         user.setChosenCharacter(character);
+        for (int i = 0; i < 3; i++)
+            user.addGame(new Game());
         access.add(user);
         return Current.user = user;
     }
