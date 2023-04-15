@@ -1,10 +1,6 @@
 package com.mammedbrk.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 public class Level {
-    @JsonIgnore
-    private Game game;
     private int no;
     private int coins;
     private int score;
@@ -24,14 +20,6 @@ public class Level {
     }
 
     // Getters and setters
-
-    public Game getGame() {
-        return game;
-    }
-
-    public void setGame(Game game) {
-        this.game = game;
-    }
 
     public int getNo() {
         return no;

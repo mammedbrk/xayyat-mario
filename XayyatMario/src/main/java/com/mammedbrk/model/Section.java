@@ -1,12 +1,8 @@
 package com.mammedbrk.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import java.util.List;
 
 public class Section {
-    @JsonIgnore
-    private Level level;
     private int no;
     private int time;
     private int score;
@@ -41,15 +37,6 @@ public class Section {
     }
 
     // Getter and setters
-
-
-    public Level getLevel() {
-        return level;
-    }
-
-    public void setLevel(Level level) {
-        this.level = level;
-    }
 
     public int getNo() {
         return no;
