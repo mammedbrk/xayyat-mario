@@ -34,8 +34,8 @@ public class User {
         coins += value;
     }
 
-    public void addGame(Game game) {
-        games.add(game);
+    public void setGame(int index, Game game) {
+        games.set(index, game);
     }
 
     public void removeGame(int index) {
