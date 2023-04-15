@@ -3,13 +3,12 @@ package com.mammedbrk.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.mammedbrk.model.gamecomponent.Tile;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Scene {
-    private int no;
     @JsonIgnore
     private Section section;
+    private int no;
     private List<Tile> components;
 
     public Scene() {

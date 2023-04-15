@@ -1,51 +1,55 @@
 package com.mammedbrk.model;
 
-import java.util.LinkedList;
-import java.util.List;
 
 public class Game {
-    private int lives;
+    private int hearts;
+    private int coins;
+    private int score;
     private Character character;
-    private List<Level> levels;
-    private Scene scene;
+
+    private Level currentLevel;
 
     public Game() {
     }
 
     // Methods
 
-    public int getCoins() {
-        int coins = 0;
-        for (Level level: levels) {
-            coins += level.getCoins();
-        }
-        return coins;
+    public void reduceHeart() {
+        hearts -= 1;
     }
 
-    public int getScore() {
-        int score = 0;
-        for (Level level: levels) {
-            score += level.getScore();
-        }
-        return score;
+    public void addCoin(int value) {
+        coins += value;
     }
 
-    public void reduceLives() {
-        lives -= 1;
-    }
-
-    public void addLevel(Level level) {
-        levels.add(level);
+    public void addScore(int value) {
+        score += value;
     }
 
     // Getters and setters
 
-    public int getLives() {
-        return lives;
+    public int getHearts() {
+        return hearts;
     }
 
-    public void setLives(int lives) {
-        this.lives = lives;
+    public void setHearts(int hearts) {
+        this.hearts = hearts;
+    }
+
+    public int getCoins() {
+        return coins;
+    }
+
+    public void setCoins(int coins) {
+        this.coins = coins;
+    }
+
+    public int getScore() {
+        return score;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
     }
 
     public Character getCharacter() {
@@ -56,19 +60,11 @@ public class Game {
         this.character = character;
     }
 
-    public List<Level> getLevels() {
-        return levels;
+    public Level getCurrentLevel() {
+        return currentLevel;
     }
 
-    public void setLevels(List<Level> levels) {
-        this.levels = levels;
-    }
-
-    public Scene getScene() {
-        return scene;
-    }
-
-    public void setScene(Scene scene) {
-        this.scene = scene;
+    public void setCurrentLevel(Level currentLevel) {
+        this.currentLevel = currentLevel;
     }
 }

@@ -2,17 +2,17 @@ package com.mammedbrk.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import java.util.LinkedList;
 import java.util.List;
 
 public class Section {
-    private int no;
     @JsonIgnore
     private Level level;
+    private int no;
     private int time;
     private int score;
     private int coins;
     private List<Scene> scenes;
+    private int x, y;
 
     public Section() {
     }
@@ -24,7 +24,7 @@ public class Section {
 
     // Methods
 
-    public void reduceTimeByOne() {
+    public void reduceTime() {
         time -= 1;
     }
 
@@ -32,7 +32,7 @@ public class Section {
         score += value;
     }
 
-    public void changeCoinsBy(int value) {
+    public void addCoin(int value) {
         coins += value;
     }
 
@@ -42,12 +42,21 @@ public class Section {
 
     // Getter and setters
 
+
     public Level getLevel() {
         return level;
     }
 
     public void setLevel(Level level) {
         this.level = level;
+    }
+
+    public int getNo() {
+        return no;
+    }
+
+    public void setNo(int no) {
+        this.no = no;
     }
 
     public int getTime() {
@@ -82,11 +91,19 @@ public class Section {
         this.scenes = scenes;
     }
 
-    public int getNo() {
-        return no;
+    public int getX() {
+        return x;
     }
 
-    public void setNo(int no) {
-        this.no = no;
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public void setY(int y) {
+        this.y = y;
     }
 }
