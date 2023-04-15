@@ -7,6 +7,10 @@ import com.mammedbrk.event.CharacterMovementEvent;
 public class CharacterCollisionListener {
     private GameController controller;
 
+    public CharacterCollisionListener(GameController controller) {
+        this.controller = controller;
+    }
+
     public CharacterMovementEvent listen(CharacterCollisionEvent characterMovementEvent) { // todo return movement things
         return controller.moveAndCollision(characterMovementEvent);
     }

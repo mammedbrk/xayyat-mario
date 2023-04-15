@@ -25,35 +25,22 @@ public class GameController {
     private static final double WIDTH = 1300;
     private static final double HEIGHT = 1000;
     private Game game;
-    private int levelNo;
-    private int sectionNo;
     private TileImages tileImages;
     private Tile[][] tiles;
     private List<Enemy> enemies;
 
     public GameController() {
-        this.game = Current.game;
-//        levelNo = game.getScene().getSection().getLevel().getNo();
-//        sectionNo = game.getScene().getSection().getNo();
+        this.game = Current.user.getCurrentGame();
         tileImages = new TileImages();
-        levelNo = 1;
-        sectionNo = 1;
     }
 
     // Methods
 
-    public List<ImageView> loadNextSection() {
+    public List<ImageView> loadSection() {
         tiles = new Tile[5*(int) (WIDTH/Tile.TILE_SIZE)][(int) (HEIGHT/Tile.TILE_SIZE)];
         enemies = new ArrayList<>();
 
-//        if (sectionNo > game.getLevels().get(levelNo - 1).getSections().size()) {
-//            levelNo++;
-//            sectionNo = 1;
-//            if (levelNo > game.getLevels().size())
-//                return null;
-//        }
-//        Section section = game.getLevels().get(levelNo - 1).getSections().get(sectionNo - 1);
-        Section section = Current.game.getScene().getSection();
+        Section section = Current.user.getCurrentGame().getCurrentLevel().getCurrentSection();
 
         List<ImageView> list = new ArrayList<>();
         for (int i = 0; i < section.getScenes().size(); i++) {
@@ -61,7 +48,9 @@ public class GameController {
             for (Tile tile: scene.getComponents()) {
                 ImageView imgView = new ImageView(tileImages.getImage(tile.getImageAddress()));
 
-                int x = tile.getX() * Tile.TILE_SIZE + i * ((int) (WIDTH / Tile.TILE_SIZE)) * Tile.TILE_SIZE;
+                int x = tile.getX() * Tile.TILE_SIZE;
+                if (tile.getX() < (int) (WIDTH / Tile.TILE_SIZE))
+                    x = tile.getX() * Tile.TILE_SIZE + i * ((int) (WIDTH / Tile.TILE_SIZE)) * Tile.TILE_SIZE;
                 int y = tile.getY() * Tile.TILE_SIZE;
 
                 imgView.setFitWidth(Tile.TILE_SIZE * tile.scaleX());
@@ -134,15 +123,14 @@ public class GameController {
 
         // Check if Coin:
         if (occupied((xBack + xFront) / 2 + characterMovementEvent.getDx(), (yBack + yFront) / 2 + characterMovementEvent.getDy()) instanceof Coin) {
-            game.getScene().getSection().changeCoinsBy(((Coin) occupied((xBack + xFront) / 2 + characterMovementEvent.getDx(), (yBack + yFront) / 2 + characterMovementEvent.getDy())).getValue());
-            System.out.println(game.getScene().getSection().getCoins()); // todo
+            game.getCurrentLevel().getCurrentSection().addCoin(((Coin) occupied((xBack + xFront) / 2 + characterMovementEvent.getDx(), (yBack + yFront) / 2 + characterMovementEvent.getDy())).getValue());
+            System.out.println(game.getCurrentLevel().getCurrentSection().getCoins()); // todo
             characterMovementEvent.setRemovedTile(occupied((xBack + xFront) / 2 + characterMovementEvent.getDx(), (yBack + yFront) / 2 + characterMovementEvent.getDy()));
             removeTile(occupied((xBack + xFront) / 2 + characterMovementEvent.getDx(), (yBack + yFront) / 2 + characterMovementEvent.getDy()));
         }
 
         // Lose with enemies
         for (Enemy enemy: enemies) {
-//            System.out.println("dskfjhsdjfkhsdkjfh");
             if ((int) (xFront / Tile.TILE_SIZE) == enemy.getxCurrent() && (int) ((yBack + yFront) / 2 / Tile.TILE_SIZE) == enemy.getyCurrent()) {
                 characterMovementEvent.setKilled(true);
             }
@@ -174,22 +162,6 @@ public class GameController {
 
     public void setGame(Game game) {
         this.game = game;
-    }
-
-    public int getLevelNo() {
-        return levelNo;
-    }
-
-    public void setLevelNo(int levelNo) {
-        this.levelNo = levelNo;
-    }
-
-    public int getSectionNo() {
-        return sectionNo;
-    }
-
-    public void setSectionNo(int sectionNo) {
-        this.sectionNo = sectionNo;
     }
 
     public TileImages getTileImages() {

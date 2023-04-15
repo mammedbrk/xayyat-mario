@@ -13,7 +13,7 @@ public class Main extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         stage.setScene(new Scene(new MainView(), 1300, 800));
-        stage.setResizable(false);
+//        stage.setResizable(false);
         stage.show();
     }
 }

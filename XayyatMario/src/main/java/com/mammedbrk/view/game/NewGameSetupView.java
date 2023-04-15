@@ -56,9 +56,15 @@ public class NewGameSetupView implements Initializable {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Sure to delete previous game and save this on it?");
             if (alert.showAndWait().get() == ButtonType.OK) {
                 saveGameListener.listen(0);
+                for (StringListener listener: listeners) {
+                    listener.listen("StartGame");
+                }
             }
         } else {
             saveGameListener.listen(0);
+            for (StringListener listener: listeners) {
+                listener.listen("StartGame");
+            }
         }
     }
 
@@ -67,9 +73,15 @@ public class NewGameSetupView implements Initializable {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Sure to delete previous game and save this on it?");
             if (alert.showAndWait().get() == ButtonType.OK) {
                 saveGameListener.listen(1);
+                for (StringListener listener: listeners) {
+                    listener.listen("StartGame");
+                }
             }
         } else {
             saveGameListener.listen(1);
+            for (StringListener listener: listeners) {
+                listener.listen("StartGame");
+            }
         }
     }
 
@@ -78,9 +90,15 @@ public class NewGameSetupView implements Initializable {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Sure to delete previous game and save this on it?");
             if (alert.showAndWait().get() == ButtonType.OK) {
                 saveGameListener.listen(2);
+                for (StringListener listener: listeners) {
+                    listener.listen("StartGame");
+                }
             }
         } else {
             saveGameListener.listen(2);
+            for (StringListener listener: listeners) {
+                listener.listen("StartGame");
+            }
         }
     }
 

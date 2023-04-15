@@ -8,8 +8,12 @@ import java.util.List;
 public class SectionLoadListener {
     private GameController controller;
 
+    public SectionLoadListener(GameController controller) {
+        this.controller = controller;
+    }
+
     public List<ImageView> listen() {
-        return controller.loadNextSection();
+        return controller.loadSection();
     }
 
     public GameController getController() {

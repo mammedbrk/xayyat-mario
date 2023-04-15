@@ -1,15 +1,11 @@
 package com.mammedbrk.view.game;
 
-import com.mammedbrk.access.SceneAccess;
-import com.mammedbrk.controller.GameController;
 import com.mammedbrk.current.Current;
 import com.mammedbrk.event.CharacterCollisionEvent;
 import com.mammedbrk.event.CharacterMovementEvent;
 import com.mammedbrk.listener.CharacterCollisionListener;
 import com.mammedbrk.listener.SectionLoadListener;
-import com.mammedbrk.model.Game;
 import com.mammedbrk.model.Scene;
-import com.mammedbrk.model.Section;
 import com.mammedbrk.model.gamecomponent.Tile;
 import com.mammedbrk.model.gamecomponent.enemy.Enemy;
 import javafx.animation.AnimationTimer;
@@ -25,50 +21,26 @@ import javafx.scene.layout.Pane;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
 import java.util.List;
 
 public class GameView extends Pane {
     private static final double WIDTH = 1300;
     private static final double HEIGHT = 1000;
-    private final ImageView character;
+    private ImageView character;
     private ImageView[][] gTiles;
     private double dx, dy;
     private double xFront, xBack;
     private double yFront, yBack;
     private static final double gravity = 0.15;
     private boolean left, right, up, canJump;
-    private final SectionLoadListener sectionLoadListener = new SectionLoadListener();
-    private final CharacterCollisionListener characterCollisionListener = new CharacterCollisionListener();
+    private final SectionLoadListener sectionLoadListener;
+    private final CharacterCollisionListener characterCollisionListener;
 
-    public GameView() {
-        // -------------------------------------
-        Current.game = new Game();
-        Current.controller = new GameController();
-        sectionLoadListener.setController(Current.controller);
-        characterCollisionListener.setController(Current.controller);
-        Current.game.setCharacter(Current.user.chosenCharacter());
-
-        Section section = new Section(100);
-        section.setScenes(new ArrayList<>());
-        section.setNo(1);
-
-        Scene scene = new SceneAccess().get(1, 1, 1);
-        scene.setSection(section);
-        section.addScene(scene);
-        Scene scene2 = new SceneAccess().get(1, 1, 2);
-        scene2.setSection(section);
-        section.addScene(scene2);
-        Current.game.setScene(scene);
-
-        // -------------------------------------
+    public GameView(SectionLoadListener sectionLoadListener, CharacterCollisionListener characterCollisionListener) {
+        this.sectionLoadListener = sectionLoadListener;
+        this.characterCollisionListener = characterCollisionListener;
 
         this.setStyle("-fx-background-color: #282828;");
-        try {
-            character = new ImageView(new Image(new FileInputStream(Current.game.getCharacter().getImageAddress())));
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
-        }
 
         // Add KeyListener
         this.sceneProperty().addListener(new ChangeListener<javafx.scene.Scene>() {
@@ -103,15 +75,13 @@ public class GameView extends Pane {
 
         // Load section graphics
         loadSectionGraphics();
-
-        // Start AnimationTimer
-        timer.start();
     }
 
     private void loadSectionGraphics() {
+        timer.stop();
+        this.getChildren().clear();
         gTiles = new ImageView[5 * (int) (WIDTH / Tile.TILE_SIZE)][(int) (HEIGHT / Tile.TILE_SIZE)];
         List<ImageView> list = sectionLoadListener.listen();
-        this.getChildren().clear();
         if (list == null) {
             // todo game finished
             return;
@@ -120,22 +90,29 @@ public class GameView extends Pane {
             this.getChildren().add(gTile);
             gTiles[(int) gTile.getX() / Tile.TILE_SIZE][(int) gTile.getY() / Tile.TILE_SIZE] = gTile;
         }
+        try {
+            character = new ImageView(new Image(new FileInputStream(Current.user.getCurrentGame().getCharacter().getImageAddress())));
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
         character.setFitWidth(50);
         character.setFitHeight(50);
-        character.setX(2 * Tile.TILE_SIZE);
-        character.setY(5 * Tile.TILE_SIZE);
+        character.setX(Current.user.getCurrentGame().getCurrentLevel().getCurrentSection().getX() * Tile.TILE_SIZE);
+        character.setY(Current.user.getCurrentGame().getCurrentLevel().getCurrentSection().getY() * Tile.TILE_SIZE);
+        xFront = xBack = yFront = yBack = 0;
         this.getChildren().add(character);
+        timer.start();
     }
 
     private final AnimationTimer timer = new AnimationTimer() {
         @Override
         public void handle(long now) {
             dx = 0;
-            if (right) dx += Current.game.getCharacter().getSpeed();
-            if (left && character.getBoundsInParent().getMinX() > 0) dx -= Current.game.getCharacter().getSpeed();
+            if (right) dx += Current.user.getCurrentGame().getCharacter().getSpeed();
+            if (left && character.getBoundsInParent().getMinX() > 0) dx -= Current.user.getCurrentGame().getCharacter().getSpeed();
             if (up) {
                 up = false;
-                dy = Current.game.getCharacter().getJumpAbility() * -1;
+                dy = Current.user.getCurrentGame().getCharacter().getJumpAbility() * -1;
             } else dy += gravity;
 
             if (dy > 0) {
@@ -166,14 +143,13 @@ public class GameView extends Pane {
                 removeGTile(characterMovementEvent.getRemovedTile());
             }
 
-            if (characterMovementEvent.isPowerUp()) {
+            /*if (characterMovementEvent.isPowerUp()) {
                 // todo apply power up
-            }
+            }*/
 
             if (characterMovementEvent.isKilled()) {
-                // todo collision with enemy
-                // todo falling down
-                System.out.println("you lose");
+                System.out.println("you lose"); // todo
+                loadSectionGraphics();
             }
 
             dx = characterMovementEvent.getDx();
@@ -188,16 +164,16 @@ public class GameView extends Pane {
                 }
             }
 
-
-            // fixme split enemies from tiles for improvement
-            for (Tile tile: Current.game.getScene().getComponents()) {
-                if (tile instanceof Enemy) {
-                    ImageView enemyImg = gTiles[tile.getX()][tile.getY()];
-                    enemyImg.setX(enemyImg.getX() + ((Enemy) tile).getxVelocity());
-                    enemyImg.setY(enemyImg.getY() + ((Enemy) tile).getyVelocity());
-                    ((Enemy) tile).setxCurrent((int) (enemyImg.getX() / Tile.TILE_SIZE));
-                    ((Enemy) tile).setyCurrent((int) (enemyImg.getY() / Tile.TILE_SIZE));
-                    ((Enemy) tile).modifySpeed();
+            for (Scene scene: Current.user.getCurrentGame().getCurrentLevel().getCurrentSection().getScenes()) {
+                for (Tile tile : scene.getComponents()){
+                    if (tile instanceof Enemy) {
+                        ImageView enemyImg = gTiles[tile.getX()][tile.getY()];
+                        enemyImg.setX(enemyImg.getX() + ((Enemy) tile).getxVelocity());
+                        enemyImg.setY(enemyImg.getY() + ((Enemy) tile).getyVelocity());
+                        ((Enemy) tile).setxCurrent((int) (enemyImg.getX() / Tile.TILE_SIZE));
+                        ((Enemy) tile).setyCurrent((int) (enemyImg.getY() / Tile.TILE_SIZE));
+                        ((Enemy) tile).modifySpeed();
+                    }
                 }
             }
         }

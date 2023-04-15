@@ -72,6 +72,8 @@ public class UserController {
             if (scene == null) break;
             section.addScene(scene);
         }
+        section.setX(2);
+        section.setY(5);
         Level level = new Level();
         level.setNo(1);
         level.setCurrentSection(section);

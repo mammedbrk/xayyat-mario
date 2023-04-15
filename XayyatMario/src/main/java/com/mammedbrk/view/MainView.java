@@ -1,9 +1,11 @@
 package com.mammedbrk.view;
 
+import com.mammedbrk.controller.GameController;
 import com.mammedbrk.listener.*;
 import com.mammedbrk.view.auth.LoginView;
 import com.mammedbrk.view.auth.RegistrationView;
 import com.mammedbrk.view.game.GameView;
+import com.mammedbrk.view.game.NewGameSetupView;
 import com.mammedbrk.view.menu.MainMenuHeaderView;
 import com.mammedbrk.view.menu.MainMenuView;
 import com.mammedbrk.view.profile.ProfileView;
@@ -22,8 +24,8 @@ public class MainView extends BorderPane {
     private FXMLLoader mainMenuHeaderViewLoader;
     private FXMLLoader rankingViewLoader;
     private FXMLLoader shopViewLoader;
-    private FXMLLoader gameViewLoader;
     private FXMLLoader profileViewLoader;
+    private FXMLLoader newGameSetupLoader;
 
     public MainView() throws IOException {
         loginView();
@@ -126,9 +128,8 @@ public class MainView extends BorderPane {
                     }
                 }
                 if (s.equals("NewGameSetupView")) {
-                    // todo
                     try {
-                        startNewGame();
+                        newGameSetupView();
                     } catch (IOException e) {
                         throw new RuntimeException(e);
                     }
@@ -219,16 +220,32 @@ public class MainView extends BorderPane {
         });
     }
 
-    public void startNewGame() throws IOException {
-        /* todo this is not start new game function, just something to test game :)
-        * Call GameController,
-        *   GameController will initialize GameView
-        *       after that, this.setCenter();
-        * */
+    private void newGameSetupView() throws IOException {
         resetPane();
-        GameView gameView = new GameView();
+        newGameSetupLoader = new FXMLLoader(getClass().getResource(dir + "game/new-game-setup-view.fxml"));
+        this.setCenter(newGameSetupLoader.load());
+        NewGameSetupView newGameSetupView = newGameSetupLoader.getController();
+        newGameSetupView.addListener(new StringListener() {
+            @Override
+            public void listen(String s) {
+                if (s.equals("MainMenu")) {
+                    try {
+                        mainMenu();
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+                if (s.equals("StartGame")) {
+                    startGame();
+                }
+            }
+        });
+    }
+
+    private void startGame() {
+        GameController controller = new GameController();
+        GameView gameView = new GameView(new SectionLoadListener(controller), new CharacterCollisionListener(controller));
         this.setCenter(gameView);
-//        gameView.setGameLoadListener(new GameLoadListener());
     }
 
     private void resetPane() {
