@@ -1,13 +1,14 @@
 package com.mammedbrk.listener;
 
 import com.mammedbrk.controller.CharacterController;
-import com.mammedbrk.event.CharacterListEvent;
+import com.mammedbrk.model.Character;
+
+import java.util.List;
 
 public class CharacterListListener {
     private final CharacterController controller = new CharacterController();
 
-    public boolean listen(CharacterListEvent characterListEvent) {
-        characterListEvent.getCharacters().addAll(controller.getAll());
-        return false;
+    public List<Character> listen() {
+        return controller.getAll();
     }
 }

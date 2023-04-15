@@ -2,7 +2,6 @@ package com.mammedbrk.view.shop;
 
 import com.mammedbrk.current.Current;
 import com.mammedbrk.event.CharacterEvent;
-import com.mammedbrk.event.CharacterListEvent;
 import com.mammedbrk.listener.CharacterBuyListener;
 import com.mammedbrk.listener.CharacterListListener;
 import com.mammedbrk.listener.StringListener;
@@ -27,7 +26,6 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -62,8 +60,7 @@ public class ShopView implements Initializable {
         setUserInfo();
 
         // Character cards
-        List<Character> characters = new ArrayList<>();
-        characterListListener.listen(new CharacterListEvent(this, characters));
+        List<Character> characters = characterListListener.listen();
         for (Character character: characters) {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com.mammedbrk/fxml/character/character-card-view.fxml"));
             try {
