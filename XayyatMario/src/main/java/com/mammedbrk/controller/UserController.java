@@ -1,13 +1,14 @@
 package com.mammedbrk.controller;
 
 import com.mammedbrk.access.CharacterAccess;
+import com.mammedbrk.access.SceneAccess;
 import com.mammedbrk.access.UserAccess;
 import com.mammedbrk.current.Current;
 import com.mammedbrk.event.FormEvent;
+import com.mammedbrk.model.*;
 import com.mammedbrk.model.Character;
-import com.mammedbrk.model.Game;
-import com.mammedbrk.model.User;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
@@ -23,7 +24,7 @@ public class UserController {
         user.addCharacter(character);
         user.setChosenCharacter(character);
         for (int i = 0; i < 3; i++)
-            user.setGame(i, new Game());
+            user.addGame(new Game());
         access.add(user);
         return Current.user = user;
     }
@@ -58,8 +59,28 @@ public class UserController {
         access.add(user);
     }
 
-    public void saveGame(User user, int index, Game game) {
-        user.setGame(index, game);
+    public void updateUser(User user) {
+        access.add(user);
+    }
+
+    public void saveNewGame(User user, int index) {
+        Section section = new Section(120);
+        section.setNo(1);
+        section.setScenes(new ArrayList<>());
+        for (int sceneNo = 1; ; sceneNo++) {
+            Scene scene = new SceneAccess().get(1, 1, sceneNo);
+            if (scene == null) break;
+            section.addScene(scene);
+        }
+        Level level = new Level();
+        level.setNo(1);
+        level.setCurrentSection(section);
+        Game game = new Game();
+        game.setCharacter(Current.user.getChosenCharacter());
+        game.setHearts(3);
+        game.setCurrentLevel(level);
+        user.putGame(index, game);
+        user.setCurrentGame(game);
         access.add(user);
     }
 }
