@@ -8,7 +8,6 @@ public class Character {
     private int collectAbility;
     private int shootAbility;
     private int price;
-    private boolean chosen;
 
     public Character() {
     }
@@ -95,13 +94,5 @@ public class Character {
 
     public void setPrice(int price) {
         this.price = price;
-    }
-
-    public boolean isChosen() {
-        return chosen;
-    }
-
-    public void setChosen(boolean chosen) {
-        this.chosen = chosen;
     }
 }
