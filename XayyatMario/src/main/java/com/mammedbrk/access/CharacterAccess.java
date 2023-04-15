@@ -45,4 +45,12 @@ public class CharacterAccess {
         }
         return returnList;
     }
+
+    public void add(Character character) {
+        try {
+            mapper.writeValue(new FileWriter(directory + character.getName() + ".json"), character);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

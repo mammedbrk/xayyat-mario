@@ -20,6 +20,7 @@ public class UserController {
         User user = new User(access.lastId() + 1, e.getUsername(), e.getPassword());
         Character character = new CharacterAccess().get("OrdinaryXayyat");
         user.addCharacter(character);
+        user.setChosenCharacter(character);
         access.add(user);
         return Current.user = user;
     }
@@ -39,10 +40,10 @@ public class UserController {
     }
 
     public boolean buyCharacter(User user, Character character) {
-        if (user.getNumOfCoins() < character.getPrice()) {
+        if (user.getCoins() < character.getPrice()) {
             return false;
         }
-        user.changeNumOfCoinsBy(character.getPrice() * -1);
+        user.addCoin(character.getPrice() * -1);
         user.addCharacter(character);
         access.add(user);
         Current.user = user;

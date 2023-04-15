@@ -3,10 +3,10 @@ package com.mammedbrk.model;
 public class Character {
     private String name;
     private String imageAddress;
-    private int speed;
-    private int jumpAbility;
-    private int collectAbility;
-    private int shootAbility;
+    private double speed;
+    private double jumpAbility;
+    private double collectAbility;
+    private double shootAbility;
     private int price;
 
     public Character() {
@@ -56,35 +56,35 @@ public class Character {
         this.imageAddress = imageAddress;
     }
 
-    public int getSpeed() {
+    public double getSpeed() {
         return speed;
     }
 
-    public void setSpeed(int speed) {
+    public void setSpeed(double speed) {
         this.speed = speed;
     }
 
-    public int getJumpAbility() {
+    public double getJumpAbility() {
         return jumpAbility;
     }
 
-    public void setJumpAbility(int jumpAbility) {
+    public void setJumpAbility(double jumpAbility) {
         this.jumpAbility = jumpAbility;
     }
 
-    public int getCollectAbility() {
+    public double getCollectAbility() {
         return collectAbility;
     }
 
-    public void setCollectAbility(int collectAbility) {
+    public void setCollectAbility(double collectAbility) {
         this.collectAbility = collectAbility;
     }
 
-    public int getShootAbility() {
+    public double getShootAbility() {
         return shootAbility;
     }
 
-    public void setShootAbility(int shootAbility) {
+    public void setShootAbility(double shootAbility) {
         this.shootAbility = shootAbility;
     }
 

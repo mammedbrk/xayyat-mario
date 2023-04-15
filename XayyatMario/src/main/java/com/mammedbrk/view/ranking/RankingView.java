@@ -42,7 +42,7 @@ public class RankingView implements Initializable {
             UserRankingCardView userRankingCardView = loader.getController();
             userRankingCardView.setRankLabel(String.valueOf(++rank));
             try {
-                userRankingCardView.getCharacterImg().setImage(new Image(new FileInputStream(user.chosenCharacter().getImageAddress())));
+                userRankingCardView.getCharacterImg().setImage(new Image(new FileInputStream(user.getChosenCharacter().getImageAddress())));
             } catch (FileNotFoundException e) {
                 throw new RuntimeException(e);
             }

@@ -1,5 +1,7 @@
 package com.mammedbrk.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,7 +10,9 @@ public class User {
     private String username;
     private String password;
     private int maxScore;
-    private int numOfCoins;
+    private int coins;
+    @JsonIgnore
+    private Game currentGame;
     private List<Game> games;
     private Character chosenCharacter;
     private List<Character> characters;
@@ -26,8 +30,8 @@ public class User {
 
     // Methods
 
-    public void changeNumOfCoinsBy(int change) {
-        numOfCoins += change;
+    public void addCoin(int value) {
+        coins += value;
     }
 
     public void addGame(Game game) {
@@ -77,12 +81,20 @@ public class User {
         this.maxScore = maxScore;
     }
 
-    public int getNumOfCoins() {
-        return numOfCoins;
+    public int getCoins() {
+        return coins;
     }
 
-    public void setNumOfCoins(int numOfCoins) {
-        this.numOfCoins = numOfCoins;
+    public void setCoins(int coins) {
+        this.coins = coins;
+    }
+
+    public Game getCurrentGame() {
+        return currentGame;
+    }
+
+    public void setCurrentGame(Game currentGame) {
+        this.currentGame = currentGame;
     }
 
     public List<Game> getGames() {

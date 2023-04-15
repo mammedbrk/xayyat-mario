@@ -13,6 +13,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -122,7 +123,8 @@ public class ShopView implements Initializable {
                                 setUserInfo();
                             }
                             else {
-                                // todo message that you don't have enough money
+                                Alert alert = new Alert(Alert.AlertType.ERROR, "You don't have enough money to buy " + character.getName() + "!");
+                                alert.show();
                             }
                         }
                     });
@@ -134,9 +136,9 @@ public class ShopView implements Initializable {
 
     private void setUserInfo() {
         username.setText(Current.user.getUsername());
-        coin.setText(String.valueOf(Current.user.getNumOfCoins()));
+        coin.setText(String.valueOf(Current.user.getCoins()));
         try {
-            characterImg.setImage(new Image(new FileInputStream(Current.user.chosenCharacter().getImageAddress())));
+            characterImg.setImage(new Image(new FileInputStream(Current.user.getChosenCharacter().getImageAddress())));
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }

@@ -1,10 +1,9 @@
 {
-  "name": "Shrek Xayyat",
-  "imageAddress": "src/main/resources/com.mammedbrk/image/character/shrek-xayyat.png",
-  "speed": 2,
-  "jumpAbility": 1,
-  "collectAbility": 2,
-  "shootAbility": 1,
-  "price": 100,
-  "chosen": false
+  "name" : "ShrekXayyat",
+  "imageAddress" : "src/main/resources/com.mammedbrk/image/character/shrek-xayyat.png",
+  "speed" : 1.7,
+  "jumpAbility" : 6.0,
+  "collectAbility" : 1.0,
+  "shootAbility" : 2.0,
+  "price" : 250
 }

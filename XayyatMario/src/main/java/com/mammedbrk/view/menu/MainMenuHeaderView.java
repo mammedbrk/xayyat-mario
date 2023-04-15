@@ -37,9 +37,9 @@ public class MainMenuHeaderView implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         username.setText(Current.user.getUsername());
         score.setText(String.valueOf(Current.user.getMaxScore()));
-        coin.setText(String.valueOf(Current.user.getNumOfCoins()));
+        coin.setText(String.valueOf(Current.user.getCoins()));
         try {
-            characterImg.setImage(new Image(new FileInputStream(Current.user.chosenCharacter().getImageAddress())));
+            characterImg.setImage(new Image(new FileInputStream(Current.user.getChosenCharacter().getImageAddress())));
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }
