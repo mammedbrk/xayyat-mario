@@ -23,7 +23,7 @@ public class UserController {
         user.addCharacter(character);
         user.setChosenCharacter(character);
         for (int i = 0; i < 3; i++)
-            user.addGame(new Game());
+            user.setGame(i, new Game());
         access.add(user);
         return Current.user = user;
     }
@@ -55,7 +55,11 @@ public class UserController {
 
     public void chooseCharacter(User user, Character character) {
         user.setChosenCharacter(character);
-        System.out.println("# " + character.getName());
+        access.add(user);
+    }
+
+    public void saveGame(User user, int index, Game game) {
+        user.setGame(index, game);
         access.add(user);
     }
 }
