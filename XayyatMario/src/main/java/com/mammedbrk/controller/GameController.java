@@ -11,6 +11,7 @@ import com.mammedbrk.model.gamecomponent.Tile;
 import com.mammedbrk.model.gamecomponent.block.Block;
 import com.mammedbrk.model.gamecomponent.block.CoinBlock;
 import com.mammedbrk.model.gamecomponent.block.PowerUpBlock;
+import com.mammedbrk.model.gamecomponent.enemy.Enemy;
 import com.mammedbrk.view.game.TileImages;
 import javafx.scene.image.ImageView;
 
@@ -28,6 +29,7 @@ public class GameController {
     private int sectionNo;
     private TileImages tileImages;
     private Tile[][] tiles;
+    private List<Enemy> enemies;
 
     public GameController() {
         this.game = Current.game;
@@ -42,6 +44,7 @@ public class GameController {
 
     public List<ImageView> loadNextSection() {
         tiles = new Tile[5*(int) (WIDTH/Tile.TILE_SIZE)][(int) (HEIGHT/Tile.TILE_SIZE)];
+        enemies = new ArrayList<>();
 
 //        if (sectionNo > game.getLevels().get(levelNo - 1).getSections().size()) {
 //            levelNo++;
@@ -67,7 +70,10 @@ public class GameController {
                 imgView.setY(y);
                 imgView.setVisible(true);
 
-                tiles[x / Tile.TILE_SIZE][y / Tile.TILE_SIZE] = tile;
+                if (tile instanceof Enemy)
+                    enemies.add((Enemy) tile);
+                else
+                    tiles[x / Tile.TILE_SIZE][y / Tile.TILE_SIZE] = tile;
                 tile.setX(x / Tile.TILE_SIZE);
                 tile.setY(y / Tile.TILE_SIZE);
 
@@ -134,30 +140,19 @@ public class GameController {
             removeTile(occupied((xBack + xFront) / 2 + characterMovementEvent.getDx(), (yBack + yFront) / 2 + characterMovementEvent.getDy()));
         }
 
-        /*
-        if (occupied(xBack + characterMovementEvent.getDx(), yBack + characterMovementEvent.getDy()) instanceof Enemy
-                || occupied(xFront + characterMovementEvent.getDx(), yBack + characterMovementEvent.getDy()) instanceof Enemy
-                || occupied(xBack + characterMovementEvent.getDx(), yFront + characterMovementEvent.getDy()) instanceof Enemy
-                || occupied(xFront + characterMovementEvent.getDx(), yFront + characterMovementEvent.getDy()) instanceof Enemy) {
-            // todo you lose
-            characterMovementEvent.setKilled(true);
-        }*/
+        // Lose with enemies
+        for (Enemy enemy: enemies) {
+//            System.out.println("dskfjhsdjfkhsdkjfh");
+            if ((int) (xFront / Tile.TILE_SIZE) == enemy.getxCurrent() && (int) ((yBack + yFront) / 2 / Tile.TILE_SIZE) == enemy.getyCurrent()) {
+                characterMovementEvent.setKilled(true);
+            }
+        }
 
         // Lose when fall down
         if (yFront > HEIGHT - 100) {
             characterMovementEvent.setDy(0);
             characterMovementEvent.setKilled(true);
         }
-
-        // Move enemies todo
-//        for (GEnemy gEnemy: enemies) {
-//            gEnemy.getEnemy().changeYVelocity();
-//            if ((int) (gEnemy.getImage().getY() / Tile.TILE_SIZE) > )
-//            if (gEnemy.getImage().getY() / Tile.TILE_SIZE != gEnemy.getEnemy().getY()) {
-//                tiles[gEnemy.getEnemy().getX()][(int) (gEnemy.getImage().getY() / Tile.TILE_SIZE)] = gEnemy.getEnemy();
-//            }
-//        }
-//        characterMovementEvent.setEnemies(enemies);
 
         return characterMovementEvent;
     }

@@ -166,11 +166,9 @@ public class GameView extends Pane {
                 removeGTile(characterMovementEvent.getRemovedTile());
             }
 
-        /*if (characterMovementEvent.isPowerUp()) {
-            GameView.this.getChildren().remove(gTiles[(int) ((xFront + xBack) / 2 / Tile.TILE_SIZE)][(int) ((yFront + dy) / Tile.TILE_SIZE)]);
-            gTiles[(int) ((xFront + xBack) / 2 / Tile.TILE_SIZE)][(int) ((yFront + dy) / Tile.TILE_SIZE)] = null;
-        }*/
-
+            if (characterMovementEvent.isPowerUp()) {
+                // todo apply power up
+            }
 
             if (characterMovementEvent.isKilled()) {
                 // todo collision with enemy
@@ -190,6 +188,8 @@ public class GameView extends Pane {
                 }
             }
 
+
+            // fixme split enemies from tiles for improvement
             for (Tile tile: Current.game.getScene().getComponents()) {
                 if (tile instanceof Enemy) {
                     ImageView enemyImg = gTiles[tile.getX()][tile.getY()];
@@ -207,98 +207,4 @@ public class GameView extends Pane {
         this.getChildren().remove(gTiles[tile.getX()][tile.getY()]);
         gTiles[tile.getX()][tile.getY()] = null;
     }
-
-    private void moveEnemies() {
-        // todo
-
-    }
-
-
-    /*private Game game; // todo how to get game? :think
-    private ImageView characterImg;
-
-    private final int width = 1300;
-    private final int height = 1000;
-    private Tile[][] tiles;
-    private ImageView[][] graphicTiles;
-    private final HashMap<String, Image> images = new HashMap<>();
-
-    private double dy;
-    private static final double gravity = 0.2;
-    private boolean up, left, right, canJump;
-    private double xForward, xBackward;
-    private double xMiddle, yMiddle;
-    private double yForward, yBackward;
-
-    public GameView() {
-        game = new Game();
-        game.setCharacter(Current.user.chosenCharacter());
-
-        Section section = new Section(100);
-        section.setScenes(new ArrayList<>());
-        section.setNo(1);
-
-        Scene scene1 = new Scene();
-        scene1.setComponents(new ArrayList<>());
-        scene1.setNo(1);
-
-        for (int i = 0; i < 21; i++) {
-            for (int j = 10; j < 15; j++) {
-                if (i == 13) continue;
-                scene1.addComponent(new OrdinaryBlock(i, j));
-            }
-        }
-        for (int i = 4; i < 9; i++)
-            scene1.addComponent(new Coin(i, 9));
-        scene1.addComponent(new OrdinaryBlock(12, 9));
-        scene1.addComponent(new OrdinaryBlock(12, 8));
-        scene1.addComponent(new OrdinaryBlock(12, 7));
-        scene1.addComponent(new OrdinaryBlock(11, 9));
-        scene1.addComponent(new OrdinaryBlock(11, 8));
-        scene1.addComponent(new OrdinaryBlock(10, 9));
-        scene1.addComponent(new OrdinaryBlock(14, 9));
-        scene1.addComponent(new OrdinaryBlock(14, 8));
-        scene1.addComponent(new OrdinaryBlock(14, 7));
-        scene1.addComponent(new OrdinaryBlock(15, 9));
-        scene1.addComponent(new OrdinaryBlock(15, 8));
-        scene1.addComponent(new OrdinaryBlock(16, 9));
-        scene1.addComponent(new PowerUpBlock(10, 4));
-        section.addScene(scene1);
-
-        Scene scene2 = new Scene();
-        scene2.setComponents(new ArrayList<>());
-        scene2.setNo(2);
-        for (int i = 0; i < 21; i++) {
-            for (int j = 10; j < 15; j++) {
-                if (i == 13) continue;
-                scene2.addComponent(new OrdinaryBlock(i, j));
-            }
-        }
-        for (int i = 4; i < 9; i++)
-            scene2.addComponent(new Coin(i, 9));
-        section.addScene(scene2);
-
-        Scene scene3 = new Scene();
-        scene3.setComponents(new ArrayList<>());
-        scene3.setNo(3);
-        section.addScene(scene3);
-
-        Scene scene4 = new Scene();
-        scene4.setComponents(new ArrayList<>());
-        scene4.setNo(4);
-        section.addScene(scene4);
-
-
-
-//        for (Level level: game.getLevels()) {
-//            if (level.getNo() < game.getScene().getSection().getLevel().getNo())
-//                continue;
-//            for (Section section: level.getSections()) {
-//                if (level.getNo() == game.getScene().getSection().getLevel().getNo()
-//                        && section.getNo() < game.getScene().getSection().getNo()) continue;
-//
-//                loadSection(section);
-//            }
-//        }
-    }*/
 }
