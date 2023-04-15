@@ -28,7 +28,11 @@ public class SceneAccess {
     public Scene get(int levelNo, int sectionNo, int sceneNo) {
         Scene scene;
         try {
-            scene = mapper.readValue(new File(directory + "/" + levelNo + "/" + sectionNo + "/" + sceneNo + ".json"), Scene.class);
+            File file = new File(directory + "/" + levelNo + "/" + sectionNo + "/" + sceneNo + ".json");
+            if (!file.exists()) {
+                return null;
+            }
+            scene = mapper.readValue(file, Scene.class);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
