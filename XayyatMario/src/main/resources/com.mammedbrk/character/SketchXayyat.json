@@ -2,7 +2,7 @@
   "name" : "SketchXayyat",
   "imageAddress" : "src/main/resources/com.mammedbrk/image/character/sketch-xayyat.png",
   "speed" : 1.9,
-  "jumpAbility" : 7.0,
+  "jumpAbility" : 6.8,
   "collectAbility" : 1.5,
   "shootAbility" : 1.5,
   "price" : 500

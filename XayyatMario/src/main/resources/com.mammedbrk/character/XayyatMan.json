@@ -2,7 +2,7 @@
   "name" : "XayyatMan",
   "imageAddress" : "src/main/resources/com.mammedbrk/image/character/xayyat-man.png",
   "speed" : 2.2,
-  "jumpAbility" : 7.7,
+  "jumpAbility" : 7.2,
   "collectAbility" : 2.0,
   "shootAbility" : 2.0,
   "price" : 999

@@ -1,0 +1,406 @@
+{
+  "no" : 3,
+  "components" : [ {
+    "type" : "grave",
+    "x" : 9,
+    "y" : 7,
+    "imageAddress" : "src/main/resources/com.mammedbrk/image/game/grave.png",
+    "xCurrent" : 9,
+    "yCurrent" : 7,
+    "xVelocity" : 0.0,
+    "yVelocity" : 0.7
+  }, {
+    "type" : "grave",
+    "x" : 13,
+    "y" : 7,
+    "imageAddress" : "src/main/resources/com.mammedbrk/image/game/grave.png",
+    "xCurrent" : 13,
+    "yCurrent" : 7,
+    "xVelocity" : 0.0,
+    "yVelocity" : 0.7
+  }, {
+    "type" : "pipe",
+    "x" : 5,
+    "y" : 9,
+    "imageAddress" : "src/main/resources/com.mammedbrk/image/game/pipe.png"
+  }, {
+    "type" : "pipe",
+    "x" : 9,
+    "y" : 9,
+    "imageAddress" : "src/main/resources/com.mammedbrk/image/game/pipe.png"
+  }, {
+    "type" : "pipe",
+    "x" : 9,
+    "y" : 8,
+    "imageAddress" : "src/main/resources/com.mammedbrk/image/game/pipe.png"
+  }, {
+    "type" : "pipe",
+    "x" : 13,
+    "y" : 9,
+    "imageAddress" : "src/main/resources/com.mammedbrk/image/game/pipe.png"
+  }, {
+    "type" : "pipe",
+    "x" : 13,
+    "y" : 8,
+    "imageAddress" : "src/main/resources/com.mammedbrk/image/game/pipe.png"
+  }, {
+    "type" : "pipe",
+    "x" : 17,
+    "y" : 9,
+    "imageAddress" : "src/main/resources/com.mammedbrk/image/game/pipe.png"
+  }, {
+    "type" : "earthBlock",
+    "x" : 0,
+    "y" : 10,
+    "imageAddress" : "src/main/resources/com.mammedbrk/image/game/earth.png"
+  }, {
+    "type" : "earthBlock",
+    "x" : 0,
+    "y" : 11,
+    "imageAddress" : "src/main/resources/com.mammedbrk/image/game/earth.png"
+  }, {
+    "type" : "earthBlock",
+    "x" : 0,
+    "y" : 13,
+    "imageAddress" : "src/main/resources/com.mammedbrk/image/game/earth.png"
+  }, {
+    "type" : "earthBlock",
+    "x" : 1,
+    "y" : 10,
+    "imageAddress" : "src/main/resources/com.mammedbrk/image/game/earth.png"
+  }, {
+    "type" : "earthBlock",
+    "x" : 1,
+    "y" : 11,
+    "imageAddress" : "src/main/resources/com.mammedbrk/image/game/earth.png"
+  }, {
+    "type" : "earthBlock",
+    "x" : 1,
+    "y" : 13,
+    "imageAddress" : "src/main/resources/com.mammedbrk/image/game/earth.png"
+  }, {
+    "type" : "earthBlock",
+    "x" : 2,
+    "y" : 10,
+    "imageAddress" : "src/main/resources/com.mammedbrk/image/game/earth.png"
+  }, {
+    "type" : "earthBlock",
+    "x" : 2,
+    "y" : 11,
+    "imageAddress" : "src/main/resources/com.mammedbrk/image/game/earth.png"
+  }, {
+    "type" : "earthBlock",
+    "x" : 2,
+    "y" : 13,
+    "imageAddress" : "src/main/resources/com.mammedbrk/image/game/earth.png"
+  }, {
+    "type" : "earthBlock",
+    "x" : 3,
+    "y" : 10,
+    "imageAddress" : "src/main/resources/com.mammedbrk/image/game/earth.png"
+  }, {
+    "type" : "earthBlock",
+    "x" : 3,
+    "y" : 11,
+    "imageAddress" : "src/main/resources/com.mammedbrk/image/game/earth.png"
+  }, {
+    "type" : "earthBlock",
+    "x" : 3,
+    "y" : 13,
+    "imageAddress" : "src/main/resources/com.mammedbrk/image/game/earth.png"
+  }, {
+    "type" : "earthBlock",
+    "x" : 4,
+    "y" : 10,
+    "imageAddress" : "src/main/resources/com.mammedbrk/image/game/earth.png"
+  }, {
+    "type" : "earthBlock",
+    "x" : 4,
+    "y" : 11,
+    "imageAddress" : "src/main/resources/com.mammedbrk/image/game/earth.png"
+  }, {
+    "type" : "earthBlock",
+    "x" : 4,
+    "y" : 13,
+    "imageAddress" : "src/main/resources/com.mammedbrk/image/game/earth.png"
+  }, {
+    "type" : "earthBlock",
+    "x" : 5,
+    "y" : 10,
+    "imageAddress" : "src/main/resources/com.mammedbrk/image/game/earth.png"
+  }, {
+    "type" : "earthBlock",
+    "x" : 5,
+    "y" : 11,
+    "imageAddress" : "src/main/resources/com.mammedbrk/image/game/earth.png"
+  }, {
+    "type" : "earthBlock",
+    "x" : 5,
+    "y" : 13,
+    "imageAddress" : "src/main/resources/com.mammedbrk/image/game/earth.png"
+  }, {
+    "type" : "earthBlock",
+    "x" : 6,
+    "y" : 10,
+    "imageAddress" : "src/main/resources/com.mammedbrk/image/game/earth.png"
+  }, {
+    "type" : "earthBlock",
+    "x" : 6,
+    "y" : 11,
+    "imageAddress" : "src/main/resources/com.mammedbrk/image/game/earth.png"
+  }, {
+    "type" : "earthBlock",
+    "x" : 6,
+    "y" : 13,
+    "imageAddress" : "src/main/resources/com.mammedbrk/image/game/earth.png"
+  }, {
+    "type" : "earthBlock",
+    "x" : 7,
+    "y" : 10,
+    "imageAddress" : "src/main/resources/com.mammedbrk/image/game/earth.png"
+  }, {
+    "type" : "earthBlock",
+    "x" : 7,
+    "y" : 11,
+    "imageAddress" : "src/main/resources/com.mammedbrk/image/game/earth.png"
+  }, {
+    "type" : "earthBlock",
+    "x" : 7,
+    "y" : 13,
+    "imageAddress" : "src/main/resources/com.mammedbrk/image/game/earth.png"
+  }, {
+    "type" : "earthBlock",
+    "x" : 8,
+    "y" : 10,
+    "imageAddress" : "src/main/resources/com.mammedbrk/image/game/earth.png"
+  }, {
+    "type" : "earthBlock",
+    "x" : 8,
+    "y" : 11,
+    "imageAddress" : "src/main/resources/com.mammedbrk/image/game/earth.png"
+  }, {
+    "type" : "earthBlock",
+    "x" : 8,
+    "y" : 13,
+    "imageAddress" : "src/main/resources/com.mammedbrk/image/game/earth.png"
+  }, {
+    "type" : "earthBlock",
+    "x" : 9,
+    "y" : 10,
+    "imageAddress" : "src/main/resources/com.mammedbrk/image/game/earth.png"
+  }, {
+    "type" : "earthBlock",
+    "x" : 9,
+    "y" : 11,
+    "imageAddress" : "src/main/resources/com.mammedbrk/image/game/earth.png"
+  }, {
+    "type" : "earthBlock",
+    "x" : 9,
+    "y" : 13,
+    "imageAddress" : "src/main/resources/com.mammedbrk/image/game/earth.png"
+  }, {
+    "type" : "earthBlock",
+    "x" : 10,
+    "y" : 10,
+    "imageAddress" : "src/main/resources/com.mammedbrk/image/game/earth.png"
+  }, {
+    "type" : "earthBlock",
+    "x" : 10,
+    "y" : 11,
+    "imageAddress" : "src/main/resources/com.mammedbrk/image/game/earth.png"
+  }, {
+    "type" : "earthBlock",
+    "x" : 10,
+    "y" : 13,
+    "imageAddress" : "src/main/resources/com.mammedbrk/image/game/earth.png"
+  }, {
+    "type" : "earthBlock",
+    "x" : 11,
+    "y" : 10,
+    "imageAddress" : "src/main/resources/com.mammedbrk/image/game/earth.png"
+  }, {
+    "type" : "earthBlock",
+    "x" : 11,
+    "y" : 11,
+    "imageAddress" : "src/main/resources/com.mammedbrk/image/game/earth.png"
+  }, {
+    "type" : "earthBlock",
+    "x" : 11,
+    "y" : 13,
+    "imageAddress" : "src/main/resources/com.mammedbrk/image/game/earth.png"
+  }, {
+    "type" : "earthBlock",
+    "x" : 12,
+    "y" : 10,
+    "imageAddress" : "src/main/resources/com.mammedbrk/image/game/earth.png"
+  }, {
+    "type" : "earthBlock",
+    "x" : 12,
+    "y" : 11,
+    "imageAddress" : "src/main/resources/com.mammedbrk/image/game/earth.png"
+  }, {
+    "type" : "earthBlock",
+    "x" : 12,
+    "y" : 13,
+    "imageAddress" : "src/main/resources/com.mammedbrk/image/game/earth.png"
+  }, {
+    "type" : "earthBlock",
+    "x" : 13,
+    "y" : 10,
+    "imageAddress" : "src/main/resources/com.mammedbrk/image/game/earth.png"
+  }, {
+    "type" : "earthBlock",
+    "x" : 13,
+    "y" : 11,
+    "imageAddress" : "src/main/resources/com.mammedbrk/image/game/earth.png"
+  }, {
+    "type" : "earthBlock",
+    "x" : 13,
+    "y" : 13,
+    "imageAddress" : "src/main/resources/com.mammedbrk/image/game/earth.png"
+  }, {
+    "type" : "earthBlock",
+    "x" : 14,
+    "y" : 10,
+    "imageAddress" : "src/main/resources/com.mammedbrk/image/game/earth.png"
+  }, {
+    "type" : "earthBlock",
+    "x" : 14,
+    "y" : 11,
+    "imageAddress" : "src/main/resources/com.mammedbrk/image/game/earth.png"
+  }, {
+    "type" : "earthBlock",
+    "x" : 14,
+    "y" : 13,
+    "imageAddress" : "src/main/resources/com.mammedbrk/image/game/earth.png"
+  }, {
+    "type" : "earthBlock",
+    "x" : 15,
+    "y" : 10,
+    "imageAddress" : "src/main/resources/com.mammedbrk/image/game/earth.png"
+  }, {
+    "type" : "earthBlock",
+    "x" : 15,
+    "y" : 11,
+    "imageAddress" : "src/main/resources/com.mammedbrk/image/game/earth.png"
+  }, {
+    "type" : "earthBlock",
+    "x" : 15,
+    "y" : 13,
+    "imageAddress" : "src/main/resources/com.mammedbrk/image/game/earth.png"
+  }, {
+    "type" : "earthBlock",
+    "x" : 16,
+    "y" : 10,
+    "imageAddress" : "src/main/resources/com.mammedbrk/image/game/earth.png"
+  }, {
+    "type" : "earthBlock",
+    "x" : 16,
+    "y" : 11,
+    "imageAddress" : "src/main/resources/com.mammedbrk/image/game/earth.png"
+  }, {
+    "type" : "earthBlock",
+    "x" : 16,
+    "y" : 13,
+    "imageAddress" : "src/main/resources/com.mammedbrk/image/game/earth.png"
+  }, {
+    "type" : "earthBlock",
+    "x" : 17,
+    "y" : 10,
+    "imageAddress" : "src/main/resources/com.mammedbrk/image/game/earth.png"
+  }, {
+    "type" : "earthBlock",
+    "x" : 17,
+    "y" : 11,
+    "imageAddress" : "src/main/resources/com.mammedbrk/image/game/earth.png"
+  }, {
+    "type" : "earthBlock",
+    "x" : 17,
+    "y" : 13,
+    "imageAddress" : "src/main/resources/com.mammedbrk/image/game/earth.png"
+  }, {
+    "type" : "earthBlock",
+    "x" : 18,
+    "y" : 10,
+    "imageAddress" : "src/main/resources/com.mammedbrk/image/game/earth.png"
+  }, {
+    "type" : "earthBlock",
+    "x" : 18,
+    "y" : 11,
+    "imageAddress" : "src/main/resources/com.mammedbrk/image/game/earth.png"
+  }, {
+    "type" : "earthBlock",
+    "x" : 18,
+    "y" : 13,
+    "imageAddress" : "src/main/resources/com.mammedbrk/image/game/earth.png"
+  }, {
+    "type" : "earthBlock",
+    "x" : 19,
+    "y" : 10,
+    "imageAddress" : "src/main/resources/com.mammedbrk/image/game/earth.png"
+  }, {
+    "type" : "earthBlock",
+    "x" : 19,
+    "y" : 11,
+    "imageAddress" : "src/main/resources/com.mammedbrk/image/game/earth.png"
+  }, {
+    "type" : "earthBlock",
+    "x" : 19,
+    "y" : 13,
+    "imageAddress" : "src/main/resources/com.mammedbrk/image/game/earth.png"
+  }, {
+    "type" : "earthBlock",
+    "x" : 20,
+    "y" : 10,
+    "imageAddress" : "src/main/resources/com.mammedbrk/image/game/earth.png"
+  }, {
+    "type" : "earthBlock",
+    "x" : 20,
+    "y" : 11,
+    "imageAddress" : "src/main/resources/com.mammedbrk/image/game/earth.png"
+  }, {
+    "type" : "earthBlock",
+    "x" : 20,
+    "y" : 13,
+    "imageAddress" : "src/main/resources/com.mammedbrk/image/game/earth.png"
+  }, {
+    "type" : "ordinaryBlock",
+    "x" : 7,
+    "y" : 8,
+    "imageAddress" : "src/main/resources/com.mammedbrk/image/game/block.png"
+  }, {
+    "type" : "ordinaryBlock",
+    "x" : 15,
+    "y" : 8,
+    "imageAddress" : "src/main/resources/com.mammedbrk/image/game/block.png"
+  }, {
+    "type" : "ordinaryBlock",
+    "x" : 11,
+    "y" : 6,
+    "imageAddress" : "src/main/resources/com.mammedbrk/image/game/block.png"
+  }, {
+    "type" : "coin",
+    "x" : 7,
+    "y" : 7,
+    "imageAddress" : "src/main/resources/com.mammedbrk/image/game/coin.png",
+    "value" : 1
+  }, {
+    "type" : "coin",
+    "x" : 15,
+    "y" : 7,
+    "imageAddress" : "src/main/resources/com.mammedbrk/image/game/coin.png",
+    "value" : 1
+  }, {
+    "type" : "coin",
+    "x" : 11,
+    "y" : 5,
+    "imageAddress" : "src/main/resources/com.mammedbrk/image/game/coin.png",
+    "value" : 1
+  }, {
+    "type" : "coinBlock",
+    "x" : 11,
+    "y" : 8,
+    "imageAddress" : "src/main/resources/com.mammedbrk/image/game/coin-block.png",
+    "value" : 5
+  } ]
+}

@@ -7,7 +7,7 @@ public class CoinBlock extends Block {
     }
 
     public CoinBlock(int x, int y) {
-        super(x, y, "src/main/resources/com.mammedbrk/image/game/block.png");
+        super(x, y, "src/main/resources/com.mammedbrk/image/game/coin-block.png");
         this.value = 1;
     }
 

@@ -2,7 +2,7 @@
   "name" : "OrdinaryXayyat",
   "imageAddress" : "src/main/resources/com.mammedbrk/image/character/ordinary-xayyat.png",
   "speed" : 1.5,
-  "jumpAbility" : 5.0,
+  "jumpAbility" : 6.0,
   "collectAbility" : 1.0,
   "shootAbility" : 1.0,
   "price" : 0

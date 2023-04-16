@@ -178,7 +178,7 @@ public class GameController {
 
     public void finishGame() {
         characterMovementEvent.setFinished(true);
-        Current.user.addCoin(game.getCurrentLevel().getCoins());
+        Current.user.addCoin(game.getCoins());
         Current.user.maximizeScore(game.getScore());
         Current.user.removeGame(game);
         new UserAccess().add(Current.user);
