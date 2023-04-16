@@ -60,7 +60,8 @@ public class NewGameSetupView implements Initializable {
                     listener.listen("StartGame");
                 }
             }
-        } else {
+        }
+        else {
             saveGameListener.listen(0);
             for (StringListener listener: listeners) {
                 listener.listen("StartGame");

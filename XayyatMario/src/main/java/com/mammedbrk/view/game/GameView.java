@@ -14,6 +14,7 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
+import javafx.scene.control.Alert;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
@@ -81,7 +82,11 @@ public class GameView extends Pane {
         loadSectionGraphics();
     }
 
-    private void loadSectionGraphics() {
+    public void loadSectionGraphics() {
+
+        xFront = xBack = Current.user.getCurrentGame().getCurrentLevel().getCurrentSection().getX() * Tile.TILE_SIZE;
+        yFront = yBack = Current.user.getCurrentGame().getCurrentLevel().getCurrentSection().getY() * Tile.TILE_SIZE;
+
         timer.stop();
         this.getChildren().clear();
         gTiles = new ImageView[5 * (int) (WIDTH / Tile.TILE_SIZE)][(int) (HEIGHT / Tile.TILE_SIZE)];
@@ -103,7 +108,6 @@ public class GameView extends Pane {
         character.setFitHeight(50);
         character.setX(Current.user.getCurrentGame().getCurrentLevel().getCurrentSection().getX() * Tile.TILE_SIZE);
         character.setY(Current.user.getCurrentGame().getCurrentLevel().getCurrentSection().getY() * Tile.TILE_SIZE);
-        xFront = xBack = yFront = yBack = 0;
         this.getChildren().add(character);
         timer.start();
     }
@@ -141,11 +145,8 @@ public class GameView extends Pane {
                     xFront, xBack,
                     yFront, yBack));
 
-            if (characterMovementEvent.isWin()) {
-                timer.stop();
-                for (StringListener listener: listeners) {
-                    listener.listen("MainMenu");
-                }
+            if (characterMovementEvent.isFinished()) {
+                finishGame();
                 return;
             }
 
@@ -158,10 +159,6 @@ public class GameView extends Pane {
             /*if (characterMovementEvent.isPowerUp()) {
                 // todo apply power up
             }*/
-
-            if (characterMovementEvent.isLoadNeeded()) {
-                loadSectionGraphics();
-            }
 
             dx = characterMovementEvent.getDx();
             dy = characterMovementEvent.getDy();
@@ -179,6 +176,7 @@ public class GameView extends Pane {
                 for (Tile tile : scene.getComponents()){
                     if (tile instanceof Enemy) {
                         ImageView enemyImg = gTiles[tile.getX()][tile.getY()];
+                        if (enemyImg == null) continue;
                         enemyImg.setX(enemyImg.getX() + ((Enemy) tile).getxVelocity());
                         enemyImg.setY(enemyImg.getY() + ((Enemy) tile).getyVelocity());
                         ((Enemy) tile).setxCurrent((int) (enemyImg.getX() / Tile.TILE_SIZE));
@@ -187,8 +185,25 @@ public class GameView extends Pane {
                     }
                 }
             }
+
+            if (characterMovementEvent.isLoadNeeded()) {
+                loadSectionGraphics();
+            }
         }
     };
+
+    public void finishGame() {
+        for (StringListener listener: listeners) {
+            listener.listen("pause");
+        }
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Game Finished");
+        alert.setContentText("Score: " + Current.user.getCurrentGame().getScore() + '\n' + "Coins: " + Current.user.getCurrentGame().getCoins());
+        alert.show();
+        for (StringListener listener: listeners) {
+            listener.listen("MainMenu");
+        }
+    }
 
     private void removeGTile(Tile tile) {
         this.getChildren().remove(gTiles[tile.getX()][tile.getY()]);

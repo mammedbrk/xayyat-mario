@@ -4,7 +4,7 @@ import com.mammedbrk.model.gamecomponent.Tile;
 
 public class CharacterMovementEvent {
     private double dx, dy;
-    private boolean canJump, loadNeeded, powerUp, win;
+    private boolean canJump, loadNeeded, powerUp, finished;
     private Tile removedTile;
 
     public CharacterMovementEvent() {
@@ -50,12 +50,12 @@ public class CharacterMovementEvent {
         this.powerUp = powerUp;
     }
 
-    public boolean isWin() {
-        return win;
+    public boolean isFinished() {
+        return finished;
     }
 
-    public void setWin(boolean win) {
-        this.win = win;
+    public void setFinished(boolean finished) {
+        this.finished = finished;
     }
 
     public Tile getRemovedTile() {

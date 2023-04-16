@@ -1,12 +1,14 @@
 package com.mammedbrk.view;
 
 import com.mammedbrk.controller.GameController;
+import com.mammedbrk.current.Current;
 import com.mammedbrk.listener.*;
 import com.mammedbrk.view.auth.LoginView;
 import com.mammedbrk.view.auth.RegistrationView;
 import com.mammedbrk.view.game.GameHeaderView;
 import com.mammedbrk.view.game.GameView;
 import com.mammedbrk.view.game.NewGameSetupView;
+import com.mammedbrk.view.game.PreGameSetupView;
 import com.mammedbrk.view.menu.MainMenuHeaderView;
 import com.mammedbrk.view.menu.MainMenuView;
 import com.mammedbrk.view.profile.ProfileView;
@@ -27,6 +29,7 @@ public class MainView extends BorderPane {
     private FXMLLoader shopViewLoader;
     private FXMLLoader profileViewLoader;
     private FXMLLoader newGameSetupLoader;
+    private FXMLLoader preGameSetupLoader;
     private FXMLLoader gameHeaderViewLoader;
 
     public MainView() throws IOException {
@@ -137,7 +140,11 @@ public class MainView extends BorderPane {
                     }
                 }
                 if (s.equals("PreGameSetupView")) {
-                    // todo
+                    try {
+                        preGameSetupView();
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
                 }
             }
         });
@@ -258,7 +265,6 @@ public class MainView extends BorderPane {
         GameView gameView = new GameView(new SectionLoadListener(controller), new CharacterCollisionListener(controller));
         this.setCenter(gameView);
 
-        // todo add listeners
         gameView.addListener(new StringListener() {
             @Override
             public void listen(String s) {
@@ -268,6 +274,10 @@ public class MainView extends BorderPane {
                     } catch (IOException e) {
                         throw new RuntimeException(e);
                     }
+                }
+                if (s.equals("pause")) {
+                    gameHeaderView.stopTimer();
+                    gameView.stopTimer();
                 }
             }
         });
@@ -285,6 +295,47 @@ public class MainView extends BorderPane {
                 if (s.equals("MainMenu")) {
                     try {
                         mainMenu();
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+                if (s.equals("time")) {
+                    gameHeaderView.stopTimer();
+                    gameView.stopTimer();
+                    controller.readFirstSection();
+                    Current.user.getCurrentGame().reduceHeart();
+                    gameHeaderView.startTimer();
+                    if (Current.user.getCurrentGame().getHearts() == 0) {
+                        controller.finishGame();
+                        gameView.finishGame();
+                    }
+                    else {
+                        gameView.loadSectionGraphics();
+                    }
+                }
+            }
+        });
+    }
+
+    private void preGameSetupView() throws IOException {
+        resetPane();
+        preGameSetupLoader = new FXMLLoader(getClass().getResource(dir + "game/pre-game-setup-view.fxml"));
+        this.setCenter(preGameSetupLoader.load());
+        PreGameSetupView preGameSetupView = preGameSetupLoader.getController();
+
+        preGameSetupView.addListener(new StringListener() {
+            @Override
+            public void listen(String s) {
+                if (s.equals("MainMenu")) {
+                    try {
+                        mainMenu();
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+                if (s.equals("StartGame")) {
+                    try {
+                        startGame();
                     } catch (IOException e) {
                         throw new RuntimeException(e);
                     }

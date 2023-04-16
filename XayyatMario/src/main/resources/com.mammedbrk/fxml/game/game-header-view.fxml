@@ -42,7 +42,7 @@
       <FlowPane alignment="CENTER" prefHeight="80.0" GridPane.columnIndex="1">
          <children>
             <Label text="Score " />
-            <Label fx:id="scoreLabel" text="0" />
+            <Label fx:id="scoreLabel" text="" />
          </children>
       </FlowPane>
       <FlowPane alignment="CENTER" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2">

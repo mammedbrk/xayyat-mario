@@ -44,6 +44,11 @@ public class GameHeaderView implements Initializable {
         timeline.getKeyFrames().add(new KeyFrame(Duration.seconds(1), new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
+                if (Current.user.getCurrentGame().getCurrentLevel().getCurrentSection().getTime() == 0) {
+                    for (StringListener listener: listeners) {
+                        listener.listen("time");
+                    }
+                }
                 timeLabel.setText(timeLeft());
                 if (Current.user.getCurrentGame().getCurrentLevel().getCurrentSection().getTime() > 0)
                     Current.user.getCurrentGame().getCurrentLevel().getCurrentSection().reduceTime();
@@ -54,8 +59,8 @@ public class GameHeaderView implements Initializable {
         animationTimer = new AnimationTimer() {
             @Override
             public void handle(long now) {
-                coinLabel.setText(String.valueOf(Current.user.getCurrentGame().getCoins() + Current.user.getCurrentGame().getCoins() + Current.user.getCurrentGame().getCurrentLevel().getCurrentSection().getCoins()));
-                scoreLabel.setText(String.valueOf(Current.user.getCurrentGame().getScore() + Current.user.getCurrentGame().getScore() + Current.user.getCurrentGame().getCurrentLevel().getCurrentSection().getScore()));
+                coinLabel.setText(String.valueOf(Current.user.getCurrentGame().getCoins() + Current.user.getCurrentGame().getCurrentLevel().getCoins() + Current.user.getCurrentGame().getCurrentLevel().getCurrentSection().getCoins()));
+                scoreLabel.setText(String.valueOf(Current.user.getCurrentGame().getScore() + Current.user.getCurrentGame().getCurrentLevel().getScore() + Current.user.getCurrentGame().getCurrentLevel().getCurrentSection().getScore()));
                 switch (Current.user.getCurrentGame().getHearts()) {
                     case 3: heartLabel.setText("<3 <3 <3"); break;
                     case 2: heartLabel.setText("<3 <3"); break;

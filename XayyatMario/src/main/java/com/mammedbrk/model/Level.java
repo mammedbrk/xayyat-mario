@@ -16,7 +16,7 @@ public class Level {
     }
 
     public void addScore(int value) {
-        coins += value;
+        score += value;
     }
 
     // Getters and setters

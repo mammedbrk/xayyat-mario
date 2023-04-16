@@ -5,6 +5,7 @@ import com.mammedbrk.access.UserAccess;
 import com.mammedbrk.current.Current;
 import com.mammedbrk.event.CharacterCollisionEvent;
 import com.mammedbrk.event.CharacterMovementEvent;
+import com.mammedbrk.listener.StringListener;
 import com.mammedbrk.model.*;
 import com.mammedbrk.model.gamecomponent.Coin;
 import com.mammedbrk.model.gamecomponent.Tile;
@@ -80,8 +81,8 @@ public class GameController {
         double yFront = characterCollisionEvent.getyFront();
         double yBack = characterCollisionEvent.getyBack();
 
-        game.getCurrentLevel().getCurrentSection().setX((int) ((xBack + xFront) / 2 / Tile.TILE_SIZE));
-        game.getCurrentLevel().getCurrentSection().setY((int) ((yBack + yFront) / 2 / Tile.TILE_SIZE));
+        game.getCurrentLevel().getCurrentSection().setX((int) (xBack / Tile.TILE_SIZE));
+        game.getCurrentLevel().getCurrentSection().setY((int) (yBack / Tile.TILE_SIZE));
 
         characterMovementEvent = new CharacterMovementEvent();
         characterMovementEvent.setDx(dx);
@@ -135,9 +136,11 @@ public class GameController {
         // Check if Coin:
         if (occupied((xBack + xFront) / 2 + characterMovementEvent.getDx(), (yBack + yFront) / 2 + characterMovementEvent.getDy()) instanceof Coin) {
             game.getCurrentLevel().getCurrentSection().addCoin(((Coin) occupied((xBack + xFront) / 2 + characterMovementEvent.getDx(), (yBack + yFront) / 2 + characterMovementEvent.getDy())).getValue());
-            System.out.println(game.getCurrentLevel().getCurrentSection().getCoins());
             characterMovementEvent.setRemovedTile(occupied((xBack + xFront) / 2 + characterMovementEvent.getDx(), (yBack + yFront) / 2 + characterMovementEvent.getDy()));
+            game.getCurrentLevel().getCurrentSection().getScenes().get((int) ((xBack / Tile.TILE_SIZE) / WIDTH)).getComponents().remove(occupied((xBack + xFront) / 2 + characterMovementEvent.getDx(), (yBack + yFront) / 2 + characterMovementEvent.getDy()));
             removeTile(occupied((xBack + xFront) / 2 + characterMovementEvent.getDx(), (yBack + yFront) / 2 + characterMovementEvent.getDy()));
+
+            game.getCurrentLevel().getCurrentSection().addScore(10);
         }
 
         // Lose with enemies
@@ -145,6 +148,9 @@ public class GameController {
             if ((int) (xFront / Tile.TILE_SIZE) == enemy.getxCurrent() && (int) ((yBack + yFront) / 2 / Tile.TILE_SIZE) == enemy.getyCurrent()) {
                 readFirstSection();
                 game.reduceHeart();
+                if (game.getHearts() == 0) {
+                    finishGame();
+                }
                 characterMovementEvent.setLoadNeeded(true);
             }
         }
@@ -153,6 +159,9 @@ public class GameController {
         if (yFront > HEIGHT - 100) {
             readFirstSection();
             game.reduceHeart();
+            if (game.getHearts() == 0) {
+                finishGame();
+            }
             characterMovementEvent.setDy(0);
             characterMovementEvent.setLoadNeeded(true);
         }
@@ -168,14 +177,26 @@ public class GameController {
         tiles[tile.getX()][tile.getY()] = null;
     }
 
+    public void finishGame() {
+        characterMovementEvent.setFinished(true);
+        Current.user.addCoin(game.getCurrentLevel().getCoins());
+        Current.user.maximizeScore(game.getScore());
+        Current.user.removeGame(game);
+        new UserAccess().add(Current.user);
+    }
+
     private void readNextSection() {
         game.getCurrentLevel().addCoin(game.getCurrentLevel().getCurrentSection().getCoins());
-        game.getCurrentLevel().addScore(game.getCurrentLevel().getCurrentSection().getCoins());
+        game.getCurrentLevel().addScore(game.getCurrentLevel().getCurrentSection().getScore());
+        System.out.println(game.getCurrentLevel().getCoins());
+        game.getCurrentLevel().addScore(game.getHearts() * 20);
+        game.getCurrentLevel().addScore(game.getCurrentLevel().getCurrentSection().getTime());
 
         int sectionNo = game.getCurrentLevel().getCurrentSection().getNo();
         int levelNo = game.getCurrentLevel().getNo();
 
-        Section section = new Section(120);
+        Section section = new Section();
+        section.setTime(120);
         if (access.exists(levelNo, ++sectionNo)) {
             section.setNo(sectionNo);
             section.setScenes(new ArrayList<>());
@@ -210,17 +231,13 @@ public class GameController {
             return;
         }
 
-        Current.user.addCoin(game.getCurrentLevel().getCoins());
-        Current.user.maximizeScore(game.getScore());
-        Current.user.removeGame(game);
-        Current.user.setCurrentGame(null);
-        new UserAccess().add(Current.user);
-        characterMovementEvent.setWin(true);
+        finishGame();
     }
 
-    private void readFirstSection() {
+    public void readFirstSection() {
         Section section = new Section(Current.user.getCurrentGame().getCurrentLevel().getCurrentSection().getTime());
         section.setNo(1);
+        section.setTime(120);
         section.setScenes(new ArrayList<>());
         for (int sceneNo = 1; ; sceneNo++) {
             Scene scene = new SceneAccess().get(game.getCurrentLevel().getNo(), 1, sceneNo);
@@ -231,6 +248,7 @@ public class GameController {
         section.setY(5);
         game.getCurrentLevel().setCurrentSection(section);
         game.getCurrentLevel().setCoins(0);
+        game.getCurrentLevel().setScore(0);
     }
 
     // Getters and setters
