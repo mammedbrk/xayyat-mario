@@ -1,7 +1,7 @@
 package com.mammedbrk.view.game;
 
 import com.mammedbrk.current.Current;
-import com.mammedbrk.listener.SaveGameListener;
+import com.mammedbrk.listener.SaveNewGameListener;
 import com.mammedbrk.listener.StringListener;
 import com.mammedbrk.model.Game;
 import javafx.event.ActionEvent;
@@ -24,7 +24,7 @@ public class NewGameSetupView implements Initializable {
     @FXML
     private Button gameBtn3;
 
-    private SaveGameListener saveGameListener = new SaveGameListener();
+    private SaveNewGameListener saveGameListener = new SaveNewGameListener();
     private List<StringListener> listeners = new LinkedList<>();
 
     public void addListener(StringListener listener) {
@@ -47,8 +47,8 @@ public class NewGameSetupView implements Initializable {
     private String buttonText(Game game) {
         return "L" + game.getCurrentLevel().getNo() +
                 ", S" + game.getCurrentLevel().getCurrentSection().getNo() +
-                " | score: " + game.getScore() +
-                " | coins: " + game.getCoins();
+                " | score: " + (game.getScore() + game.getCurrentLevel().getScore() + game.getCurrentLevel().getCurrentSection().getScore()) +
+                " | coins: " + (game.getCoins() + game.getCurrentLevel().getCoins() + game.getCurrentLevel().getCurrentSection().getCoins());
     }
 
     public void gameBtn1Clicked(ActionEvent event) {
@@ -118,11 +118,11 @@ public class NewGameSetupView implements Initializable {
         this.listeners = listeners;
     }
 
-    public SaveGameListener getSaveGameListener() {
+    public SaveNewGameListener getSaveGameListener() {
         return saveGameListener;
     }
 
-    public void setSaveGameListener(SaveGameListener saveGameListener) {
+    public void setSaveGameListener(SaveNewGameListener saveGameListener) {
         this.saveGameListener = saveGameListener;
     }
 }

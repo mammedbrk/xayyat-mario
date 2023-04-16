@@ -54,11 +54,11 @@ public class GameView extends Pane {
                     newValue.setOnKeyPressed(new EventHandler<KeyEvent>() {
                         @Override
                         public void handle(KeyEvent event) {
-                            if (event.getCode() == KeyCode.RIGHT)
+                            if (event.getCode() == KeyCode.SEMICOLON)
                                 right = true;
-                            if (event.getCode() == KeyCode.LEFT)
+                            if (event.getCode() == KeyCode.K)
                                 left = true;
-                            if (event.getCode() == KeyCode.UP && canJump) {
+                            if (event.getCode() == KeyCode.O && canJump) {
                                 up = true;
                             }
                         }
@@ -67,9 +67,9 @@ public class GameView extends Pane {
                     newValue.setOnKeyReleased(new EventHandler<KeyEvent>() {
                         @Override
                         public void handle(KeyEvent event) {
-                            if (event.getCode() == KeyCode.RIGHT)
+                            if (event.getCode() == KeyCode.SEMICOLON)
                                 right = false;
-                            if (event.getCode() == KeyCode.LEFT)
+                            if (event.getCode() == KeyCode.K)
                                 left = false;
                         }
                     });
@@ -169,7 +169,7 @@ public class GameView extends Pane {
             character.setX(character.getX() + dx);
             character.setY(character.getY() + dy);
 
-            if (dx > 0 && character.getBoundsInParent().getCenterX() > WIDTH / 2) {
+            if (dx > 0 && character.getBoundsInParent().getCenterX() > WIDTH / 2 && character.getX() < Current.user.getCurrentGame().getCurrentLevel().getCurrentSection().getScenes().size() * WIDTH - WIDTH/2) {
                 for (Node node : GameView.this.getChildren()) {
                     node.relocate(node.getBoundsInParent().getMinX() - dx, node.getBoundsInParent().getMinY());
                 }
@@ -197,5 +197,14 @@ public class GameView extends Pane {
 
     public void addListener(StringListener listener) {
         listeners.add(listener);
+    }
+
+    public void stopTimer() {
+        up = left = right = false;
+        timer.stop();
+    }
+
+    public void startTimer() {
+        timer.start();
     }
 }

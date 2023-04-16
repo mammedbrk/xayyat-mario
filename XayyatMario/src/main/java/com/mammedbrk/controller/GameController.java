@@ -80,6 +80,9 @@ public class GameController {
         double yFront = characterCollisionEvent.getyFront();
         double yBack = characterCollisionEvent.getyBack();
 
+        game.getCurrentLevel().getCurrentSection().setX((int) ((xBack + xFront) / 2 / Tile.TILE_SIZE));
+        game.getCurrentLevel().getCurrentSection().setY((int) ((yBack + yFront) / 2 / Tile.TILE_SIZE));
+
         characterMovementEvent = new CharacterMovementEvent();
         characterMovementEvent.setDx(dx);
         characterMovementEvent.setDy(dy);
@@ -121,9 +124,11 @@ public class GameController {
             // Check if CoinBlock:
             if (occupied(xFront, yFront + dy) instanceof CoinBlock) {
                 game.getCurrentLevel().getCurrentSection().addCoin(((CoinBlock) occupied(xFront, yFront + dy)).getValue());
+                ((CoinBlock) occupied(xFront, yFront + dy)).setValue(0);
             }
             else if (occupied(xBack, yFront + dy) instanceof CoinBlock) {
                 game.getCurrentLevel().getCurrentSection().addCoin(((CoinBlock) occupied(xBack, yFront + dy)).getValue());
+                ((CoinBlock) occupied(xBack, yFront + dy)).setValue(0);
             }
         }
 
@@ -214,7 +219,7 @@ public class GameController {
     }
 
     private void readFirstSection() {
-        Section section = new Section(120);
+        Section section = new Section(Current.user.getCurrentGame().getCurrentLevel().getCurrentSection().getTime());
         section.setNo(1);
         section.setScenes(new ArrayList<>());
         for (int sceneNo = 1; ; sceneNo++) {
@@ -225,6 +230,7 @@ public class GameController {
         section.setX(2);
         section.setY(5);
         game.getCurrentLevel().setCurrentSection(section);
+        game.getCurrentLevel().setCoins(0);
     }
 
     // Getters and setters

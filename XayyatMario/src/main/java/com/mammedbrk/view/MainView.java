@@ -4,6 +4,7 @@ import com.mammedbrk.controller.GameController;
 import com.mammedbrk.listener.*;
 import com.mammedbrk.view.auth.LoginView;
 import com.mammedbrk.view.auth.RegistrationView;
+import com.mammedbrk.view.game.GameHeaderView;
 import com.mammedbrk.view.game.GameView;
 import com.mammedbrk.view.game.NewGameSetupView;
 import com.mammedbrk.view.menu.MainMenuHeaderView;
@@ -26,6 +27,7 @@ public class MainView extends BorderPane {
     private FXMLLoader shopViewLoader;
     private FXMLLoader profileViewLoader;
     private FXMLLoader newGameSetupLoader;
+    private FXMLLoader gameHeaderViewLoader;
 
     public MainView() throws IOException {
         loginView();
@@ -236,19 +238,50 @@ public class MainView extends BorderPane {
                     }
                 }
                 if (s.equals("StartGame")) {
-                    startGame();
+                    try {
+                        startGame();
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
                 }
             }
         });
     }
 
-    private void startGame() {
+    private void startGame() throws IOException {
+        resetPane();
+        gameHeaderViewLoader = new FXMLLoader(getClass().getResource(dir + "game/game-header-view.fxml"));
+        this.setTop(gameHeaderViewLoader.load());
+        GameHeaderView gameHeaderView = gameHeaderViewLoader.getController();
+
         GameController controller = new GameController();
         GameView gameView = new GameView(new SectionLoadListener(controller), new CharacterCollisionListener(controller));
         this.setCenter(gameView);
+
+        // todo add listeners
         gameView.addListener(new StringListener() {
             @Override
             public void listen(String s) {
+                if (s.equals("MainMenu")) {
+                    try {
+                        mainMenu();
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+            }
+        });
+        gameHeaderView.addListener(new StringListener() {
+            @Override
+            public void listen(String s) {
+                if (s.equals("pause")) {
+                    gameHeaderView.stopTimer();
+                    gameView.stopTimer();
+                }
+                if (s.equals("resume")) {
+                    gameHeaderView.startTimer();
+                    gameView.startTimer();
+                }
                 if (s.equals("MainMenu")) {
                     try {
                         mainMenu();
