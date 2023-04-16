@@ -109,6 +109,12 @@ public class GameView extends Pane {
         character.setX(Current.user.getCurrentGame().getCurrentLevel().getCurrentSection().getX() * Tile.TILE_SIZE);
         character.setY(Current.user.getCurrentGame().getCurrentLevel().getCurrentSection().getY() * Tile.TILE_SIZE);
         this.getChildren().add(character);
+
+        if (character.getX() > WIDTH/2) {
+            for (Node node : GameView.this.getChildren()) {
+                node.relocate(node.getBoundsInParent().getMinX() - ((Current.user.getCurrentGame().getCurrentLevel().getCurrentSection().getX() - WIDTH / 2 / Tile.TILE_SIZE) * Tile.TILE_SIZE), node.getBoundsInParent().getMinY());
+            }
+        }
         timer.start();
     }
 

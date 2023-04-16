@@ -5,7 +5,6 @@ import com.mammedbrk.access.UserAccess;
 import com.mammedbrk.current.Current;
 import com.mammedbrk.event.CharacterCollisionEvent;
 import com.mammedbrk.event.CharacterMovementEvent;
-import com.mammedbrk.listener.StringListener;
 import com.mammedbrk.model.*;
 import com.mammedbrk.model.gamecomponent.Coin;
 import com.mammedbrk.model.gamecomponent.Tile;
@@ -188,7 +187,6 @@ public class GameController {
     private void readNextSection() {
         game.getCurrentLevel().addCoin(game.getCurrentLevel().getCurrentSection().getCoins());
         game.getCurrentLevel().addScore(game.getCurrentLevel().getCurrentSection().getScore());
-        System.out.println(game.getCurrentLevel().getCoins());
         game.getCurrentLevel().addScore(game.getHearts() * 20);
         game.getCurrentLevel().addScore(game.getCurrentLevel().getCurrentSection().getTime());
 
