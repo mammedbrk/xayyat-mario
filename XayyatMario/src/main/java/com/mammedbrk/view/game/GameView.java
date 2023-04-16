@@ -5,6 +5,7 @@ import com.mammedbrk.event.CharacterCollisionEvent;
 import com.mammedbrk.event.CharacterMovementEvent;
 import com.mammedbrk.listener.CharacterCollisionListener;
 import com.mammedbrk.listener.SectionLoadListener;
+import com.mammedbrk.listener.StringListener;
 import com.mammedbrk.model.Scene;
 import com.mammedbrk.model.gamecomponent.Tile;
 import com.mammedbrk.model.gamecomponent.enemy.Enemy;
@@ -21,6 +22,7 @@ import javafx.scene.layout.Pane;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.util.LinkedList;
 import java.util.List;
 
 public class GameView extends Pane {
@@ -35,6 +37,8 @@ public class GameView extends Pane {
     private boolean left, right, up, canJump;
     private final SectionLoadListener sectionLoadListener;
     private final CharacterCollisionListener characterCollisionListener;
+    private final List<StringListener> listeners = new LinkedList<>();
+
 
     public GameView(SectionLoadListener sectionLoadListener, CharacterCollisionListener characterCollisionListener) {
         this.sectionLoadListener = sectionLoadListener;
@@ -137,6 +141,14 @@ public class GameView extends Pane {
                     xFront, xBack,
                     yFront, yBack));
 
+            if (characterMovementEvent.isWin()) {
+                timer.stop();
+                for (StringListener listener: listeners) {
+                    listener.listen("MainMenu");
+                }
+                return;
+            }
+
             canJump = characterMovementEvent.isCanJump();
 
             if (characterMovementEvent.getRemovedTile() != null) {
@@ -147,8 +159,7 @@ public class GameView extends Pane {
                 // todo apply power up
             }*/
 
-            if (characterMovementEvent.isKilled()) {
-                System.out.println("you lose"); // todo
+            if (characterMovementEvent.isLoadNeeded()) {
                 loadSectionGraphics();
             }
 
@@ -182,5 +193,9 @@ public class GameView extends Pane {
     private void removeGTile(Tile tile) {
         this.getChildren().remove(gTiles[tile.getX()][tile.getY()]);
         gTiles[tile.getX()][tile.getY()] = null;
+    }
+
+    public void addListener(StringListener listener) {
+        listeners.add(listener);
     }
 }

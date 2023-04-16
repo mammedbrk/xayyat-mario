@@ -38,4 +38,9 @@ public class SceneAccess {
         }
         return scene;
     }
+
+    public boolean exists(int levelNo, int sectionNo) {
+        File file = new File(directory + "/" + levelNo + "/" + sectionNo);
+        return file.exists();
+    }
 }

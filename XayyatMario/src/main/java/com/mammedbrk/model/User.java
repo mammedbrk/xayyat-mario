@@ -42,12 +42,20 @@ public class User {
         games.add(game);
     }
 
-    public void removeGame(int index) {
-        games.remove(index);
+    public void removeGame(Game game) {
+        for (int i = 0; i < games.size(); i++) {
+            if (game.equals(games.get(i))) {
+                putGame(i, new Game());
+            }
+        }
     }
 
     public void addCharacter(Character character) {
         characters.add(character);
+    }
+
+    public void maximizeScore(int value) {
+        maxScore = Math.max(maxScore, value);
     }
 
     // Getters and setters

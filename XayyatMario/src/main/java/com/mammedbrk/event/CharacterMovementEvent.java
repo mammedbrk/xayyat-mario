@@ -4,18 +4,10 @@ import com.mammedbrk.model.gamecomponent.Tile;
 
 public class CharacterMovementEvent {
     private double dx, dy;
-    private boolean canJump, killed, powerUp;
+    private boolean canJump, loadNeeded, powerUp, win;
     private Tile removedTile;
 
     public CharacterMovementEvent() {
-    }
-
-    public CharacterMovementEvent(double dx, double dy, boolean canJump, boolean killed, boolean powerUp) {
-        this.dx = dx;
-        this.dy = dy;
-        this.canJump = canJump;
-        this.killed = killed;
-        this.powerUp = powerUp;
     }
 
     public double getDx() {
@@ -42,12 +34,12 @@ public class CharacterMovementEvent {
         this.canJump = canJump;
     }
 
-    public boolean isKilled() {
-        return killed;
+    public boolean isLoadNeeded() {
+        return loadNeeded;
     }
 
-    public void setKilled(boolean killed) {
-        this.killed = killed;
+    public void setLoadNeeded(boolean loadNeeded) {
+        this.loadNeeded = loadNeeded;
     }
 
     public boolean isPowerUp() {
@@ -56,6 +48,14 @@ public class CharacterMovementEvent {
 
     public void setPowerUp(boolean powerUp) {
         this.powerUp = powerUp;
+    }
+
+    public boolean isWin() {
+        return win;
+    }
+
+    public void setWin(boolean win) {
+        this.win = win;
     }
 
     public Tile getRemovedTile() {

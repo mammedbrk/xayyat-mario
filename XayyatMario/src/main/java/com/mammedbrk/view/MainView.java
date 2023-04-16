@@ -246,6 +246,18 @@ public class MainView extends BorderPane {
         GameController controller = new GameController();
         GameView gameView = new GameView(new SectionLoadListener(controller), new CharacterCollisionListener(controller));
         this.setCenter(gameView);
+        gameView.addListener(new StringListener() {
+            @Override
+            public void listen(String s) {
+                if (s.equals("MainMenu")) {
+                    try {
+                        mainMenu();
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+            }
+        });
     }
 
     private void resetPane() {
