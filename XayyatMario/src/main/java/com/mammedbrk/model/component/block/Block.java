@@ -12,17 +12,12 @@ import java.nio.channels.Pipe;
         property = "type"
 )
 @JsonSubTypes({
-        @JsonSubTypes.Type(value = OrdinaryBlock.class, name = "ordinaryBlock"),
-        @JsonSubTypes.Type(value = EarthBlock.class, name = "earthBlock"),
-        @JsonSubTypes.Type(value = CoinBlock.class, name = "coinBlock"),
-        @JsonSubTypes.Type(value = PowerUpBlock.class, name = "powerUpBlock"),
-        @JsonSubTypes.Type(value = Pipe.class, name = "pipe"),
 })
 public abstract class Block extends Component {
     public Block() {
     }
 
-    public Block(int x, int y, String imageAddress) {
-        super(x, y, imageAddress);
+    public Block(int x, int y) {
+        super(x, y);
     }
 }
