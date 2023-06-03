@@ -1,4 +1,4 @@
-package com.mammedbrk.model.gamecomponent.enemy;
+package com.mammedbrk.model.component.enemy;
 
 // Grave is a fixed enemy like plant in SuperMario
 public class Grave extends Enemy {

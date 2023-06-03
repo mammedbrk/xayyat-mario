@@ -1,4 +1,4 @@
-package com.mammedbrk.model.gamecomponent.block;
+package com.mammedbrk.model.component.block;
 
 public class CoinBlock extends Block {
     private int value;

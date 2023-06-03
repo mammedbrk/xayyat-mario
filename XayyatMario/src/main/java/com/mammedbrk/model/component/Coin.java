@@ -1,6 +1,6 @@
-package com.mammedbrk.model.gamecomponent;
+package com.mammedbrk.model.component;
 
-public class Coin extends Tile {
+public class Coin extends Component {
     private int value;
 
     public Coin() {

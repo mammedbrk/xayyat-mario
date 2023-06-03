@@ -1,8 +1,8 @@
-package com.mammedbrk.model.gamecomponent.enemy;
+package com.mammedbrk.model.component.enemy;
 
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import com.mammedbrk.model.gamecomponent.Tile;
+import com.mammedbrk.model.component.Component;
 
 @JsonTypeInfo(
         use = JsonTypeInfo.Id.NAME,
@@ -12,7 +12,7 @@ import com.mammedbrk.model.gamecomponent.Tile;
 @JsonSubTypes({
         @JsonSubTypes.Type(value = Grave.class, name = "grave")
 })
-public abstract class Enemy extends Tile {
+public abstract class Enemy extends Component {
     protected int xCurrent, yCurrent;
     protected double xVelocity, yVelocity;
 
