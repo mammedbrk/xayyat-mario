@@ -7,6 +7,13 @@ public class PiranhaTrapPipe extends Pipe implements Piranha {
     private boolean shown;
     private int time;
 
+    public PiranhaTrapPipe() {
+    }
+
+    public PiranhaTrapPipe(int x, int y) {
+        super(x, y);
+        alive = true;
+    }
 
     @Override
     public boolean isAlive() {

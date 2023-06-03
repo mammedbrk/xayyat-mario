@@ -8,7 +8,8 @@ public abstract class TelePipe extends Pipe {
     public TelePipe() {
     }
 
-    public TelePipe(Section section) {
+    public TelePipe(int x, int y, Section section) {
+        super(x, y);
         this.section = section;
     }
 
