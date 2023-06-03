@@ -1,10 +1,25 @@
 package com.mammedbrk.model.component.block;
 
-public class PowerUpBlock extends Block {
-    public PowerUpBlock() {
+import com.mammedbrk.model.component.item.Item;
+
+public class QuestionBlock extends Block {
+    private Item item;
+
+    public QuestionBlock() {
     }
 
-    public PowerUpBlock(int x, int y) {
-        super(x, y, "src/main/resources/com.mammedbrk/image/game/power-up.png");
+    public QuestionBlock(int x, int y, Item item) {
+        super(x, y);
+        this.item = item;
+    }
+
+    // Getters and setters
+
+    public Item getItem() {
+        return item;
+    }
+
+    public void setItem(Item item) {
+        this.item = item;
     }
 }
