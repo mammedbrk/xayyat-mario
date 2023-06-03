@@ -6,7 +6,7 @@ import com.mammedbrk.model.component.enemy.Piranha;
 
 public class PiranhaTrapPipe extends Pipe implements Piranha {
     @JsonIgnore
-    private int showTime = Scene.x();
+    private int showTime;
     @JsonIgnore
     private int hideTime;
     private boolean alive;
