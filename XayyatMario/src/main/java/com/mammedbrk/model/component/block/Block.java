@@ -12,6 +12,11 @@ import java.nio.channels.Pipe;
         property = "type"
 )
 @JsonSubTypes({
+        @JsonSubTypes.Type(value = SimpleBlock.class, name = "SIMPLE"),
+        @JsonSubTypes.Type(value = CoinBlock.class, name = "COIN"),
+        @JsonSubTypes.Type(value = CoinsBlock.class, name = "COINS"),
+        @JsonSubTypes.Type(value = EmptyBlock.class, name = "EMPTY"),
+        @JsonSubTypes.Type(value = QuestionBlock.class, name = "QUESTION")
 })
 public abstract class Block extends Component {
     public Block() {
