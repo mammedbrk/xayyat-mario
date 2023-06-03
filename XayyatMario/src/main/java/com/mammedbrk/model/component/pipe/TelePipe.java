@@ -2,7 +2,7 @@ package com.mammedbrk.model.component.pipe;
 
 import com.mammedbrk.model.Section;
 
-public class TelePipe extends Pipe {
+public abstract class TelePipe extends Pipe {
     protected Section section;
 
     public TelePipe() {
