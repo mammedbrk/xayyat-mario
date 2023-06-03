@@ -7,6 +7,8 @@ public class TelePiranhaPipe extends TelePipe implements Piranha {
     private boolean alive;
     private boolean shown;
     private int time;
+    private int showTime;
+    private int hideTime;
 
     public TelePiranhaPipe() {
     }
@@ -14,6 +16,8 @@ public class TelePiranhaPipe extends TelePipe implements Piranha {
     public TelePiranhaPipe(int x, int y, Section section) {
         super(x, y, section);
         alive = true;
+        showTime = 3; // todo read from config file
+        hideTime = 2; // todo read from config file
     }
 
     @Override
@@ -33,10 +37,10 @@ public class TelePiranhaPipe extends TelePipe implements Piranha {
 
     @Override
     public void changeVisibility() {
-        if (shown && time == 3) { // todo read from config file
+        if (shown && time == showTime) {
             shown = false;
         }
-        else if (!shown && time == 2) { // todo read from config file
+        else if (!shown && time == hideTime) {
             shown = true;
         }
     }

@@ -1,6 +1,7 @@
 package com.mammedbrk.model.component.block;
 
 public class CoinsBlock extends Block {
+    private int coinsCount;
     private int hitCount;
 
     public CoinsBlock() {
@@ -9,6 +10,7 @@ public class CoinsBlock extends Block {
 
     public CoinsBlock(int x, int y) {
         super(x, y);
+        coinsCount = 5; // todo read from config file
     }
 
     public void increaseHitCount() {
@@ -16,7 +18,7 @@ public class CoinsBlock extends Block {
     }
 
     public boolean hasCoins() {
-        return hitCount < 5; // todo read from config file
+        return hitCount < coinsCount;
     }
 
     // Getters and setters
