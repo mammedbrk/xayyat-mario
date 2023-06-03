@@ -9,9 +9,9 @@ public class Mushroom extends Item implements Movable {
     public Mushroom() {
     }
 
-    public Mushroom(int x, int y, double speed) {
+    public Mushroom(int x, int y) {
         super(x, y);
-        this.speed = speed;
+        speed = 0.5; // todo read from config
     }
 
     // Methods
@@ -21,10 +21,9 @@ public class Mushroom extends Item implements Movable {
     }
 
     @Override
-    public void move(int dx, int dy) {
-        if (time <= 3) {
-            x += dx;
-            y += dy;
+    public void move() {
+        if (time >= 3) {
+            x += speed;
         }
     }
 
