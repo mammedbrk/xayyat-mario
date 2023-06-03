@@ -1,13 +1,17 @@
 package com.mammedbrk.model.component.pipe;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.mammedbrk.model.Scene;
 import com.mammedbrk.model.component.enemy.Piranha;
 
 public class PiranhaTrapPipe extends Pipe implements Piranha {
+    @JsonIgnore
+    private int showTime = Scene.x();
+    @JsonIgnore
+    private int hideTime;
     private boolean alive;
     private boolean shown;
     private int time;
-    private int showTime;
-    private int hideTime;
 
     public PiranhaTrapPipe() {
     }
