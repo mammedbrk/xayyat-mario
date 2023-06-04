@@ -5,20 +5,31 @@ import com.mammedbrk.model.interfaces.Gravitational;
 import com.mammedbrk.model.interfaces.Hittable;
 import com.mammedbrk.model.interfaces.Movable;
 
-public class Goomba extends Enemy implements Movable, Gravitational, Hittable {
+import java.util.Random;
+
+public class Spiny extends Enemy implements Movable, Gravitational {
     private static double speed;
     private double gravity;
+    private boolean marioCheck;
+    private double velocity;
 
-    public Goomba() {
+    public Spiny() {
     }
 
-    public Goomba(int x, int y) {
+    public Spiny(int x, int y) {
         super(x, y);
     }
 
     @Override
     public void move() {
-        x = x + speed;
+        if (marioCheck) {
+            velocity = velocity + speed;
+            x = x + velocity;
+        }
+        else {
+            velocity = 0;
+            x = x + speed;
+        }
     }
 
     @Override
@@ -37,12 +48,11 @@ public class Goomba extends Enemy implements Movable, Gravitational, Hittable {
         gravity = 0;
     }
 
-    @Override
-    public void hit() {
-        die();
+    public static void setSpeed(double speed) {
+        Spiny.speed = speed;
     }
 
-    public static void setSpeed(double speed) {
-        Goomba.speed = speed;
+    public void setMarioCheck(boolean marioCheck) {
+        this.marioCheck = marioCheck;
     }
 }

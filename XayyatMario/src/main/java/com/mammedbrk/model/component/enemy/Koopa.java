@@ -5,20 +5,28 @@ import com.mammedbrk.model.interfaces.Gravitational;
 import com.mammedbrk.model.interfaces.Hittable;
 import com.mammedbrk.model.interfaces.Movable;
 
-public class Goomba extends Enemy implements Movable, Gravitational, Hittable {
+import java.util.Random;
+
+public class Koopa extends Enemy implements Movable, Gravitational, Hittable {
     private static double speed;
     private double gravity;
+    private boolean hit;
+    private long hitTime;
 
-    public Goomba() {
+    public Koopa() {
     }
 
-    public Goomba(int x, int y) {
+    public Koopa(int x, int y) {
         super(x, y);
     }
 
     @Override
     public void move() {
-        x = x + speed;
+        if (hit && System.currentTimeMillis() - hitTime >= 3000)
+            hit = false;
+        if (!hit) {
+            x = x + speed;
+        }
     }
 
     @Override
@@ -39,10 +47,21 @@ public class Goomba extends Enemy implements Movable, Gravitational, Hittable {
 
     @Override
     public void hit() {
-        die();
+        if (hit && System.currentTimeMillis() - hitTime < 3000) { // todo maybe read from config
+            die();
+            return;
+        }
+        hit = true;
+        hitTime = System.currentTimeMillis();
+        moveAfterHit();
+    }
+
+    private void moveAfterHit() {
+        boolean direction = new Random().nextBoolean();
+        x = x + (direction? 1: -1);
     }
 
     public static void setSpeed(double speed) {
-        Goomba.speed = speed;
+        Koopa.speed = speed;
     }
 }
