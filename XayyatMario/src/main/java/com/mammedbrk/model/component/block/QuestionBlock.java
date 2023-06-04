@@ -2,8 +2,9 @@ package com.mammedbrk.model.component.block;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.mammedbrk.model.component.item.ItemType;
+import com.mammedbrk.model.interfaces.Changeable;
 
-public class QuestionBlock extends Block {
+public class QuestionBlock extends Block implements Changeable<EmptyBlock> {
     @JsonIgnore
     private boolean hit;
     private ItemType item;
@@ -34,5 +35,10 @@ public class QuestionBlock extends Block {
 
     public void setHit(boolean hit) {
         this.hit = hit;
+    }
+
+    @Override
+    public EmptyBlock changedObject() {
+        return new EmptyBlock(x, y);
     }
 }
