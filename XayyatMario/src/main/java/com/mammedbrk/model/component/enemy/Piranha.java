@@ -1,10 +1,10 @@
 package com.mammedbrk.model.component.enemy;
 
-public interface Piranha {
+import com.mammedbrk.model.interfaces.Movable;
+import com.mammedbrk.model.interfaces.Timer;
+
+public interface Piranha extends Timer {
     boolean isAlive();
     void die();
     boolean isShown();
-    void changeVisibility();
-    void resetTime();
-    void increaseTime();
 }

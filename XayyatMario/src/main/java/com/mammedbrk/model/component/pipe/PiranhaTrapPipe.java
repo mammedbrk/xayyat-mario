@@ -6,9 +6,9 @@ import com.mammedbrk.model.component.enemy.Piranha;
 
 public class PiranhaTrapPipe extends Pipe implements Piranha {
     @JsonIgnore
-    private int showTime;
+    private static int showTime;
     @JsonIgnore
-    private int hideTime;
+    private static int hideTime;
     private boolean alive;
     private boolean shown;
     private int time;
@@ -19,8 +19,11 @@ public class PiranhaTrapPipe extends Pipe implements Piranha {
     public PiranhaTrapPipe(int x, int y) {
         super(x, y);
         alive = true;
-        showTime = 3; // todo read from config file
-        hideTime = 2; // todo read from config file
+    }
+
+    public PiranhaTrapPipe(int x, int y, boolean alive) {
+        super(x, y);
+        this.alive = alive;
     }
 
     @Override
@@ -39,22 +42,30 @@ public class PiranhaTrapPipe extends Pipe implements Piranha {
     }
 
     @Override
-    public void changeVisibility() {
-        if (shown && time == showTime) {
-            shown = false;
-        }
-        else if (!shown && time == hideTime) {
-            shown = true;
+    public void changeTime() {
+        if (time > 0)
+            time--;
+        else {
+            if (shown) {
+                time = hideTime;
+                shown = false;
+            }
+            else {
+                time = showTime;
+                shown = true;
+            }
         }
     }
 
-    @Override
-    public void resetTime() {
-        time = 0;
+    public static void setShowTime(int showTime) {
+        PiranhaTrapPipe.showTime = showTime;
     }
 
-    @Override
-    public void increaseTime() {
-        time++;
+    public static void setHideTime(int hideTime) {
+        PiranhaTrapPipe.hideTime = hideTime;
+    }
+
+    public void setAlive(boolean alive) {
+        this.alive = alive;
     }
 }
