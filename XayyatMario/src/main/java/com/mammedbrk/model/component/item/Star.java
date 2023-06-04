@@ -1,48 +1,63 @@
 package com.mammedbrk.model.component.item;
 
-import com.mammedbrk.model.Movable;
+import com.mammedbrk.current.Current;
+import com.mammedbrk.model.interfaces.Gravitational;
+import com.mammedbrk.model.interfaces.Movable;
+import com.mammedbrk.model.interfaces.Timer;
 
-public class Star extends Item implements Movable {
-    private double speed;
-    private int time;
+public class Star extends Item implements Movable, Gravitational, Timer {
+    private static double speed;
+    private static double jumpSpeed;
+    private double gravity;
+    private int waitTime;
+    private boolean move;
+    private boolean jump;
 
     public Star() {
     }
 
     public Star(int x, int y) {
         super(x, y);
-        speed = 0.5; // todo read from config
     }
 
-    // Methods
-
-    private void increaseTime() {
-        time++;
+    @Override
+    public void changeTime() {
+        if (waitTime < 3) // todo
+            waitTime++;
+        else move = jump = true;
     }
 
     @Override
     public void move() {
-        if (time >= 3) {
-            x += speed;
+        if (move)
+            x = x + speed;
+        if (jump) {
+            y = y + jumpSpeed; // todo may cause some bug
+            jump = false;
         }
-        // todo jump after 1s moving on ground
     }
 
-    // Getters and setters
-
-    public double getSpeed() {
-        return speed;
+    @Override
+    public void changeDirection() {
+        speed = -speed;
     }
 
-    public void setSpeed(double speed) {
-        this.speed = speed;
+    @Override
+    public void applyGravity() {
+        gravity = gravity + Current.gravity; // todo
+        y += gravity;
     }
 
-    public int getTime() {
-        return time;
+    @Override
+    public void resetGravity() {
+        gravity = 0;
     }
 
-    public void setTime(int time) {
-        this.time = time;
+    public static void setSpeed(double speed) {
+        Star.speed = speed;
+    }
+
+    public static void setJumpSpeed(double jumpSpeed) {
+        Star.jumpSpeed = jumpSpeed;
     }
 }

@@ -1,47 +1,54 @@
 package com.mammedbrk.model.component.item;
 
-import com.mammedbrk.model.Movable;
+import com.mammedbrk.current.Current;
+import com.mammedbrk.model.component.enemy.Goomba;
+import com.mammedbrk.model.interfaces.Gravitational;
+import com.mammedbrk.model.interfaces.Movable;
+import com.mammedbrk.model.interfaces.Timer;
 
-public class Mushroom extends Item implements Movable {
-    private double speed;
+public class Mushroom extends Item implements Gravitational, Movable, Timer {
+    private static double speed;
+    private double gravity;
     private int time;
+    private boolean move;
 
     public Mushroom() {
     }
 
     public Mushroom(int x, int y) {
         super(x, y);
-        speed = 0.5; // todo read from config
     }
 
-    // Methods
-
-    private void increaseTime() {
-        time++;
+    @Override
+    public void changeTime() {
+        if (time < 3) // todo
+            time++;
+        else move = true;
     }
 
     @Override
     public void move() {
-        if (time >= 3) {
-            x += speed;
-        }
+        if (move)
+            x = x + speed;
     }
 
-    // Getters and setters
-
-    public double getSpeed() {
-        return speed;
+    @Override
+    public void changeDirection() {
+        speed = -speed;
     }
 
-    public void setSpeed(double speed) {
-        this.speed = speed;
+    @Override
+    public void applyGravity() {
+        gravity = gravity + Current.gravity; // todo
+        y += gravity;
     }
 
-    public int getTime() {
-        return time;
+    @Override
+    public void resetGravity() {
+        gravity = 0;
     }
 
-    public void setTime(int time) {
-        this.time = time;
+    public static void setSpeed(double speed) {
+        Mushroom.speed = speed;
     }
 }

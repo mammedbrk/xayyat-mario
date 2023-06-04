@@ -4,14 +4,15 @@ import com.mammedbrk.current.Current;
 import com.mammedbrk.model.interfaces.Gravitational;
 import com.mammedbrk.model.interfaces.Hittable;
 import com.mammedbrk.model.interfaces.Movable;
+import com.mammedbrk.model.interfaces.Timer;
 
 import java.util.Random;
 
-public class Koopa extends Enemy implements Movable, Gravitational, Hittable {
+public class Koopa extends Enemy implements Movable, Gravitational, Hittable, Timer {
     private static double speed;
     private double gravity;
     private boolean hit;
-    private long hitTime;
+    private long time;
 
     public Koopa() {
     }
@@ -22,11 +23,8 @@ public class Koopa extends Enemy implements Movable, Gravitational, Hittable {
 
     @Override
     public void move() {
-        if (hit && System.currentTimeMillis() - hitTime >= 3000)
-            hit = false;
-        if (!hit) {
+        if (!hit)
             x = x + speed;
-        }
     }
 
     @Override
@@ -47,12 +45,12 @@ public class Koopa extends Enemy implements Movable, Gravitational, Hittable {
 
     @Override
     public void hit() {
-        if (hit && System.currentTimeMillis() - hitTime < 3000) { // todo maybe read from config
+        if (hit) {
             die();
             return;
         }
         hit = true;
-        hitTime = System.currentTimeMillis();
+        time = 0;
         moveAfterHit();
     }
 
@@ -63,5 +61,12 @@ public class Koopa extends Enemy implements Movable, Gravitational, Hittable {
 
     public static void setSpeed(double speed) {
         Koopa.speed = speed;
+    }
+
+    @Override
+    public void changeTime() {
+        if (time < 3)
+            time++;
+        else hit = false;
     }
 }
