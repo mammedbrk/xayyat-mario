@@ -15,7 +15,7 @@ public class Goomba extends Enemy implements Movable, Gravitational, Hittable {
     public Goomba() {
     }
 
-    public Goomba(int x, int y) {
+    public Goomba(double x, double y) {
         super(x, y);
     }
 

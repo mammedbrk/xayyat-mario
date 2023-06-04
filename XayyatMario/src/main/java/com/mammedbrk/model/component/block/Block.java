@@ -22,7 +22,7 @@ public abstract class Block extends Component {
     public Block() {
     }
 
-    public Block(int x, int y) {
+    public Block(double x, double y) {
         super(x, y);
     }
 }

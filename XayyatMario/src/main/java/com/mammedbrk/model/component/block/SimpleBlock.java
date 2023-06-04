@@ -9,7 +9,7 @@ public class SimpleBlock extends Block {
     public SimpleBlock() {
     }
 
-    public SimpleBlock(int x, int y) {
+    public SimpleBlock(double x, double y) {
         super(x, y);
     }
 

@@ -6,7 +6,7 @@ public class TeleSimplePipe extends TelePipe {
     public TeleSimplePipe() {
     }
 
-    public TeleSimplePipe(int x, int y, Section section) {
+    public TeleSimplePipe(double x, double y, Section section) {
         super(x, y, section);
     }
 }

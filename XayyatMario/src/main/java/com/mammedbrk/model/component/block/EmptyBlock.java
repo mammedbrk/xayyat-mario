@@ -4,7 +4,7 @@ public class EmptyBlock extends Block {
     public EmptyBlock() {
     }
 
-    public EmptyBlock(int x, int y) {
+    public EmptyBlock(double x, double y) {
         super(x, y);
     }
 }

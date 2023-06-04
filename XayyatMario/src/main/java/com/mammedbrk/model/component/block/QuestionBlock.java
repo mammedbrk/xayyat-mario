@@ -11,11 +11,11 @@ public class QuestionBlock extends Block {
     public QuestionBlock() {
     }
 
-    public QuestionBlock(int x, int y) {
+    public QuestionBlock(double x, double y) {
         super(x, y);
     }
 
-    public QuestionBlock(int x, int y, ItemType item) {
+    public QuestionBlock(double x, double y, ItemType item) {
         super(x, y);
         this.item = item;
     }

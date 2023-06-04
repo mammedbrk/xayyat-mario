@@ -19,7 +19,7 @@ public abstract class Pipe extends Component {
     public Pipe() {
     }
 
-    public Pipe(int x, int y) {
+    public Pipe(double x, double y) {
         super(x, y);
     }
 }

@@ -9,7 +9,7 @@ public class CoinBlock extends Block {
     public CoinBlock() {
     }
 
-    public CoinBlock(int x, int y) {
+    public CoinBlock(double x, double y) {
         super(x, y);
     }
 

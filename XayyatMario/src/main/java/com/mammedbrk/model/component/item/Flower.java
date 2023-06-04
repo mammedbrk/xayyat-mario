@@ -4,7 +4,7 @@ public class Flower extends Item {
     public Flower() {
     }
 
-    public Flower(int x, int y) {
+    public Flower(double x, double y) {
         super(x, y);
     }
 }

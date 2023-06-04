@@ -10,11 +10,11 @@ public class CoinsBlock extends Block {
     public CoinsBlock() {
     }
 
-    public CoinsBlock(int x, int y) {
+    public CoinsBlock(double x, double y) {
         super(x, y);
     }
 
-    public CoinsBlock(int x, int y, int hitCount) {
+    public CoinsBlock(double x, double y, int hitCount) {
         super(x, y);
         this.hitCount = hitCount;
     }

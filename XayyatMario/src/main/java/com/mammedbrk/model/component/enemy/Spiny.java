@@ -19,11 +19,11 @@ public class Spiny extends Enemy implements Movable, Gravitational {
     public Spiny() {
     }
 
-    public Spiny(int x, int y) {
+    public Spiny(double x, double y) {
         super(x, y);
     }
 
-    public Spiny(int x, int y, boolean marioCheck, double velocity) {
+    public Spiny(double x, double y, boolean marioCheck, double velocity) {
         super(x, y);
         this.marioCheck = marioCheck;
         this.velocity = velocity;

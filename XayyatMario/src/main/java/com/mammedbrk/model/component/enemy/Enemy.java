@@ -19,7 +19,7 @@ public abstract class Enemy extends Component {
     public Enemy() {
     }
 
-    public Enemy(int x, int y) {
+    public Enemy(double x, double y) {
         super(x, y);
         alive = true;
     }

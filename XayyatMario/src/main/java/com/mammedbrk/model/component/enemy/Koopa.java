@@ -20,11 +20,11 @@ public class Koopa extends Enemy implements Movable, Gravitational, Hittable, Ti
     public Koopa() {
     }
 
-    public Koopa(int x, int y) {
+    public Koopa(double x, double y) {
         super(x, y);
     }
 
-    public Koopa(int x, int y, boolean hit, long time) {
+    public Koopa(double x, double y, boolean hit, long time) {
         super(x, y);
         this.hit = hit;
         this.time = time;

@@ -1,18 +1,23 @@
 package com.mammedbrk.model;
 
-import com.mammedbrk.model.component.Component;
+import com.mammedbrk.model.component.block.Block;
+import com.mammedbrk.model.component.item.Item;
 
 import java.util.List;
 
 public class Scene {
     private int no;
-    private List<Component> components;
+    private List<Block> blocks;
+    private List<Item> items;
 
     public Scene() {
     }
 
-    public void addComponent(Component component) {
-        components.add(component);
+    public void addBlock(Block block) {
+        blocks.add(block);
+    }
+    public void addItem(Item item) {
+        items.add(item);
     }
 
     // Getters and setters
@@ -26,11 +31,19 @@ public class Scene {
         this.no = no;
     }
 
-    public List<Component> getComponents() {
-        return components;
+    public List<Block> getBlocks() {
+        return blocks;
     }
 
-    public void setComponents(List<Component> components) {
-        this.components = components;
+    public void setBlocks(List<Block> blocks) {
+        this.blocks = blocks;
+    }
+
+    public List<Item> getItems() {
+        return items;
+    }
+
+    public void setItems(List<Item> items) {
+        this.items = items;
     }
 }

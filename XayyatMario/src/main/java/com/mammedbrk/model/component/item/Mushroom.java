@@ -18,11 +18,11 @@ public class Mushroom extends Item implements Gravitational, Movable, Timer {
     public Mushroom() {
     }
 
-    public Mushroom(int x, int y) {
+    public Mushroom(double x, double y) {
         super(x, y);
     }
 
-    public Mushroom(int x, int y, int time, boolean move) {
+    public Mushroom(double x, double y, int time, boolean move) {
         super(x, y);
         this.time = time;
         this.move = move;

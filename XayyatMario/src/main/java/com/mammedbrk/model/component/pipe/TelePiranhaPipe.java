@@ -19,7 +19,7 @@ public class TelePiranhaPipe extends TelePipe implements Piranha {
     public TelePiranhaPipe() {
     }
 
-    public TelePiranhaPipe(int x, int y, Section section) {
+    public TelePiranhaPipe(double x, double y, Section section) {
         super(x, y, section);
         alive = true;
     }

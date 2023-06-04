@@ -20,11 +20,11 @@ public class Star extends Item implements Movable, Gravitational, Timer {
     public Star() {
     }
 
-    public Star(int x, int y) {
+    public Star(double x, double y) {
         super(x, y);
     }
 
-    public Star(int x, int y, int waitTime, boolean move, boolean jump) {
+    public Star(double x, double y, int waitTime, boolean move, boolean jump) {
         super(x, y);
         this.waitTime = waitTime;
         this.move = move;

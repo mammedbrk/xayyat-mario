@@ -11,7 +11,7 @@ public class Coin extends Item implements Gravitational {
     public Coin() {
     }
 
-    public Coin(int x, int y) {
+    public Coin(double x, double y) {
         super(x, y);
     }
 

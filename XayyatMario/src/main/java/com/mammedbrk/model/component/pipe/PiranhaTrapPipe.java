@@ -18,12 +18,12 @@ public class PiranhaTrapPipe extends Pipe implements Piranha {
     public PiranhaTrapPipe() {
     }
 
-    public PiranhaTrapPipe(int x, int y) {
+    public PiranhaTrapPipe(double x, double y) {
         super(x, y);
         alive = true;
     }
 
-    public PiranhaTrapPipe(int x, int y, boolean alive) {
+    public PiranhaTrapPipe(double x, double y, boolean alive) {
         super(x, y);
         this.alive = alive;
     }

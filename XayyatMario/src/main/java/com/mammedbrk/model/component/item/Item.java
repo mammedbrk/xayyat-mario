@@ -24,7 +24,7 @@ public abstract class Item extends Component {
     public Item() {
     }
 
-    public Item(int x, int y) {
+    public Item(double x, double y) {
         super(x, y);
     }
 

@@ -4,7 +4,7 @@ public class SimplePipe extends Pipe {
     public SimplePipe() {
     }
 
-    public SimplePipe(int x, int y) {
+    public SimplePipe(double x, double y) {
         super(x, y);
     }
 }
