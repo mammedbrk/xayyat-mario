@@ -1,11 +1,11 @@
 package com.mammedbrk.event;
 
-import com.mammedbrk.model.gamecomponent.Tile;
+import com.mammedbrk.model.component.Component;
 
 public class CharacterMovementEvent {
     private double dx, dy;
     private boolean canJump, loadNeeded, powerUp, finished;
-    private Tile removedTile;
+    private Component removedTile;
 
     public CharacterMovementEvent() {
     }
@@ -58,11 +58,11 @@ public class CharacterMovementEvent {
         this.finished = finished;
     }
 
-    public Tile getRemovedTile() {
+    public Component getRemovedTile() {
         return removedTile;
     }
 
-    public void setRemovedTile(Tile removedTile) {
+    public void setRemovedTile(Component removedTile) {
         this.removedTile = removedTile;
     }
 }

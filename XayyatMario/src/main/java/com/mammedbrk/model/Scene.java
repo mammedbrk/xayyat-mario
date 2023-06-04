@@ -1,19 +1,17 @@
 package com.mammedbrk.model;
 
-import com.mammedbrk.model.gamecomponent.Tile;
+import com.mammedbrk.model.component.Component;
 
 import java.util.List;
 
 public class Scene {
     private int no;
-    private List<Tile> components;
+    private List<Component> components;
 
     public Scene() {
     }
 
-    // Methods
-
-    public void addComponent(Tile component) {
+    public void addComponent(Component component) {
         components.add(component);
     }
 
@@ -28,11 +26,11 @@ public class Scene {
         this.no = no;
     }
 
-    public List<Tile> getComponents() {
+    public List<Component> getComponents() {
         return components;
     }
 
-    public void setComponents(List<Tile> components) {
+    public void setComponents(List<Component> components) {
         this.components = components;
     }
 }

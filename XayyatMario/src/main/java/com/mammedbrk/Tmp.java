@@ -1,21 +1,12 @@
 package com.mammedbrk;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
-import com.mammedbrk.access.CharacterAccess;
 import com.mammedbrk.access.SceneAccess;
-import com.mammedbrk.access.UserAccess;
-import com.mammedbrk.controller.UserController;
-import com.mammedbrk.current.Current;
 import com.mammedbrk.model.*;
-import com.mammedbrk.model.Character;
-import com.mammedbrk.model.gamecomponent.Coin;
-import com.mammedbrk.model.gamecomponent.Tile;
-import com.mammedbrk.model.gamecomponent.block.*;
-import com.mammedbrk.model.gamecomponent.enemy.Grave;
+import com.mammedbrk.model.component.Coin;
+import com.mammedbrk.model.component.Component;
+import com.mammedbrk.model.component.block.*;
+import com.mammedbrk.model.component.enemy.Grave;
 
-import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -35,7 +26,7 @@ public class Tmp {
         scene.addComponent(new Pipe(14, 9));
 
 
-        for (int i = 0; i < WIDTH / Tile.TILE_SIZE; i++) {
+        for (int i = 0; i < WIDTH / Component.TILE_SIZE; i++) {
             scene.addComponent(new EarthBlock(i, 10));
             scene.addComponent(new EarthBlock(i, 11));
 //            scene.addComponent(new EarthBlock(i, 12));

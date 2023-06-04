@@ -1,4 +1,4 @@
-package com.mammedbrk.model.gamecomponent.block;
+package com.mammedbrk.model.component.block;
 
 public class EarthBlock extends Block {
     public EarthBlock() {

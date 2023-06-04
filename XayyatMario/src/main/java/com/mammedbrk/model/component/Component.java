@@ -1,10 +1,10 @@
-package com.mammedbrk.model.gamecomponent;
+package com.mammedbrk.model.component;
 
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import com.mammedbrk.model.gamecomponent.block.Block;
-import com.mammedbrk.model.gamecomponent.block.Pipe;
-import com.mammedbrk.model.gamecomponent.enemy.Enemy;
+import com.mammedbrk.model.component.block.Block;
+import com.mammedbrk.model.component.block.Pipe;
+import com.mammedbrk.model.component.enemy.Enemy;
 
 @JsonTypeInfo(
         use = JsonTypeInfo.Id.NAME,
@@ -17,20 +17,20 @@ import com.mammedbrk.model.gamecomponent.enemy.Enemy;
         @JsonSubTypes.Type(value = Coin.class, name = "coin"),
         @JsonSubTypes.Type(value = Pipe.class, name = "pipe"),
 })
-public abstract class Tile {
+public abstract class Component {
     public static int TILE_SIZE = 60;
     protected int x, y;
     protected String imageAddress;
 
-    public Tile() {
+    public Component() {
     }
 
-    public Tile(int x, int y) {
+    public Component(int x, int y) {
         this.x = x;
         this.y = y;
     }
 
-    public Tile(int x, int y, String imageAddress) {
+    public Component(int x, int y, String imageAddress) {
         this.x = x;
         this.y = y;
         this.imageAddress = imageAddress;

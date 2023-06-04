@@ -1,8 +1,8 @@
-package com.mammedbrk.model.gamecomponent.block;
+package com.mammedbrk.model.component.block;
 
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import com.mammedbrk.model.gamecomponent.Tile;
+import com.mammedbrk.model.component.Component;
 
 import java.nio.channels.Pipe;
 
@@ -18,7 +18,7 @@ import java.nio.channels.Pipe;
         @JsonSubTypes.Type(value = PowerUpBlock.class, name = "powerUpBlock"),
         @JsonSubTypes.Type(value = Pipe.class, name = "pipe"),
 })
-public abstract class Block extends Tile {
+public abstract class Block extends Component {
     public Block() {
     }
 

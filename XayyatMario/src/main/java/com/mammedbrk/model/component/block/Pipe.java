@@ -1,4 +1,4 @@
-package com.mammedbrk.model.gamecomponent.block;
+package com.mammedbrk.model.component.block;
 
 public class Pipe extends Block {
     public Pipe() {

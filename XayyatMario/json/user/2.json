@@ -2,10 +2,10 @@
   "id" : 2,
   "username" : "a",
   "password" : "a",
-  "maxScore" : 758,
-  "coins" : 93,
+  "maxScore" : 931,
+  "coins" : 217,
   "games" : [ {
-    "hearts" : 3,
+    "hearts" : 2,
     "coins" : 0,
     "score" : 0,
     "character" : {
@@ -23,9 +23,9 @@
       "score" : 0,
       "currentSection" : {
         "no" : 1,
-        "time" : 108,
-        "score" : 70,
-        "coins" : 7,
+        "time" : 117,
+        "score" : 0,
+        "coins" : 0,
         "scenes" : [ {
           "no" : 1,
           "components" : [ {
@@ -300,6 +300,48 @@
             "imageAddress" : "src/main/resources/com.mammedbrk/image/game/block.png"
           }, {
             "type" : "coin",
+            "x" : 4,
+            "y" : 9,
+            "imageAddress" : "src/main/resources/com.mammedbrk/image/game/coin.png",
+            "value" : 1
+          }, {
+            "type" : "coin",
+            "x" : 5,
+            "y" : 8,
+            "imageAddress" : "src/main/resources/com.mammedbrk/image/game/coin.png",
+            "value" : 1
+          }, {
+            "type" : "coin",
+            "x" : 6,
+            "y" : 7,
+            "imageAddress" : "src/main/resources/com.mammedbrk/image/game/coin.png",
+            "value" : 1
+          }, {
+            "type" : "coin",
+            "x" : 7,
+            "y" : 6,
+            "imageAddress" : "src/main/resources/com.mammedbrk/image/game/coin.png",
+            "value" : 1
+          }, {
+            "type" : "coin",
+            "x" : 8,
+            "y" : 7,
+            "imageAddress" : "src/main/resources/com.mammedbrk/image/game/coin.png",
+            "value" : 1
+          }, {
+            "type" : "coin",
+            "x" : 9,
+            "y" : 8,
+            "imageAddress" : "src/main/resources/com.mammedbrk/image/game/coin.png",
+            "value" : 1
+          }, {
+            "type" : "coin",
+            "x" : 10,
+            "y" : 9,
+            "imageAddress" : "src/main/resources/com.mammedbrk/image/game/coin.png",
+            "value" : 1
+          }, {
+            "type" : "coin",
             "x" : 17,
             "y" : 5,
             "imageAddress" : "src/main/resources/com.mammedbrk/image/game/coin.png",
@@ -325,9 +367,9 @@
             "y" : 8,
             "imageAddress" : "src/main/resources/com.mammedbrk/image/game/grave.png",
             "xCurrent" : 29,
-            "yCurrent" : 8,
+            "yCurrent" : 9,
             "xVelocity" : 0.0,
-            "yVelocity" : -0.5
+            "yVelocity" : 0.7
           }, {
             "type" : "pipe",
             "x" : 29,
@@ -666,18 +708,18 @@
             "y" : 7,
             "imageAddress" : "src/main/resources/com.mammedbrk/image/game/grave.png",
             "xCurrent" : 51,
-            "yCurrent" : 7,
+            "yCurrent" : 8,
             "xVelocity" : 0.0,
-            "yVelocity" : -0.5
+            "yVelocity" : 0.7
           }, {
             "type" : "grave",
             "x" : 55,
             "y" : 7,
             "imageAddress" : "src/main/resources/com.mammedbrk/image/game/grave.png",
             "xCurrent" : 55,
-            "yCurrent" : 7,
+            "yCurrent" : 8,
             "xVelocity" : 0.0,
-            "yVelocity" : -0.5
+            "yVelocity" : 0.7
           }, {
             "type" : "pipe",
             "x" : 47,
@@ -1071,18 +1113,18 @@
             "y" : 8,
             "imageAddress" : "src/main/resources/com.mammedbrk/image/game/grave.png",
             "xCurrent" : 76,
-            "yCurrent" : 8,
+            "yCurrent" : 9,
             "xVelocity" : 0.0,
-            "yVelocity" : -0.5
+            "yVelocity" : 0.7
           }, {
             "type" : "grave",
             "x" : 77,
             "y" : 8,
             "imageAddress" : "src/main/resources/com.mammedbrk/image/game/grave.png",
             "xCurrent" : 77,
-            "yCurrent" : 8,
+            "yCurrent" : 9,
             "xVelocity" : 0.0,
-            "yVelocity" : -0.5
+            "yVelocity" : 0.7
           }, {
             "type" : "pipe",
             "x" : 76,
@@ -1497,7 +1539,7 @@
             "value" : 5
           } ]
         } ],
-        "x" : 24,
+        "x" : 2,
         "y" : 9
       }
     }
