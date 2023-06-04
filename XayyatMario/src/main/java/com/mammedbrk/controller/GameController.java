@@ -6,12 +6,12 @@ import com.mammedbrk.current.Current;
 import com.mammedbrk.event.CharacterCollisionEvent;
 import com.mammedbrk.event.CharacterMovementEvent;
 import com.mammedbrk.model.*;
-import com.mammedbrk.model.gamecomponent.Coin;
-import com.mammedbrk.model.gamecomponent.Tile;
-import com.mammedbrk.model.gamecomponent.block.Block;
-import com.mammedbrk.model.gamecomponent.block.CoinBlock;
-import com.mammedbrk.model.gamecomponent.block.PowerUpBlock;
-import com.mammedbrk.model.gamecomponent.enemy.Enemy;
+import com.mammedbrk.model.component.Coin;
+import com.mammedbrk.model.component.Component;
+import com.mammedbrk.model.component.block.Block;
+import com.mammedbrk.model.component.block.CoinBlock;
+import com.mammedbrk.model.component.block.PowerUpBlock;
+import com.mammedbrk.model.component.enemy.Enemy;
 import com.mammedbrk.view.game.TileImages;
 import javafx.scene.image.ImageView;
 
@@ -24,7 +24,7 @@ public class GameController {
     private final SceneAccess access = new SceneAccess();
     private Game game;
     private TileImages tileImages;
-    private Tile[][] tiles;
+    private Component[][] tiles;
     private List<Enemy> enemies;
     private CharacterMovementEvent characterMovementEvent;
 
@@ -36,7 +36,7 @@ public class GameController {
     // Methods
 
     public List<ImageView> loadSection() {
-        tiles = new Tile[(game.getCurrentLevel().getCurrentSection().getScenes().size() + 1) *(int) (WIDTH/Tile.TILE_SIZE)][(int) (HEIGHT/Tile.TILE_SIZE)];
+        tiles = new Component[(game.getCurrentLevel().getCurrentSection().getScenes().size() + 1) *(int) (WIDTH/ Component.TILE_SIZE)][(int) (HEIGHT/ Component.TILE_SIZE)];
         enemies = new ArrayList<>();
 
         Section section = Current.user.getCurrentGame().getCurrentLevel().getCurrentSection();
@@ -44,16 +44,16 @@ public class GameController {
         List<ImageView> list = new ArrayList<>();
         for (int i = 0; i < section.getScenes().size(); i++) {
             Scene scene = section.getScenes().get(i);
-            for (Tile tile: scene.getComponents()) {
+            for (Component tile: scene.getComponents()) {
                 ImageView imgView = new ImageView(tileImages.getImage(tile.getImageAddress()));
 
-                int x = tile.getX() * Tile.TILE_SIZE;
-                if (tile.getX() < (int) (WIDTH / Tile.TILE_SIZE))
-                    x = tile.getX() * Tile.TILE_SIZE + i * ((int) (WIDTH / Tile.TILE_SIZE)) * Tile.TILE_SIZE;
-                int y = tile.getY() * Tile.TILE_SIZE;
+                int x = tile.getX() * Component.TILE_SIZE;
+                if (tile.getX() < (int) (WIDTH / Component.TILE_SIZE))
+                    x = tile.getX() * Component.TILE_SIZE + i * ((int) (WIDTH / Component.TILE_SIZE)) * Component.TILE_SIZE;
+                int y = tile.getY() * Component.TILE_SIZE;
 
-                imgView.setFitWidth(Tile.TILE_SIZE * tile.scaleX());
-                imgView.setFitHeight(Tile.TILE_SIZE * tile.scaleY());
+                imgView.setFitWidth(Component.TILE_SIZE * tile.scaleX());
+                imgView.setFitHeight(Component.TILE_SIZE * tile.scaleY());
                 imgView.setX(x);
                 imgView.setY(y);
                 imgView.setVisible(true);
@@ -61,9 +61,9 @@ public class GameController {
                 if (tile instanceof Enemy)
                     enemies.add((Enemy) tile);
                 else
-                    tiles[x / Tile.TILE_SIZE][y / Tile.TILE_SIZE] = tile;
-                tile.setX(x / Tile.TILE_SIZE);
-                tile.setY(y / Tile.TILE_SIZE);
+                    tiles[x / Component.TILE_SIZE][y / Component.TILE_SIZE] = tile;
+                tile.setX(x / Component.TILE_SIZE);
+                tile.setY(y / Component.TILE_SIZE);
 
                 list.add(imgView);
             }
@@ -80,14 +80,14 @@ public class GameController {
         double yFront = characterCollisionEvent.getyFront();
         double yBack = characterCollisionEvent.getyBack();
 
-        game.getCurrentLevel().getCurrentSection().setX((int) (xBack / Tile.TILE_SIZE));
-        game.getCurrentLevel().getCurrentSection().setY((int) (yBack / Tile.TILE_SIZE));
+        game.getCurrentLevel().getCurrentSection().setX((int) (xBack / Component.TILE_SIZE));
+        game.getCurrentLevel().getCurrentSection().setY((int) (yBack / Component.TILE_SIZE));
 
         characterMovementEvent = new CharacterMovementEvent();
         characterMovementEvent.setDx(dx);
         characterMovementEvent.setDy(dy);
 
-        if (xBack > game.getCurrentLevel().getCurrentSection().getScenes().size() * ((int) (WIDTH / Tile.TILE_SIZE)) * Tile.TILE_SIZE) {
+        if (xBack > game.getCurrentLevel().getCurrentSection().getScenes().size() * ((int) (WIDTH / Component.TILE_SIZE)) * Component.TILE_SIZE) {
             readNextSection();
 
             characterMovementEvent.setLoadNeeded(true);
@@ -136,7 +136,7 @@ public class GameController {
         if (occupied((xBack + xFront) / 2 + characterMovementEvent.getDx(), (yBack + yFront) / 2 + characterMovementEvent.getDy()) instanceof Coin) {
             game.getCurrentLevel().getCurrentSection().addCoin(((Coin) occupied((xBack + xFront) / 2 + characterMovementEvent.getDx(), (yBack + yFront) / 2 + characterMovementEvent.getDy())).getValue());
             characterMovementEvent.setRemovedTile(occupied((xBack + xFront) / 2 + characterMovementEvent.getDx(), (yBack + yFront) / 2 + characterMovementEvent.getDy()));
-            game.getCurrentLevel().getCurrentSection().getScenes().get((int) ((xBack / Tile.TILE_SIZE) / WIDTH)).getComponents().remove(occupied((xBack + xFront) / 2 + characterMovementEvent.getDx(), (yBack + yFront) / 2 + characterMovementEvent.getDy()));
+            game.getCurrentLevel().getCurrentSection().getScenes().get((int) ((xBack / Component.TILE_SIZE) / WIDTH)).getComponents().remove(occupied((xBack + xFront) / 2 + characterMovementEvent.getDx(), (yBack + yFront) / 2 + characterMovementEvent.getDy()));
             removeTile(occupied((xBack + xFront) / 2 + characterMovementEvent.getDx(), (yBack + yFront) / 2 + characterMovementEvent.getDy()));
 
             game.getCurrentLevel().getCurrentSection().addScore(10);
@@ -144,7 +144,7 @@ public class GameController {
 
         // Lose with enemies
         for (Enemy enemy: enemies) {
-            if ((int) (xFront / Tile.TILE_SIZE) == enemy.getxCurrent() && (int) ((yBack + yFront) / 2 / Tile.TILE_SIZE) == enemy.getyCurrent()) {
+            if ((int) (xFront / Component.TILE_SIZE) == enemy.getxCurrent() && (int) ((yBack + yFront) / 2 / Component.TILE_SIZE) == enemy.getyCurrent()) {
                 readFirstSection();
                 game.reduceHeart();
                 if (game.getHearts() == 0) {
@@ -168,11 +168,11 @@ public class GameController {
         return characterMovementEvent;
     }
 
-    private Tile occupied(double x, double y) {
-        return tiles[(int) (x/ Tile.TILE_SIZE)][(int) (y/ Tile.TILE_SIZE)];
+    private Component occupied(double x, double y) {
+        return tiles[(int) (x/ Component.TILE_SIZE)][(int) (y/ Component.TILE_SIZE)];
     }
 
-    private void removeTile(Tile tile) {
+    private void removeTile(Component tile) {
         tiles[tile.getX()][tile.getY()] = null;
     }
 

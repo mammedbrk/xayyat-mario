@@ -7,8 +7,8 @@ import com.mammedbrk.listener.CharacterCollisionListener;
 import com.mammedbrk.listener.SectionLoadListener;
 import com.mammedbrk.listener.StringListener;
 import com.mammedbrk.model.Scene;
-import com.mammedbrk.model.gamecomponent.Tile;
-import com.mammedbrk.model.gamecomponent.enemy.Enemy;
+import com.mammedbrk.model.component.Component;
+import com.mammedbrk.model.component.enemy.Enemy;
 import javafx.animation.AnimationTimer;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -45,6 +45,9 @@ public class GameView extends Pane {
         this.sectionLoadListener = sectionLoadListener;
         this.characterCollisionListener = characterCollisionListener;
 
+        this.setTranslateX(0);
+        this.setPrefWidth(5*WIDTH);
+        this.setMinWidth(5*WIDTH);
         this.setStyle("-fx-background-color: #282828;");
 
         // Add KeyListener
@@ -83,13 +86,16 @@ public class GameView extends Pane {
     }
 
     public void loadSectionGraphics() {
+        this.setTranslateX(0);
+        this.setPrefWidth(5*WIDTH);
+        this.setStyle("-fx-background-color: #282828;");
 
-        xFront = xBack = Current.user.getCurrentGame().getCurrentLevel().getCurrentSection().getX() * Tile.TILE_SIZE;
-        yFront = yBack = Current.user.getCurrentGame().getCurrentLevel().getCurrentSection().getY() * Tile.TILE_SIZE;
+        xFront = xBack = Current.user.getCurrentGame().getCurrentLevel().getCurrentSection().getX() * Component.TILE_SIZE;
+        yFront = yBack = Current.user.getCurrentGame().getCurrentLevel().getCurrentSection().getY() * Component.TILE_SIZE;
 
         timer.stop();
         this.getChildren().clear();
-        gTiles = new ImageView[5 * (int) (WIDTH / Tile.TILE_SIZE)][(int) (HEIGHT / Tile.TILE_SIZE)];
+        gTiles = new ImageView[5 * (int) (WIDTH / Component.TILE_SIZE)][(int) (HEIGHT / Component.TILE_SIZE)];
         List<ImageView> list = sectionLoadListener.listen();
         if (list == null) {
             // todo game finished
@@ -97,7 +103,7 @@ public class GameView extends Pane {
         }
         for (ImageView gTile : list) {
             this.getChildren().add(gTile);
-            gTiles[(int) gTile.getX() / Tile.TILE_SIZE][(int) gTile.getY() / Tile.TILE_SIZE] = gTile;
+            gTiles[(int) gTile.getX() / Component.TILE_SIZE][(int) gTile.getY() / Component.TILE_SIZE] = gTile;
         }
         try {
             character = new ImageView(new Image(new FileInputStream(Current.user.getCurrentGame().getCharacter().getImageAddress())));
@@ -106,13 +112,14 @@ public class GameView extends Pane {
         }
         character.setFitWidth(50);
         character.setFitHeight(50);
-        character.setX(Current.user.getCurrentGame().getCurrentLevel().getCurrentSection().getX() * Tile.TILE_SIZE);
-        character.setY(Current.user.getCurrentGame().getCurrentLevel().getCurrentSection().getY() * Tile.TILE_SIZE);
+        character.setX(Current.user.getCurrentGame().getCurrentLevel().getCurrentSection().getX() * Component.TILE_SIZE);
+        character.setY(Current.user.getCurrentGame().getCurrentLevel().getCurrentSection().getY() * Component.TILE_SIZE);
         this.getChildren().add(character);
 
         if (character.getX() > WIDTH/2) {
             for (Node node : GameView.this.getChildren()) {
-                node.relocate(node.getBoundsInParent().getMinX() - ((Current.user.getCurrentGame().getCurrentLevel().getCurrentSection().getX() - WIDTH / 2 / Tile.TILE_SIZE) * Tile.TILE_SIZE), node.getBoundsInParent().getMinY());
+//                node.relocate(node.getBoundsInParent().getMinX() - ((Current.user.getCurrentGame().getCurrentLevel().getCurrentSection().getX() - WIDTH / 2 / Component.TILE_SIZE) * Component.TILE_SIZE), node.getBoundsInParent().getMinY());
+                GameView.this.setTranslateX(GameView.this.getTranslateX()  - (Current.user.getCurrentGame().getCurrentLevel().getCurrentSection().getX() - WIDTH / 2 / Component.TILE_SIZE) * Component.TILE_SIZE);
             }
         }
         timer.start();
@@ -172,21 +179,25 @@ public class GameView extends Pane {
             character.setX(character.getX() + dx);
             character.setY(character.getY() + dy);
 
-            if (dx > 0 && character.getBoundsInParent().getCenterX() > WIDTH / 2 && character.getX() < Current.user.getCurrentGame().getCurrentLevel().getCurrentSection().getScenes().size() * WIDTH - WIDTH/2) {
-                for (Node node : GameView.this.getChildren()) {
+            if (dx > 0 && character.getBoundsInParent().getCenterX() > -GameView.this.getTranslateX() + WIDTH / 2 && character.getX() < Current.user.getCurrentGame().getCurrentLevel().getCurrentSection().getScenes().size() * WIDTH - WIDTH/2) {
+                /*for (Node node : GameView.this.getChildren()) {
                     node.relocate(node.getBoundsInParent().getMinX() - dx, node.getBoundsInParent().getMinY());
-                }
+                }*/
+
+                System.out.println(GameView.this.getTranslateX());
+                GameView.this.setTranslateX(GameView.this.getTranslateX() - dx);
+                GameView.this.setStyle("-fx-background-color: #282828;");
             }
 
             for (Scene scene: Current.user.getCurrentGame().getCurrentLevel().getCurrentSection().getScenes()) {
-                for (Tile tile : scene.getComponents()){
+                for (Component tile : scene.getComponents()){
                     if (tile instanceof Enemy) {
                         ImageView enemyImg = gTiles[tile.getX()][tile.getY()];
                         if (enemyImg == null) continue;
                         enemyImg.setX(enemyImg.getX() + ((Enemy) tile).getxVelocity());
                         enemyImg.setY(enemyImg.getY() + ((Enemy) tile).getyVelocity());
-                        ((Enemy) tile).setxCurrent((int) (enemyImg.getX() / Tile.TILE_SIZE));
-                        ((Enemy) tile).setyCurrent((int) (enemyImg.getY() / Tile.TILE_SIZE));
+                        ((Enemy) tile).setxCurrent((int) (enemyImg.getX() / Component.TILE_SIZE));
+                        ((Enemy) tile).setyCurrent((int) (enemyImg.getY() / Component.TILE_SIZE));
                         ((Enemy) tile).modifySpeed();
                     }
                 }
@@ -211,7 +222,7 @@ public class GameView extends Pane {
         }
     }
 
-    private void removeGTile(Tile tile) {
+    private void removeGTile(Component tile) {
         this.getChildren().remove(gTiles[tile.getX()][tile.getY()]);
         gTiles[tile.getX()][tile.getY()] = null;
     }
