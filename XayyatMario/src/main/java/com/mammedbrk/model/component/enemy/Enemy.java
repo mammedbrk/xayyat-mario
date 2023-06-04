@@ -1,5 +1,6 @@
 package com.mammedbrk.model.component.enemy;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.mammedbrk.model.component.Component;
@@ -12,6 +13,7 @@ import com.mammedbrk.model.component.Component;
 @JsonSubTypes({
 })
 public abstract class Enemy extends Component {
+    @JsonIgnore
     protected boolean alive;
 
     public Enemy() {

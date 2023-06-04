@@ -1,12 +1,15 @@
 package com.mammedbrk.model.component.enemy;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.mammedbrk.current.Current;
 import com.mammedbrk.model.interfaces.Gravitational;
 import com.mammedbrk.model.interfaces.Hittable;
 import com.mammedbrk.model.interfaces.Movable;
 
 public class Goomba extends Enemy implements Movable, Gravitational, Hittable {
+    @JsonIgnore
     private static double speed;
+    @JsonIgnore
     private double gravity;
 
     public Goomba() {
@@ -28,7 +31,7 @@ public class Goomba extends Enemy implements Movable, Gravitational, Hittable {
 
     @Override
     public void applyGravity() {
-        gravity = gravity + Current.gravity; // todo maybe from config
+        gravity = gravity + Current.gravity; // todo
         y += gravity;
     }
 

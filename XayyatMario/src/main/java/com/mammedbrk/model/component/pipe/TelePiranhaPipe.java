@@ -11,7 +11,9 @@ public class TelePiranhaPipe extends TelePipe implements Piranha {
     @JsonIgnore
     private static int hideTime;
     private boolean alive;
+    @JsonIgnore
     private boolean shown;
+    @JsonIgnore
     private int time;
 
     public TelePiranhaPipe() {

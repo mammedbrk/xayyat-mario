@@ -1,6 +1,10 @@
 package com.mammedbrk.model.component;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 public abstract class Component {
+    @JsonIgnore
+    public static int SIZE;
     protected double x, y;
 
     public Component() {
@@ -27,5 +31,9 @@ public abstract class Component {
 
     public void setY(double y) {
         this.y = y;
+    }
+
+    public static void setSIZE(int SIZE) {
+        Component.SIZE = SIZE;
     }
 }

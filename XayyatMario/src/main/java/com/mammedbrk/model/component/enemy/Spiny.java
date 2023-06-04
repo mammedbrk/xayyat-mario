@@ -1,5 +1,6 @@
 package com.mammedbrk.model.component.enemy;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.mammedbrk.current.Current;
 import com.mammedbrk.model.interfaces.Gravitational;
 import com.mammedbrk.model.interfaces.Hittable;
@@ -8,7 +9,9 @@ import com.mammedbrk.model.interfaces.Movable;
 import java.util.Random;
 
 public class Spiny extends Enemy implements Movable, Gravitational {
+    @JsonIgnore
     private static double speed;
+    @JsonIgnore
     private double gravity;
     private boolean marioCheck;
     private double velocity;
@@ -18,6 +21,12 @@ public class Spiny extends Enemy implements Movable, Gravitational {
 
     public Spiny(int x, int y) {
         super(x, y);
+    }
+
+    public Spiny(int x, int y, boolean marioCheck, double velocity) {
+        super(x, y);
+        this.marioCheck = marioCheck;
+        this.velocity = velocity;
     }
 
     @Override
@@ -39,7 +48,7 @@ public class Spiny extends Enemy implements Movable, Gravitational {
 
     @Override
     public void applyGravity() {
-        gravity = gravity + Current.gravity; // todo maybe from config
+        gravity = gravity + Current.gravity; // todo
         y += gravity;
     }
 
@@ -54,5 +63,17 @@ public class Spiny extends Enemy implements Movable, Gravitational {
 
     public void setMarioCheck(boolean marioCheck) {
         this.marioCheck = marioCheck;
+    }
+
+    public boolean isMarioCheck() {
+        return marioCheck;
+    }
+
+    public double getVelocity() {
+        return velocity;
+    }
+
+    public void setVelocity(double velocity) {
+        this.velocity = velocity;
     }
 }

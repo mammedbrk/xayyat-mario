@@ -1,5 +1,6 @@
 package com.mammedbrk.model.component.enemy;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.mammedbrk.current.Current;
 import com.mammedbrk.model.interfaces.Gravitational;
 import com.mammedbrk.model.interfaces.Hittable;
@@ -9,7 +10,9 @@ import com.mammedbrk.model.interfaces.Timer;
 import java.util.Random;
 
 public class Koopa extends Enemy implements Movable, Gravitational, Hittable, Timer {
+    @JsonIgnore
     private static double speed;
+    @JsonIgnore
     private double gravity;
     private boolean hit;
     private long time;
@@ -19,6 +22,12 @@ public class Koopa extends Enemy implements Movable, Gravitational, Hittable, Ti
 
     public Koopa(int x, int y) {
         super(x, y);
+    }
+
+    public Koopa(int x, int y, boolean hit, long time) {
+        super(x, y);
+        this.hit = hit;
+        this.time = time;
     }
 
     @Override
@@ -34,7 +43,7 @@ public class Koopa extends Enemy implements Movable, Gravitational, Hittable, Ti
 
     @Override
     public void applyGravity() {
-        gravity = gravity + Current.gravity; // todo maybe from config
+        gravity = gravity + Current.gravity; // todo
         y += gravity;
     }
 
@@ -68,5 +77,21 @@ public class Koopa extends Enemy implements Movable, Gravitational, Hittable, Ti
         if (time < 3)
             time++;
         else hit = false;
+    }
+
+    public boolean isHit() {
+        return hit;
+    }
+
+    public void setHit(boolean hit) {
+        this.hit = hit;
+    }
+
+    public long getTime() {
+        return time;
+    }
+
+    public void setTime(long time) {
+        this.time = time;
     }
 }

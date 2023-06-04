@@ -1,5 +1,6 @@
 package com.mammedbrk.model.component.item;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.mammedbrk.current.Current;
 import com.mammedbrk.model.component.enemy.Goomba;
 import com.mammedbrk.model.interfaces.Gravitational;
@@ -7,7 +8,9 @@ import com.mammedbrk.model.interfaces.Movable;
 import com.mammedbrk.model.interfaces.Timer;
 
 public class Mushroom extends Item implements Gravitational, Movable, Timer {
+    @JsonIgnore
     private static double speed;
+    @JsonIgnore
     private double gravity;
     private int time;
     private boolean move;
@@ -17,6 +20,12 @@ public class Mushroom extends Item implements Gravitational, Movable, Timer {
 
     public Mushroom(int x, int y) {
         super(x, y);
+    }
+
+    public Mushroom(int x, int y, int time, boolean move) {
+        super(x, y);
+        this.time = time;
+        this.move = move;
     }
 
     @Override

@@ -1,13 +1,17 @@
 package com.mammedbrk.model.component.item;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.mammedbrk.current.Current;
 import com.mammedbrk.model.interfaces.Gravitational;
 import com.mammedbrk.model.interfaces.Movable;
 import com.mammedbrk.model.interfaces.Timer;
 
 public class Star extends Item implements Movable, Gravitational, Timer {
+    @JsonIgnore
     private static double speed;
+    @JsonIgnore
     private static double jumpSpeed;
+    @JsonIgnore
     private double gravity;
     private int waitTime;
     private boolean move;
@@ -18,6 +22,13 @@ public class Star extends Item implements Movable, Gravitational, Timer {
 
     public Star(int x, int y) {
         super(x, y);
+    }
+
+    public Star(int x, int y, int waitTime, boolean move, boolean jump) {
+        super(x, y);
+        this.waitTime = waitTime;
+        this.move = move;
+        this.jump = jump;
     }
 
     @Override
@@ -59,5 +70,29 @@ public class Star extends Item implements Movable, Gravitational, Timer {
 
     public static void setJumpSpeed(double jumpSpeed) {
         Star.jumpSpeed = jumpSpeed;
+    }
+
+    public int getWaitTime() {
+        return waitTime;
+    }
+
+    public void setWaitTime(int waitTime) {
+        this.waitTime = waitTime;
+    }
+
+    public boolean isMove() {
+        return move;
+    }
+
+    public void setMove(boolean move) {
+        this.move = move;
+    }
+
+    public boolean isJump() {
+        return jump;
+    }
+
+    public void setJump(boolean jump) {
+        this.jump = jump;
     }
 }

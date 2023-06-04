@@ -1,5 +1,6 @@
 package com.mammedbrk.model.component.item;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.mammedbrk.model.component.Component;
@@ -17,10 +18,21 @@ import com.mammedbrk.model.component.block.*;
         @JsonSubTypes.Type(value = Flower.class, name = "FLOWER")
 })
 public abstract class Item extends Component {
+    @JsonIgnore
+    private boolean hit;
+
     public Item() {
     }
 
     public Item(int x, int y) {
         super(x, y);
+    }
+
+    public boolean isHit() {
+        return hit;
+    }
+
+    public void setHit(boolean hit) {
+        this.hit = hit;
     }
 }
