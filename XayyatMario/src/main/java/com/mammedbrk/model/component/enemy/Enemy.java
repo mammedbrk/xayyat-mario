@@ -22,6 +22,10 @@ public abstract class Enemy extends Component {
         alive = true;
     }
 
+    public void die() {
+        alive = false;
+    }
+
     public boolean isAlive() {
         return alive;
     }
