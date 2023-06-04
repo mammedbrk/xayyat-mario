@@ -1,4 +1,4 @@
-package com.mammedbrk.model;
+package com.mammedbrk.model.interfaces;
 
 public interface Movable {
     void move();
