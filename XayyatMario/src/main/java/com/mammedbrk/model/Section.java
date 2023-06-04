@@ -154,6 +154,22 @@ public class Section {
         this.spawnPipe = spawnPipe;
     }
 
+    public List<Checkpoint> getCheckpoints() {
+        return checkpoints;
+    }
+
+    public void setCheckpoints(List<Checkpoint> checkpoints) {
+        this.checkpoints = checkpoints;
+    }
+
+    public List<EmptySpace> getSpaces() {
+        return spaces;
+    }
+
+    public void setSpaces(List<EmptySpace> spaces) {
+        this.spaces = spaces;
+    }
+
     public static void setHEIGHT(int HEIGHT) {
         Section.HEIGHT = HEIGHT;
     }
