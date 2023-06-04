@@ -1,31 +1,31 @@
 package com.mammedbrk.model.component;
 
 public abstract class Component {
-    protected int x, y;
+    protected double x, y;
 
     public Component() {
     }
 
-    public Component(int x, int y) {
+    public Component(double x, double y) {
         this.x = x;
         this.y = y;
     }
 
     // Getters and setters
 
-    public int getX() {
+    public double getX() {
         return x;
     }
 
-    public void setX(int x) {
+    public void setX(double x) {
         this.x = x;
     }
 
-    public int getY() {
+    public double getY() {
         return y;
     }
 
-    public void setY(int y) {
+    public void setY(double y) {
         this.y = y;
     }
 }
