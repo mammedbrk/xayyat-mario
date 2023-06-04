@@ -1,7 +1,6 @@
 package com.mammedbrk.model.component.pipe;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.mammedbrk.model.Scene;
 import com.mammedbrk.model.component.enemy.Piranha;
 
 public class PiranhaTrapPipe extends Pipe implements Piranha {
