@@ -1,26 +1,21 @@
 package com.mammedbrk.model.component.block;
 
 public class CoinBlock extends Block {
-    private int value;
+    private boolean hit;
 
     public CoinBlock() {
+
     }
 
     public CoinBlock(int x, int y) {
-        super(x, y, "src/main/resources/com.mammedbrk/image/game/coin-block.png");
-        this.value = 1;
+        super(x, y);
     }
 
-    public CoinBlock(int x, int y, int value) {
-        this(x, y);
-        this.value = value;
+    public boolean isHit() {
+        return hit;
     }
 
-    public int getValue() {
-        return value;
-    }
-
-    public void setValue(int value) {
-        this.value = value;
+    public void setHit(boolean hit) {
+        this.hit = hit;
     }
 }
