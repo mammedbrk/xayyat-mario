@@ -1,49 +1,109 @@
 package com.mammedbrk.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.mammedbrk.model.component.Checkpoint;
+import com.mammedbrk.model.component.Component;
+import com.mammedbrk.model.component.EmptySpace;
+import com.mammedbrk.model.component.block.Block;
+import com.mammedbrk.model.component.enemy.Enemy;
+import com.mammedbrk.model.component.item.Item;
+import com.mammedbrk.model.component.pipe.Pipe;
+
+import java.util.ArrayList;
 import java.util.List;
 
 public class Section {
-    private int no;
+    @JsonIgnore
+    private static int HEIGHT;
+    private int length;
     private int time;
-    private int score;
-    private int coins;
-    private List<Scene> scenes;
-    private int x, y;
+    private List<Block> blocks;
+    private List<Enemy> enemies;
+    private List<Pipe> pipes;
+    private List<Item> items;
+    private List<Checkpoint> checkpoints;
+    private List<EmptySpace> spaces;
+    private Pipe spawnPipe;
 
     public Section() {
+        this.blocks = new ArrayList<>();
+        this.enemies = new ArrayList<>();
+        this.pipes = new ArrayList<>();
+        this.items = new ArrayList<>();
+        this.checkpoints = new ArrayList<>();
+        this.spaces = new ArrayList<>();
     }
 
-    public Section(int timeLeft) {
+    public Section(int length, int time) {
         this();
-        this.time = timeLeft;
+        this.length = length;
+        this.time = time;
     }
 
-    // Methods
-
-    public void reduceTime() {
-        time -= 1;
+    public Section(int length, int time, List<Block> blocks, List<Enemy> enemies, List<Pipe> pipes) {
+        this.length = length;
+        this.time = time;
+        this.blocks = blocks;
+        this.enemies = enemies;
+        this.pipes = pipes;
+        this.items = new ArrayList<>();
+        this.checkpoints = new ArrayList<>();
+        this.spaces = new ArrayList<>();
     }
 
-    public void addScore(int value) {
-        score += value;
+    public Section(int length, int time, List<Block> blocks, List<Enemy> enemies, List<Pipe> pipes, Pipe spawnPipe) {
+        this.length = length;
+        this.time = time;
+        this.blocks = blocks;
+        this.enemies = enemies;
+        this.pipes = pipes;
+        this.spawnPipe = spawnPipe;
+        this.items = new ArrayList<>();
+        this.checkpoints = new ArrayList<>();
+        this.spaces = new ArrayList<>();
     }
 
-    public void addCoin(int value) {
-        coins += value;
+    public Section(int length, int time, List<Block> blocks, List<Enemy> enemies, List<Pipe> pipes, List<Item> items, List<Checkpoint> checkpoints, List<EmptySpace> spaces, Pipe spawnPipe) {
+        this.length = length;
+        this.time = time;
+        this.blocks = blocks;
+        this.enemies = enemies;
+        this.pipes = pipes;
+        this.items = items;
+        this.checkpoints = checkpoints;
+        this.spaces = spaces;
+        this.spawnPipe = spawnPipe;
     }
 
-    public void addScene(Scene scene) {
-        scenes.add(scene);
+    public void addComponent(Component component) {
+        if (component instanceof Block)
+            blocks.add((Block) component);
+        else if (component instanceof Enemy)
+            enemies.add((Enemy) component);
+        else if (component instanceof Pipe)
+            pipes.add((Pipe) component);
+        else if (component instanceof Item)
+            items.add((Item) component);
     }
 
-    // Getter and setters
-
-    public int getNo() {
-        return no;
+    public void removeComponent(Component component) {
+        if (component instanceof Block)
+            blocks.remove((Block) component);
+        else if (component instanceof Enemy)
+            enemies.remove((Enemy) component);
+        else if (component instanceof Pipe)
+            pipes.remove((Pipe) component);
+        else if (component instanceof Item)
+            items.remove((Item) component);
     }
 
-    public void setNo(int no) {
-        this.no = no;
+
+    public int getLength() {
+        return length;
+    }
+
+    public void setLength(int length) {
+        this.length = length;
     }
 
     public int getTime() {
@@ -54,43 +114,47 @@ public class Section {
         this.time = time;
     }
 
-    public int getScore() {
-        return score;
+    public List<Block> getBlocks() {
+        return blocks;
     }
 
-    public void setScore(int score) {
-        this.score = score;
+    public void setBlocks(List<Block> blocks) {
+        this.blocks = blocks;
     }
 
-    public int getCoins() {
-        return coins;
+    public List<Enemy> getEnemies() {
+        return enemies;
     }
 
-    public void setCoins(int coins) {
-        this.coins = coins;
+    public void setEnemies(List<Enemy> enemies) {
+        this.enemies = enemies;
     }
 
-    public List<Scene> getScenes() {
-        return scenes;
+    public List<Pipe> getPipes() {
+        return pipes;
     }
 
-    public void setScenes(List<Scene> scenes) {
-        this.scenes = scenes;
+    public void setPipes(List<Pipe> pipes) {
+        this.pipes = pipes;
     }
 
-    public int getX() {
-        return x;
+    public List<Item> getItems() {
+        return items;
     }
 
-    public void setX(int x) {
-        this.x = x;
+    public void setItems(List<Item> items) {
+        this.items = items;
     }
 
-    public int getY() {
-        return y;
+    public Pipe getSpawnPipe() {
+        return spawnPipe;
     }
 
-    public void setY(int y) {
-        this.y = y;
+    public void setSpawnPipe(Pipe spawnPipe) {
+        this.spawnPipe = spawnPipe;
+    }
+
+    public static void setHEIGHT(int HEIGHT) {
+        Section.HEIGHT = HEIGHT;
     }
 }
