@@ -1,12 +1,15 @@
 package com.mammedbrk.controller;
 
 import com.mammedbrk.access.CharacterAccess;
-import com.mammedbrk.access.SceneAccess;
+import com.mammedbrk.access.GameAccess;
+import com.mammedbrk.access.LevelAccess;
 import com.mammedbrk.access.UserAccess;
 import com.mammedbrk.current.Current;
 import com.mammedbrk.event.FormEvent;
 import com.mammedbrk.model.*;
 import com.mammedbrk.model.Character;
+import com.mammedbrk.model.game.Game;
+import com.mammedbrk.model.game.Level;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -20,11 +23,13 @@ public class UserController {
             return null;
         }
         User user = new User(access.lastId() + 1, e.getUsername(), e.getPassword());
+
         Character character = new CharacterAccess().get("OrdinaryXayyat");
         user.addCharacter(character);
-        user.setChosenCharacter(character);
+
         for (int i = 0; i < 3; i++)
             user.addGame(new Game());
+
         access.add(user);
         return Current.user = user;
     }
@@ -39,7 +44,7 @@ public class UserController {
 
     public List<User> getSortedUsersList() {
         List<User> users = access.getAll();
-        users.sort(Comparator.comparing(User::getMaxScore).reversed());
+        users.sort(Comparator.comparing(User::getScore).reversed());
         return users;
     }
 
@@ -54,35 +59,19 @@ public class UserController {
         return true;
     }
 
-    public void chooseCharacter(User user, Character character) {
-        user.setChosenCharacter(character);
-        access.add(user);
-    }
-
     public void updateUser(User user) {
         access.add(user);
     }
 
     public void saveNewGame(User user, int index) {
-        Section section = new Section(120);
-        section.setNo(1);
-        section.setScenes(new ArrayList<>());
-        for (int sceneNo = 1; ; sceneNo++) {
-            Scene scene = new SceneAccess().get(1, 1, sceneNo);
-            if (scene == null) break;
-            section.addScene(scene);
-        }
-        section.setX(2);
-        section.setY(5);
-        Level level = new Level();
-        level.setNo(1);
-        level.setCurrentSection(section);
+        LevelAccess levelAccess = new LevelAccess();
+
         Game game = new Game();
-        game.setCharacter(Current.user.getChosenCharacter());
-        game.setHearts(3);
-        game.setCurrentLevel(level);
+        Level level;
+        for (int levelNo = 0; (level = levelAccess.get(levelNo)) != null; levelNo++)
+            game.addLevel(level);
         user.putGame(index, game);
-        user.setCurrentGame(game);
+
         access.add(user);
     }
 }
