@@ -2,45 +2,45 @@ package com.mammedbrk.access;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
-import com.mammedbrk.model.Scene;
+import com.mammedbrk.model.Section;
 
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
-public class SceneAccess {
+public class SectionAccess {
     private final ObjectMapper mapper;
     private final String directory = "src/main/resources/com.mammedbrk/game/";
 
-    public SceneAccess() {
+    public SectionAccess() {
         mapper = new ObjectMapper();
         mapper.enable(SerializationFeature.INDENT_OUTPUT);
     }
 
-    public void add(Scene scene, int levelNo, int sectionNo) {
+    public void add(Section section, int levelId, int sectionId) {
         try {
-            mapper.writeValue(new FileWriter(directory + levelNo + "/" + sectionNo + "/" + scene.getNo() + ".json"), scene);
+            mapper.writeValue(new FileWriter(directory + levelId + "/" + sectionId + ".json"), section);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public Scene get(int levelNo, int sectionNo, int sceneNo) {
-        Scene scene;
+    public Section get(int levelNo, int sectionNo) {
+        Section section;
         try {
-            File file = new File(directory + "/" + levelNo + "/" + sectionNo + "/" + sceneNo + ".json");
+            File file = new File(directory + "/" + levelNo + "/" + sectionNo + ".json");
             if (!file.exists()) {
                 return null;
             }
-            scene = mapper.readValue(file, Scene.class);
+            section = mapper.readValue(file, Section.class);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        return scene;
+        return section;
     }
 
     public boolean exists(int levelNo, int sectionNo) {
-        File file = new File(directory + "/" + levelNo + "/" + sectionNo);
+        File file = new File(directory + "/" + levelNo + "/" + sectionNo + ".json");
         return file.exists();
     }
 }
