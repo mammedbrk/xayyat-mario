@@ -1,6 +1,6 @@
 package com.mammedbrk.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.mammedbrk.model.game.Game;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,37 +9,47 @@ public class User {
     private int id;
     private String username;
     private String password;
-    private int maxScore;
+    private int score;
     private int coins;
-    @JsonIgnore
-    private Game currentGame;
     private List<Game> games;
-    private Character chosenCharacter;
     private List<Character> characters;
 
     public User() {
-    }
-
-    public User(int id, String username, String password) {
-        this.id = id;
-        this.username = username;
-        this.password = password;
         games = new ArrayList<>();
         characters = new ArrayList<>();
     }
 
-    // Methods
+    public User(int id, String username, String password) {
+        this();
+        this.id = id;
+        this.username = username;
+        this.password = password;
+    }
+
+    public User(int id, String username, String password, int score, int coins, List<Game> games, List<Character> characters) {
+        this.id = id;
+        this.username = username;
+        this.password = password;
+        this.score = score;
+        this.coins = coins;
+        this.games = games;
+        this.characters = characters;
+    }
+
+    public void maxScore(int value) {
+        score = Math.max(score, value);
+    }
 
     public void addCoin(int value) {
         coins += value;
     }
 
-    public void putGame(int index, Game game) {
-        games.set(index, game);
-    }
-
     public void addGame(Game game) {
         games.add(game);
+    }
+
+    public void addCharacter(Character character) {
+        characters.add(character);
     }
 
     public void removeGame(Game game) {
@@ -50,16 +60,9 @@ public class User {
         }
     }
 
-    public void addCharacter(Character character) {
-        characters.add(character);
+    public void putGame(int index, Game game) {
+        games.set(index, game);
     }
-
-    public void maximizeScore(int value) {
-        maxScore = Math.max(maxScore, value);
-    }
-
-    // Getters and setters
-
 
     public int getId() {
         return id;
@@ -85,12 +88,12 @@ public class User {
         this.password = password;
     }
 
-    public int getMaxScore() {
-        return maxScore;
+    public int getScore() {
+        return score;
     }
 
-    public void setMaxScore(int maxScore) {
-        this.maxScore = maxScore;
+    public void setScore(int score) {
+        this.score = score;
     }
 
     public int getCoins() {
@@ -101,28 +104,12 @@ public class User {
         this.coins = coins;
     }
 
-    public Game getCurrentGame() {
-        return currentGame;
-    }
-
-    public void setCurrentGame(Game currentGame) {
-        this.currentGame = currentGame;
-    }
-
     public List<Game> getGames() {
         return games;
     }
 
     public void setGames(List<Game> games) {
         this.games = games;
-    }
-
-    public Character getChosenCharacter() {
-        return chosenCharacter;
-    }
-
-    public void setChosenCharacter(Character chosenCharacter) {
-        this.chosenCharacter = chosenCharacter;
     }
 
     public List<Character> getCharacters() {
