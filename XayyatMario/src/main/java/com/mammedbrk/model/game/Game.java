@@ -69,6 +69,14 @@ public class Game {
         checkpointSaves++;
     }
 
+    public Level currentLevel() {
+        return levels.get(levelNo);
+    }
+
+    public Section currentSection() {
+        return levels.get(levelNo).getSections().get(sectionNo);
+    }
+
     public List<Level> getLevels() {
         return levels;
     }
