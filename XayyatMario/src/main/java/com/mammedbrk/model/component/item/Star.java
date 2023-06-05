@@ -42,10 +42,8 @@ public class Star extends Item implements Movable, Gravitational, Timer {
     public void move() {
         if (move)
             x = x + speed;
-        if (jump) {
+        if (jump)
             y = y + jumpSpeed; // todo may cause some bug
-            jump = false;
-        }
     }
 
     @Override
@@ -62,6 +60,7 @@ public class Star extends Item implements Movable, Gravitational, Timer {
     @Override
     public void resetGravity() {
         gravity = 0;
+        jump = false;
     }
 
     public static void setSpeed(double speed) {
