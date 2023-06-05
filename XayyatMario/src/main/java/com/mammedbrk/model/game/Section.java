@@ -1,4 +1,4 @@
-package com.mammedbrk.model;
+package com.mammedbrk.model.game;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.mammedbrk.model.component.Checkpoint;

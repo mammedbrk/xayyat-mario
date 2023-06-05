@@ -1,4 +1,4 @@
-package com.mammedbrk.model;
+package com.mammedbrk.model.game;
 
 import java.util.ArrayList;
 import java.util.List;
