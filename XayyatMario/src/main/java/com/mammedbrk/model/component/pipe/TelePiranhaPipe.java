@@ -1,7 +1,7 @@
 package com.mammedbrk.model.component.pipe;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.mammedbrk.model.Section;
+import com.mammedbrk.model.game.Section;
 import com.mammedbrk.model.component.enemy.Piranha;
 
 public class TelePiranhaPipe extends TelePipe implements Piranha {

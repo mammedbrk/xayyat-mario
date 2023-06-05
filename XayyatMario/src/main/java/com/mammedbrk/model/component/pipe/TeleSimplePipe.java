@@ -1,6 +1,6 @@
 package com.mammedbrk.model.component.pipe;
 
-import com.mammedbrk.model.Section;
+import com.mammedbrk.model.game.Section;
 
 public class TeleSimplePipe extends TelePipe {
     public TeleSimplePipe() {
