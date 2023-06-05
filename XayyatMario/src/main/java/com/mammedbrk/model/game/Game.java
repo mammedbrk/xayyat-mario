@@ -13,6 +13,7 @@ public class Game {
     private Mario mario;
     private int score;
     private int coins;
+    private int checkpointSaves;
     private int levelNo;
     private int sectionNo;
 
@@ -23,6 +24,7 @@ public class Game {
         mario = new Mario();
         score = 0;
         coins = 0;
+        checkpointSaves = 0;
         levelNo = 0;
         sectionNo = 0;
     }
@@ -34,17 +36,19 @@ public class Game {
         mario = new Mario();
         score = 0;
         coins = 0;
+        checkpointSaves = 0;
         levelNo = 0;
         sectionNo = 0;
     }
 
-    public Game(List<Level> levels, int hearts, int marioState, Mario mario, int score, int coins, int levelNo, int sectionNo) {
+    public Game(List<Level> levels, int hearts, int marioState, Mario mario, int score, int coins, int checkpointSaves, int levelNo, int sectionNo) {
         this.levels = levels;
         this.hearts = hearts;
         this.marioState = marioState;
         this.mario = mario;
         this.score = score;
         this.coins = coins;
+        this.checkpointSaves = checkpointSaves;
         this.levelNo = levelNo;
         this.sectionNo = sectionNo;
     }
@@ -59,6 +63,10 @@ public class Game {
 
     public void addScore(int value) {
         score += value;
+    }
+
+    public void increaseCheckpointSaves() {
+        checkpointSaves++;
     }
 
     public List<Level> getLevels() {
@@ -91,6 +99,30 @@ public class Game {
 
     public void setMario(Mario mario) {
         this.mario = mario;
+    }
+
+    public int getScore() {
+        return score;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
+    }
+
+    public int getCoins() {
+        return coins;
+    }
+
+    public void setCoins(int coins) {
+        this.coins = coins;
+    }
+
+    public int getCheckpointSaves() {
+        return checkpointSaves;
+    }
+
+    public void setCheckpointSaves(int checkpointSaves) {
+        this.checkpointSaves = checkpointSaves;
     }
 
     public int getLevelNo() {
