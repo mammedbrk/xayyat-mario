@@ -53,6 +53,14 @@ public class Game {
         levels.add(level);
     }
 
+    public void addCoin(int value) {
+        coins += value;
+    }
+
+    public void addScore(int value) {
+        score += value;
+    }
+
     public List<Level> getLevels() {
         return levels;
     }
