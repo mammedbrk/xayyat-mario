@@ -19,6 +19,7 @@ public class Spiny extends Enemy implements Movable, Gravitational {
     private double velocity;
 
     public Spiny() {
+        this.speed = SPEED;
     }
 
     public Spiny(double x, double y) {
