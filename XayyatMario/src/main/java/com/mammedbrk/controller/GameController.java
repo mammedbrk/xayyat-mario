@@ -1,269 +1,99 @@
 package com.mammedbrk.controller;
 
-import com.mammedbrk.access.SceneAccess;
-import com.mammedbrk.access.UserAccess;
-import com.mammedbrk.current.Current;
-import com.mammedbrk.event.CharacterCollisionEvent;
-import com.mammedbrk.event.CharacterMovementEvent;
-import com.mammedbrk.model.*;
-import com.mammedbrk.model.component.Coin;
+import com.mammedbrk.model.component.Checkpoint;
 import com.mammedbrk.model.component.Component;
+import com.mammedbrk.model.component.EmptySpace;
 import com.mammedbrk.model.component.block.Block;
-import com.mammedbrk.model.component.block.CoinBlock;
-import com.mammedbrk.model.component.block.PowerUpBlock;
 import com.mammedbrk.model.component.enemy.Enemy;
-import com.mammedbrk.view.game.TileImages;
-import javafx.scene.image.ImageView;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.mammedbrk.model.component.item.Item;
+import com.mammedbrk.model.component.pipe.Pipe;
+import com.mammedbrk.model.game.Game;
+import com.mammedbrk.model.game.Section;
+import com.mammedbrk.model.interfaces.Gravitational;
+import com.mammedbrk.model.interfaces.Movable;
+import com.mammedbrk.model.interfaces.Timer;
+import com.mammedbrk.view.game.GameView;
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.util.Duration;
 
 public class GameController {
-    private static final double WIDTH = 1300;
-    private static final double HEIGHT = 1000;
-    private final SceneAccess access = new SceneAccess();
+    private static double WIDTH;
+    private static double HEIGHT;
+    private static double FPS;
     private Game game;
-    private TileImages tileImages;
-    private Component[][] tiles;
-    private List<Enemy> enemies;
-    private CharacterMovementEvent characterMovementEvent;
+    private GameView view;
+    private Section section;
+    private int frameCount;
 
-    public GameController() {
-        this.game = Current.user.getCurrentGame();
-        tileImages = new TileImages();
-    }
-
-    // Methods
-
-    public List<ImageView> loadSection() {
-        tiles = new Component[(game.getCurrentLevel().getCurrentSection().getScenes().size() + 1) *(int) (WIDTH/ Component.TILE_SIZE)][(int) (HEIGHT/ Component.TILE_SIZE)];
-        enemies = new ArrayList<>();
-
-        Section section = Current.user.getCurrentGame().getCurrentLevel().getCurrentSection();
-
-        List<ImageView> list = new ArrayList<>();
-        for (int i = 0; i < section.getScenes().size(); i++) {
-            Scene scene = section.getScenes().get(i);
-            for (Component tile: scene.getComponents()) {
-                ImageView imgView = new ImageView(tileImages.getImage(tile.getImageAddress()));
-
-                int x = tile.getX() * Component.TILE_SIZE;
-                if (tile.getX() < (int) (WIDTH / Component.TILE_SIZE))
-                    x = tile.getX() * Component.TILE_SIZE + i * ((int) (WIDTH / Component.TILE_SIZE)) * Component.TILE_SIZE;
-                int y = tile.getY() * Component.TILE_SIZE;
-
-                imgView.setFitWidth(Component.TILE_SIZE * tile.scaleX());
-                imgView.setFitHeight(Component.TILE_SIZE * tile.scaleY());
-                imgView.setX(x);
-                imgView.setY(y);
-                imgView.setVisible(true);
-
-                if (tile instanceof Enemy)
-                    enemies.add((Enemy) tile);
-                else
-                    tiles[x / Component.TILE_SIZE][y / Component.TILE_SIZE] = tile;
-                tile.setX(x / Component.TILE_SIZE);
-                tile.setY(y / Component.TILE_SIZE);
-
-                list.add(imgView);
-            }
-        }
-        return list;
-    }
-
-
-    public CharacterMovementEvent moveAndCollision(CharacterCollisionEvent characterCollisionEvent) {
-        double dx = characterCollisionEvent.getDx();
-        double dy = characterCollisionEvent.getDy();
-        double xFront = characterCollisionEvent.getxFront();
-        double xBack = characterCollisionEvent.getxBack();
-        double yFront = characterCollisionEvent.getyFront();
-        double yBack = characterCollisionEvent.getyBack();
-
-        game.getCurrentLevel().getCurrentSection().setX((int) (xBack / Component.TILE_SIZE));
-        game.getCurrentLevel().getCurrentSection().setY((int) (yBack / Component.TILE_SIZE));
-
-        characterMovementEvent = new CharacterMovementEvent();
-        characterMovementEvent.setDx(dx);
-        characterMovementEvent.setDy(dy);
-
-        if (xBack > game.getCurrentLevel().getCurrentSection().getScenes().size() * ((int) (WIDTH / Component.TILE_SIZE)) * Component.TILE_SIZE) {
-            readNextSection();
-
-            characterMovementEvent.setLoadNeeded(true);
-            characterMovementEvent.setDx(0);
-        }
-
-        if (occupied(xFront, yFront + characterCollisionEvent.getDy()) instanceof Block
-                || occupied(xBack, yFront + characterMovementEvent.getDy()) instanceof Block) {
-            characterMovementEvent.setDy(0);
-            characterMovementEvent.setCanJump(true);
-        }
-
-        if (occupied(xFront + characterMovementEvent.getDx(), yFront + characterMovementEvent.getDy()) instanceof Block
-                || occupied(xFront + characterMovementEvent.getDx(), yBack + characterMovementEvent.getDy()) instanceof Block) {
-            characterMovementEvent.setDx(0);
-        }
-
-        // While jumping,
-        if (dy < 0) {
-            // Check if PowerUpBlock:
-            if (occupied(xFront, yFront + dy) instanceof PowerUpBlock) {
-                characterMovementEvent.setPowerUp(true);
-                characterMovementEvent.setRemovedTile(occupied(xFront, yFront + dy));
-                removeTile(occupied(xFront, yFront + dy));
-                System.out.println("pwrUp");
-            }
-            else if (occupied(xBack, yFront + dy) instanceof PowerUpBlock) {
-                characterMovementEvent.setPowerUp(true);
-                characterMovementEvent.setRemovedTile(occupied(xBack, yFront + dy));
-                removeTile(occupied(xBack, yFront + dy));
-                System.out.println("pwrUp");
-            }
-
-            // Check if CoinBlock:
-            if (occupied(xFront, yFront + dy) instanceof CoinBlock) {
-                game.getCurrentLevel().getCurrentSection().addCoin(((CoinBlock) occupied(xFront, yFront + dy)).getValue());
-                ((CoinBlock) occupied(xFront, yFront + dy)).setValue(0);
-            }
-            else if (occupied(xBack, yFront + dy) instanceof CoinBlock) {
-                game.getCurrentLevel().getCurrentSection().addCoin(((CoinBlock) occupied(xBack, yFront + dy)).getValue());
-                ((CoinBlock) occupied(xBack, yFront + dy)).setValue(0);
-            }
-        }
-
-        // Check if Coin:
-        if (occupied((xBack + xFront) / 2 + characterMovementEvent.getDx(), (yBack + yFront) / 2 + characterMovementEvent.getDy()) instanceof Coin) {
-            game.getCurrentLevel().getCurrentSection().addCoin(((Coin) occupied((xBack + xFront) / 2 + characterMovementEvent.getDx(), (yBack + yFront) / 2 + characterMovementEvent.getDy())).getValue());
-            characterMovementEvent.setRemovedTile(occupied((xBack + xFront) / 2 + characterMovementEvent.getDx(), (yBack + yFront) / 2 + characterMovementEvent.getDy()));
-            game.getCurrentLevel().getCurrentSection().getScenes().get((int) ((xBack / Component.TILE_SIZE) / WIDTH)).getComponents().remove(occupied((xBack + xFront) / 2 + characterMovementEvent.getDx(), (yBack + yFront) / 2 + characterMovementEvent.getDy()));
-            removeTile(occupied((xBack + xFront) / 2 + characterMovementEvent.getDx(), (yBack + yFront) / 2 + characterMovementEvent.getDy()));
-
-            game.getCurrentLevel().getCurrentSection().addScore(10);
-        }
-
-        // Lose with enemies
-        for (Enemy enemy: enemies) {
-            if ((int) (xFront / Component.TILE_SIZE) == enemy.getxCurrent() && (int) ((yBack + yFront) / 2 / Component.TILE_SIZE) == enemy.getyCurrent()) {
-                readFirstSection();
-                game.reduceHeart();
-                if (game.getHearts() == 0) {
-                    finishGame();
-                }
-                characterMovementEvent.setLoadNeeded(true);
-            }
-        }
-
-        // Lose when fall down
-        if (yFront > HEIGHT - 100) {
-            readFirstSection();
-            game.reduceHeart();
-            if (game.getHearts() == 0) {
-                finishGame();
-            }
-            characterMovementEvent.setDy(0);
-            characterMovementEvent.setLoadNeeded(true);
-        }
-
-        return characterMovementEvent;
-    }
-
-    private Component occupied(double x, double y) {
-        return tiles[(int) (x/ Component.TILE_SIZE)][(int) (y/ Component.TILE_SIZE)];
-    }
-
-    private void removeTile(Component tile) {
-        tiles[tile.getX()][tile.getY()] = null;
-    }
-
-    public void finishGame() {
-        characterMovementEvent.setFinished(true);
-        Current.user.addCoin(game.getCoins());
-        Current.user.maximizeScore(game.getScore());
-        Current.user.removeGame(game);
-        new UserAccess().add(Current.user);
-    }
-
-    private void readNextSection() {
-        game.getCurrentLevel().addCoin(game.getCurrentLevel().getCurrentSection().getCoins());
-        game.getCurrentLevel().addScore(game.getCurrentLevel().getCurrentSection().getScore());
-        game.getCurrentLevel().addScore(game.getHearts() * 20);
-        game.getCurrentLevel().addScore(game.getCurrentLevel().getCurrentSection().getTime());
-
-        int sectionNo = game.getCurrentLevel().getCurrentSection().getNo();
-        int levelNo = game.getCurrentLevel().getNo();
-
-        Section section = new Section();
-        section.setTime(120);
-        if (access.exists(levelNo, ++sectionNo)) {
-            section.setNo(sectionNo);
-            section.setScenes(new ArrayList<>());
-            for (int sceneNo = 1; ; sceneNo++) {
-                Scene scene = new SceneAccess().get(levelNo, sectionNo, sceneNo);
-                if (scene == null) break;
-                section.addScene(scene);
-            }
-            section.setX(2);
-            section.setY(5);
-            game.getCurrentLevel().setCurrentSection(section);
-            return;
-        }
-
-        game.addCoin(game.getCurrentLevel().getCoins());
-        game.addScore(game.getCurrentLevel().getScore());
-
-        if (access.exists(++levelNo, sectionNo = 1)) {
-            section.setNo(sectionNo);
-            section.setScenes(new ArrayList<>());
-            for (int sceneNo = 1; ; sceneNo++) {
-                Scene scene = new SceneAccess().get(levelNo, sectionNo, sceneNo);
-                if (scene == null) break;
-                section.addScene(scene);
-            }
-            section.setX(2);
-            section.setY(5);
-            Level level = new Level();
-            level.setNo(levelNo);
-            level.setCurrentSection(section);
-            game.setCurrentLevel(level);
-            return;
-        }
-
-        finishGame();
-    }
-
-    public void readFirstSection() {
-        Section section = new Section(Current.user.getCurrentGame().getCurrentLevel().getCurrentSection().getTime());
-        section.setNo(1);
-        section.setTime(120);
-        section.setScenes(new ArrayList<>());
-        for (int sceneNo = 1; ; sceneNo++) {
-            Scene scene = new SceneAccess().get(game.getCurrentLevel().getNo(), 1, sceneNo);
-            if (scene == null) break;
-            section.addScene(scene);
-        }
-        section.setX(2);
-        section.setY(5);
-        game.getCurrentLevel().setCurrentSection(section);
-        game.getCurrentLevel().setCoins(0);
-        game.getCurrentLevel().setScore(0);
-    }
-
-    // Getters and setters
-
-    public Game getGame() {
-        return game;
-    }
-
-    public void setGame(Game game) {
+    public GameController(Game game, GameView view) {
         this.game = game;
+        this.view = view;
+        this.section = game.currentSection();
+        gameLoop.setCycleCount(Animation.INDEFINITE);
+        gameLoop.play();
     }
 
-    public TileImages getTileImages() {
-        return tileImages;
+    private Timeline gameLoop = new Timeline(new KeyFrame(Duration.millis(1000 / FPS), event -> {
+        frameCount++;
+        view.handleInput();
+        // doCharacterOperations();
+        update();
+        // doCollisionDetection();
+        view.render(game);
+    }));
+
+    private void update() {
+        // todo move mario
+
+        for (Block block: section.getBlocks()) {
+            method(block);
+        }
+        for (Enemy enemy: section.getEnemies()) {
+            method(enemy);
+        }
+        for (Pipe pipe: section.getPipes()) {
+            method(pipe);
+        }
+        for (Item item: section.getItems()) {
+            method(item);
+        }
+        for (Checkpoint checkpoint: section.getCheckpoints()) {
+            method(checkpoint);
+        }
+        for (EmptySpace space: section.getSpaces()) {
+            method(space);
+        }
+
+        // todo collision detection and other updates
+        //  reset gravity if landed
+        //  change blocks if hit
+        //  remove enemies if killed
     }
 
-    public void setTileImages(TileImages tileImages) {
-        this.tileImages = tileImages;
+    private void method(Component component) {
+        if (component instanceof Movable)
+            ((Movable) component).move();
+
+        if (component instanceof Gravitational)
+            ((Gravitational) component).applyGravity();
+
+        if (frameCount >= 1000 / FPS && component instanceof Timer) {
+            frameCount = 0;
+            ((Timer) component).changeTime();
+        }
+    }
+
+    public static void setWIDTH(double WIDTH) {
+        GameController.WIDTH = WIDTH;
+    }
+
+    public static void setHEIGHT(double HEIGHT) {
+        GameController.HEIGHT = HEIGHT;
+    }
+
+    public static void setFPS(double FPS) {
+        GameController.FPS = FPS;
     }
 }
