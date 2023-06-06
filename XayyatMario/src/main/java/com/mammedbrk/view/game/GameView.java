@@ -7,8 +7,15 @@ import com.mammedbrk.listener.CharacterCollisionListener;
 import com.mammedbrk.listener.SectionLoadListener;
 import com.mammedbrk.listener.StringListener;
 import com.mammedbrk.model.Scene;
+import com.mammedbrk.model.component.Checkpoint;
 import com.mammedbrk.model.component.Component;
+import com.mammedbrk.model.component.EmptySpace;
+import com.mammedbrk.model.component.block.Block;
 import com.mammedbrk.model.component.enemy.Enemy;
+import com.mammedbrk.model.component.item.Item;
+import com.mammedbrk.model.component.pipe.Pipe;
+import com.mammedbrk.model.game.Game;
+import com.mammedbrk.model.game.Section;
 import javafx.animation.AnimationTimer;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -83,6 +90,35 @@ public class GameView extends Pane {
 
         // Load section graphics
         loadSectionGraphics();
+    }
+
+    public void render(Game game) {
+        Section section = game.currentSection();
+
+        this.getChildren().add(getImageView(game.getMario()));
+        for (Block block: section.getBlocks())
+            this.getChildren().add(getImageView(block));
+        for (Enemy enemy: section.getEnemies())
+            this.getChildren().add(getImageView(enemy));
+        for (Pipe pipe: section.getPipes())
+            this.getChildren().add(getImageView(pipe));
+        for (Item item: section.getItems())
+            this.getChildren().add(getImageView(item));
+        for (EmptySpace space: section.getSpaces())
+            this.getChildren().add(getImageView(space));
+        for (Checkpoint checkpoint: section.getCheckpoints())
+            this.getChildren().add(getImageView(checkpoint));
+    }
+
+    private ImageView getImageView(Component component) {
+        ImageView imageView = new ImageView();
+        imageView.setImage(ComponentImageFactory.getImage(component.getClass().getSimpleName()));
+        imageView.setX(component.getX() * Component.SIZE);
+        imageView.setX(HEIGHT - component.getY() * Component.SIZE);
+        imageView.setFitWidth(Component.SIZE);
+        imageView.setFitHeight(Component.SIZE);
+        // todo reverse if speed is negative
+        return imageView;
     }
 
     public void loadSectionGraphics() {
