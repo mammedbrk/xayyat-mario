@@ -1,5 +1,6 @@
 package com.mammedbrk.controller;
 
+import com.mammedbrk.event.MovementEvent;
 import com.mammedbrk.model.component.Checkpoint;
 import com.mammedbrk.model.component.Component;
 import com.mammedbrk.model.component.EmptySpace;
@@ -24,28 +25,37 @@ public class GameController {
     private static double FPS;
     private Game game;
     private GameView view;
-    private Section section;
     private int frameCount;
 
     public GameController(Game game, GameView view) {
         this.game = game;
         this.view = view;
-        this.section = game.currentSection();
         gameLoop.setCycleCount(Animation.INDEFINITE);
         gameLoop.play();
     }
 
     private Timeline gameLoop = new Timeline(new KeyFrame(Duration.millis(1000 / FPS), event -> {
         frameCount++;
-        view.handleInput();
-        // doCharacterOperations();
-        update();
+        MovementEvent movementEvent = view.handleInput();
+        update(movementEvent);
         // doCollisionDetection();
         view.render(game);
     }));
 
-    private void update() {
-        // todo move mario
+    private void moveMario(MovementEvent movementEvent) {
+        if (movementEvent.isMove()) {
+            game.getMario().setMove(true);
+            game.getMario().setLeft(movementEvent.isLeft());
+            game.getMario().move();
+        } else game.getMario().setMove(false);
+        if (movementEvent.isJump())
+            game.getMario().setJump(true);
+    }
+
+    private void update(MovementEvent movementEvent) {
+        Section section = game.currentSection();
+
+        moveMario(movementEvent);
 
         for (Block block: section.getBlocks()) {
             method(block);
