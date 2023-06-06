@@ -60,4 +60,8 @@ public class Mushroom extends Item implements Gravitational, Movable, Timer {
     public static void setSpeed(double speed) {
         Mushroom.speed = speed;
     }
+
+    public static double getSpeed() {
+        return speed;
+    }
 }
