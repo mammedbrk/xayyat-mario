@@ -10,7 +10,9 @@ import java.util.Random;
 
 public class Spiny extends Enemy implements Movable, Gravitational {
     @JsonIgnore
-    private static double speed;
+    private static double SPEED;
+    @JsonIgnore
+    private double speed;
     @JsonIgnore
     private double gravity;
     private boolean marioCheck;
@@ -21,6 +23,7 @@ public class Spiny extends Enemy implements Movable, Gravitational {
 
     public Spiny(double x, double y) {
         super(x, y);
+        this.speed = SPEED;
     }
 
     public Spiny(double x, double y, boolean marioCheck, double velocity) {
@@ -57,8 +60,8 @@ public class Spiny extends Enemy implements Movable, Gravitational {
         gravity = 0;
     }
 
-    public static void setSpeed(double speed) {
-        Spiny.speed = speed;
+    public static void setSPEED(double SPEED) {
+        Spiny.SPEED = SPEED;
     }
 
     public void setMarioCheck(boolean marioCheck) {

@@ -11,6 +11,9 @@ import com.mammedbrk.model.component.Component;
         property = "type"
 )
 @JsonSubTypes({
+        @JsonSubTypes.Type(value = Goomba.class, name = "GOOMBA"),
+        @JsonSubTypes.Type(value = Koopa.class, name = "KOOPA"),
+        @JsonSubTypes.Type(value = Spiny.class, name = "SPINY")
 })
 public abstract class Enemy extends Component {
     @JsonIgnore
