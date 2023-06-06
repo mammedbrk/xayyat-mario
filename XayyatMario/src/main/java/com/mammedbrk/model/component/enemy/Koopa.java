@@ -11,7 +11,9 @@ import java.util.Random;
 
 public class Koopa extends Enemy implements Movable, Gravitational, Hittable, Timer {
     @JsonIgnore
-    private static double speed;
+    private static double SPEED;
+    @JsonIgnore
+    private double speed;
     @JsonIgnore
     private double gravity;
     private boolean hit;
@@ -22,6 +24,7 @@ public class Koopa extends Enemy implements Movable, Gravitational, Hittable, Ti
 
     public Koopa(double x, double y) {
         super(x, y);
+        this.speed = SPEED;
     }
 
     public Koopa(double x, double y, boolean hit, long time) {
@@ -68,8 +71,8 @@ public class Koopa extends Enemy implements Movable, Gravitational, Hittable, Ti
         x = x + (direction? 1: -1);
     }
 
-    public static void setSpeed(double speed) {
-        Koopa.speed = speed;
+    public static void setSPEED(double SPEED) {
+        Koopa.SPEED = SPEED;
     }
 
     @Override

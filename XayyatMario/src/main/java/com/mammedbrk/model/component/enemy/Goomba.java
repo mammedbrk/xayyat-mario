@@ -8,7 +8,9 @@ import com.mammedbrk.model.interfaces.Movable;
 
 public class Goomba extends Enemy implements Movable, Gravitational, Hittable {
     @JsonIgnore
-    private static double speed;
+    private static double SPEED;
+    @JsonIgnore
+    private double speed;
     @JsonIgnore
     private double gravity;
 
@@ -17,6 +19,7 @@ public class Goomba extends Enemy implements Movable, Gravitational, Hittable {
 
     public Goomba(double x, double y) {
         super(x, y);
+        this.speed = SPEED;
     }
 
     @Override
@@ -45,7 +48,7 @@ public class Goomba extends Enemy implements Movable, Gravitational, Hittable {
         die();
     }
 
-    public static void setSpeed(double speed) {
-        Goomba.speed = speed;
+    public static void setSPEED(double SPEED) {
+        Goomba.SPEED = SPEED;
     }
 }
