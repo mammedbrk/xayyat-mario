@@ -94,4 +94,8 @@ public class Star extends Item implements Movable, Gravitational, Timer {
     public void setJump(boolean jump) {
         this.jump = jump;
     }
+
+    public static double getSpeed() {
+        return speed;
+    }
 }

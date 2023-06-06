@@ -98,4 +98,8 @@ public class Koopa extends Enemy implements Movable, Gravitational, Hittable, Ti
     public void setTime(long time) {
         this.time = time;
     }
+
+    public double getSpeed() {
+        return speed;
+    }
 }

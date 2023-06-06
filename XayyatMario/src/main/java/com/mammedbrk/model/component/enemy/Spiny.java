@@ -80,4 +80,8 @@ public class Spiny extends Enemy implements Movable, Gravitational {
     public void setVelocity(double velocity) {
         this.velocity = velocity;
     }
+
+    public double getSpeed() {
+        return speed;
+    }
 }
