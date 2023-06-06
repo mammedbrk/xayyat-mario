@@ -20,6 +20,7 @@ public class Koopa extends Enemy implements Movable, Gravitational, Hittable, Ti
     private long time;
 
     public Koopa() {
+        this.speed = SPEED;
     }
 
     public Koopa(double x, double y) {

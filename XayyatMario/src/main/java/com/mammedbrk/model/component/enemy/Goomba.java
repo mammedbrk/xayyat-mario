@@ -15,6 +15,7 @@ public class Goomba extends Enemy implements Movable, Gravitational, Hittable {
     private double gravity;
 
     public Goomba() {
+        this.speed = SPEED;
     }
 
     public Goomba(double x, double y) {
