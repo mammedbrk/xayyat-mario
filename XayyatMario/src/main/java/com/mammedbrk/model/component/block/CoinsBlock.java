@@ -3,7 +3,7 @@ package com.mammedbrk.model.component.block;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.mammedbrk.model.interfaces.Changeable;
 
-public class CoinsBlock extends Block implements Changeable<EmptyBlock> {
+public class CoinsBlock extends Block implements Changeable<Block> {
     @JsonIgnore
     private static int coinsCount;
     private int hitCount;
@@ -18,10 +18,6 @@ public class CoinsBlock extends Block implements Changeable<EmptyBlock> {
     public CoinsBlock(double x, double y, int hitCount) {
         super(x, y);
         this.hitCount = hitCount;
-    }
-
-    public void increaseHitCount() {
-        hitCount++;
     }
 
     public boolean hasCoins() {
@@ -41,7 +37,14 @@ public class CoinsBlock extends Block implements Changeable<EmptyBlock> {
     }
 
     @Override
-    public EmptyBlock changedObject() {
+    public Block changedObject() {
+        if (hasCoins()) return this;
         return new EmptyBlock(x, y);
+    }
+
+    @Override
+    public void hit() {
+        if (hasCoins())
+            hitCount++;
     }
 }

@@ -15,7 +15,7 @@ public class Goomba extends Enemy implements Movable, Gravitational, Hittable {
     private double gravity;
 
     public Goomba() {
-        this.speed = SPEED;
+        speed = SPEED;
     }
 
     public Goomba(double x, double y) {
@@ -51,9 +51,5 @@ public class Goomba extends Enemy implements Movable, Gravitational, Hittable {
 
     public static void setSPEED(double SPEED) {
         Goomba.SPEED = SPEED;
-    }
-
-    public double getSpeed() {
-        return speed;
     }
 }

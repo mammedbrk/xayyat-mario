@@ -3,10 +3,7 @@ package com.mammedbrk.model.component.enemy;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.mammedbrk.current.Current;
 import com.mammedbrk.model.interfaces.Gravitational;
-import com.mammedbrk.model.interfaces.Hittable;
 import com.mammedbrk.model.interfaces.Movable;
-
-import java.util.Random;
 
 public class Spiny extends Enemy implements Movable, Gravitational {
     @JsonIgnore
@@ -19,7 +16,7 @@ public class Spiny extends Enemy implements Movable, Gravitational {
     private double velocity;
 
     public Spiny() {
-        this.speed = SPEED;
+        speed = SPEED;
     }
 
     public Spiny(double x, double y) {
@@ -79,9 +76,5 @@ public class Spiny extends Enemy implements Movable, Gravitational {
 
     public void setVelocity(double velocity) {
         this.velocity = velocity;
-    }
-
-    public double getSpeed() {
-        return speed;
     }
 }

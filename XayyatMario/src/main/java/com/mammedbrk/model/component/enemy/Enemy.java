@@ -20,6 +20,7 @@ public abstract class Enemy extends Component {
     protected boolean alive;
 
     public Enemy() {
+        alive = true;
     }
 
     public Enemy(double x, double y) {
@@ -29,6 +30,7 @@ public abstract class Enemy extends Component {
 
     public void die() {
         alive = false;
+        System.out.println(this);
     }
 
     public boolean isAlive() {
