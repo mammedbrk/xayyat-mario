@@ -26,4 +26,9 @@ public class CoinBlock extends Block implements Changeable<SimpleBlock> {
     public SimpleBlock changedObject() {
         return new SimpleBlock(x, y);
     }
+
+    @Override
+    public void hit() {
+        hit = true;
+    }
 }

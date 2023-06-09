@@ -3,7 +3,6 @@ package com.mammedbrk.model.game;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.mammedbrk.model.component.Checkpoint;
 import com.mammedbrk.model.component.Component;
-import com.mammedbrk.model.component.EmptySpace;
 import com.mammedbrk.model.component.block.Block;
 import com.mammedbrk.model.component.enemy.Enemy;
 import com.mammedbrk.model.component.item.Item;
@@ -22,7 +21,6 @@ public class Section {
     private List<Pipe> pipes;
     private List<Item> items;
     private List<Checkpoint> checkpoints;
-    private List<EmptySpace> spaces;
     private Pipe spawnPipe;
 
     public Section() {
@@ -31,7 +29,6 @@ public class Section {
         this.pipes = new ArrayList<>();
         this.items = new ArrayList<>();
         this.checkpoints = new ArrayList<>();
-        this.spaces = new ArrayList<>();
     }
 
     public Section(int length, int time) {
@@ -48,7 +45,6 @@ public class Section {
         this.pipes = pipes;
         this.items = new ArrayList<>();
         this.checkpoints = new ArrayList<>();
-        this.spaces = new ArrayList<>();
     }
 
     public Section(int length, int time, List<Block> blocks, List<Enemy> enemies, List<Pipe> pipes, Pipe spawnPipe) {
@@ -60,10 +56,9 @@ public class Section {
         this.spawnPipe = spawnPipe;
         this.items = new ArrayList<>();
         this.checkpoints = new ArrayList<>();
-        this.spaces = new ArrayList<>();
     }
 
-    public Section(int length, int time, List<Block> blocks, List<Enemy> enemies, List<Pipe> pipes, List<Item> items, List<Checkpoint> checkpoints, List<EmptySpace> spaces, Pipe spawnPipe) {
+    public Section(int length, int time, List<Block> blocks, List<Enemy> enemies, List<Pipe> pipes, List<Item> items, List<Checkpoint> checkpoints, Pipe spawnPipe) {
         this.length = length;
         this.time = time;
         this.blocks = blocks;
@@ -71,7 +66,6 @@ public class Section {
         this.pipes = pipes;
         this.items = items;
         this.checkpoints = checkpoints;
-        this.spaces = spaces;
         this.spawnPipe = spawnPipe;
     }
 
@@ -160,14 +154,6 @@ public class Section {
 
     public void setCheckpoints(List<Checkpoint> checkpoints) {
         this.checkpoints = checkpoints;
-    }
-
-    public List<EmptySpace> getSpaces() {
-        return spaces;
-    }
-
-    public void setSpaces(List<EmptySpace> spaces) {
-        this.spaces = spaces;
     }
 
     public static void setHEIGHT(int HEIGHT) {

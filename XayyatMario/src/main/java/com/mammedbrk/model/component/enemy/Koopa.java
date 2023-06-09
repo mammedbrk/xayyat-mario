@@ -20,7 +20,7 @@ public class Koopa extends Enemy implements Movable, Gravitational, Hittable, Ti
     private long time;
 
     public Koopa() {
-        this.speed = SPEED;
+        speed = SPEED;
     }
 
     public Koopa(double x, double y) {
@@ -80,7 +80,9 @@ public class Koopa extends Enemy implements Movable, Gravitational, Hittable, Ti
     public void changeTime() {
         if (time < 3)
             time++;
-        else hit = false;
+        else {
+            hit = false;
+        }
     }
 
     public boolean isHit() {
@@ -97,9 +99,5 @@ public class Koopa extends Enemy implements Movable, Gravitational, Hittable, Ti
 
     public void setTime(long time) {
         this.time = time;
-    }
-
-    public double getSpeed() {
-        return speed;
     }
 }

@@ -4,8 +4,6 @@ import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.mammedbrk.model.component.Component;
 
-import java.nio.channels.Pipe;
-
 @JsonTypeInfo(
         use = JsonTypeInfo.Id.NAME,
         include = JsonTypeInfo.As.PROPERTY,
@@ -24,5 +22,10 @@ public abstract class Block extends Component {
 
     public Block(double x, double y) {
         super(x, y);
+    }
+
+    @Override
+    public String getType() {
+        return this.getClass().getSimpleName();
     }
 }

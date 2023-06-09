@@ -41,4 +41,9 @@ public class QuestionBlock extends Block implements Changeable<EmptyBlock> {
     public EmptyBlock changedObject() {
         return new EmptyBlock(x, y);
     }
+
+    @Override
+    public void hit() {
+        hit = true;
+    }
 }
