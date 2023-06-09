@@ -85,6 +85,7 @@ public class Koopa extends Enemy implements Movable, Gravitational, Hittable, Ti
         }
     }
 
+    @Override
     public boolean isHit() {
         return hit;
     }

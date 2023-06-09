@@ -47,4 +47,9 @@ public class CoinsBlock extends Block implements Changeable<Block> {
         if (hasCoins())
             hitCount++;
     }
+
+    @Override
+    public boolean isHit() {
+        return !hasCoins();
+    }
 }
