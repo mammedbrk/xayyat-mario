@@ -15,7 +15,8 @@ public abstract class Component {
         this.y = y;
     }
 
-    // Getters and setters
+    @JsonIgnore
+    public abstract String getType();
 
     public double getX() {
         return x;

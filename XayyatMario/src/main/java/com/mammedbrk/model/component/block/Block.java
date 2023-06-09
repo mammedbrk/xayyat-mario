@@ -23,4 +23,9 @@ public abstract class Block extends Component {
     public Block(double x, double y) {
         super(x, y);
     }
+
+    @Override
+    public String getType() {
+        return this.getClass().getSimpleName();
+    }
 }

@@ -28,6 +28,11 @@ public abstract class Enemy extends Component {
         alive = true;
     }
 
+    @Override
+    public String getType() {
+        return this.getClass().getSimpleName();
+    }
+
     public void die() {
         alive = false;
         System.out.println(this);

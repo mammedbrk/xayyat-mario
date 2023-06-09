@@ -16,6 +16,11 @@ public class Checkpoint extends Component implements Gravitational {
     }
 
     @Override
+    public String getType() {
+        return this.getClass().getSimpleName();
+    }
+
+    @Override
     public void applyGravity() {
         gravity = gravity + Current.gravity; // todo
         y += gravity;

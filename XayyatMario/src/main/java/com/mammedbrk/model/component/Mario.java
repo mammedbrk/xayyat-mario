@@ -33,6 +33,11 @@ public class Mario extends Component implements Movable, Gravitational {
     }
 
     @Override
+    public String getType() {
+        return this.getClass().getSimpleName();
+    }
+
+    @Override
     public void move() {
         if (move)
             x = x + (left? -speed: speed);

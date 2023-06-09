@@ -22,4 +22,9 @@ public abstract class Pipe extends Component {
     public Pipe(double x, double y) {
         super(x, y);
     }
+
+    @Override
+    public String getType() {
+        return this.getClass().getSimpleName();
+    }
 }
