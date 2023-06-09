@@ -14,16 +14,13 @@ public class SimpleBlock extends Block implements Hittable {
         super(x, y);
     }
 
-    public boolean isHit() {
-        return hit;
-    }
-
-    public void setHit(boolean hit) {
-        this.hit = hit;
-    }
-
     @Override
     public void hit() {
         hit = true;
+    }
+
+    @Override
+    public boolean isHit() {
+        return hit;
     }
 }

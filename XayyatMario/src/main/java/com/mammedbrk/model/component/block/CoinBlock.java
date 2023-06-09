@@ -14,14 +14,6 @@ public class CoinBlock extends Block implements Changeable<SimpleBlock> {
         super(x, y);
     }
 
-    public boolean isHit() {
-        return hit;
-    }
-
-    public void setHit(boolean hit) {
-        this.hit = hit;
-    }
-
     @Override
     public SimpleBlock changedObject() {
         return new SimpleBlock(x, y);
@@ -30,5 +22,10 @@ public class CoinBlock extends Block implements Changeable<SimpleBlock> {
     @Override
     public void hit() {
         hit = true;
+    }
+
+    @Override
+    public boolean isHit() {
+        return hit;
     }
 }
