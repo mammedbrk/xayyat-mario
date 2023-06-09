@@ -29,14 +29,6 @@ public class QuestionBlock extends Block implements Changeable<EmptyBlock> {
         this.item = item;
     }
 
-    public boolean isHit() {
-        return hit;
-    }
-
-    public void setHit(boolean hit) {
-        this.hit = hit;
-    }
-
     @Override
     public EmptyBlock changedObject() {
         return new EmptyBlock(x, y);
@@ -45,5 +37,10 @@ public class QuestionBlock extends Block implements Changeable<EmptyBlock> {
     @Override
     public void hit() {
         hit = true;
+    }
+
+    @Override
+    public boolean isHit() {
+        return hit;
     }
 }

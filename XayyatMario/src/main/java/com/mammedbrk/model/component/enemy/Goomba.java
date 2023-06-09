@@ -49,6 +49,11 @@ public class Goomba extends Enemy implements Movable, Gravitational, Hittable {
         die();
     }
 
+    @Override
+    public boolean isHit() {
+        return false;
+    }
+
     public static void setSPEED(double SPEED) {
         Goomba.SPEED = SPEED;
     }
