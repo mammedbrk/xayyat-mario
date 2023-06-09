@@ -1,18 +1,16 @@
 package com.mammedbrk.controller;
 
+import com.mammedbrk.controller.collision.*;
 import com.mammedbrk.event.MovementEvent;
 import com.mammedbrk.model.component.Checkpoint;
 import com.mammedbrk.model.component.Component;
-import com.mammedbrk.model.component.EmptySpace;
 import com.mammedbrk.model.component.block.Block;
 import com.mammedbrk.model.component.enemy.Enemy;
 import com.mammedbrk.model.component.item.Item;
 import com.mammedbrk.model.component.pipe.Pipe;
 import com.mammedbrk.model.game.Game;
 import com.mammedbrk.model.game.Section;
-import com.mammedbrk.model.interfaces.Gravitational;
-import com.mammedbrk.model.interfaces.Movable;
-import com.mammedbrk.model.interfaces.Timer;
+import com.mammedbrk.model.interfaces.*;
 import com.mammedbrk.view.game.GameView;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
@@ -25,11 +23,13 @@ public class GameController {
     private static double FPS;
     private Game game;
     private GameView view;
+    private CollisionManager collisionManager;
     private int frameCount;
 
     public GameController(Game game, GameView view) {
         this.game = game;
         this.view = view;
+        this.collisionManager = new CollisionManager();
         gameLoop.setCycleCount(Animation.INDEFINITE);
         gameLoop.play();
     }
@@ -38,61 +38,82 @@ public class GameController {
         frameCount++;
         MovementEvent movementEvent = view.handleInput();
         update(movementEvent);
-        // doCollisionDetection();
         view.render(game);
+        if (frameCount > FPS)
+            frameCount = 0;
     }));
+
+
+    private void update(MovementEvent movementEvent) {
+        updateStates(movementEvent);
+        handleCollisions();
+    }
+
+    private void updateStates(MovementEvent movementEvent) {
+        Section section = game.currentSection();
+
+        moveMario(movementEvent);
+        for (Block block: section.getBlocks())
+            updateComponentState(block);
+        for (Enemy enemy: section.getEnemies())
+            updateComponentState(enemy);
+        for (Pipe pipe: section.getPipes())
+            updateComponentState(pipe);
+        for (Item item: section.getItems())
+            updateComponentState(item);
+        for (Checkpoint checkpoint: section.getCheckpoints())
+            updateComponentState(checkpoint);
+    }
+
+    private void handleCollisions() {
+        Section section = game.currentSection();
+
+        for (Block block: section.getBlocks()) {
+            collisionManager.handleCollision(game.getMario(), block);
+            for (Enemy enemy: section.getEnemies())
+                collisionManager.handleCollision(enemy, block);
+            for (Item item: section.getItems())
+                collisionManager.handleCollision(item, block);
+        }
+        for (Pipe pipe: section.getPipes()) {
+            collisionManager.handleCollision(game.getMario(), pipe);
+            for (Enemy enemy: section.getEnemies())
+                collisionManager.handleCollision(enemy, pipe);
+            for (Item item: section.getItems())
+                collisionManager.handleCollision(item, pipe);
+        }
+        for (Checkpoint checkpoint: section.getCheckpoints()) {
+            collisionManager.handleCollision(game.getMario(), checkpoint);
+        }
+        for (Enemy enemy: section.getEnemies()) {
+            collisionManager.handleCollision(game.getMario(), enemy);
+            for (Enemy enemy2: section.getEnemies())
+                if (!enemy.equals(enemy2))
+                    collisionManager.handleCollision(enemy, enemy2);
+        }
+        for (Item item: section.getItems()) {
+            collisionManager.handleCollision(game.getMario(), item);
+        }
+    }
 
     private void moveMario(MovementEvent movementEvent) {
         if (movementEvent.isMove()) {
             game.getMario().setMove(true);
             game.getMario().setLeft(movementEvent.isLeft());
-            game.getMario().move();
         } else game.getMario().setMove(false);
         if (movementEvent.isJump())
             game.getMario().setJump(true);
+        game.getMario().move();
+        game.getMario().applyGravity();
     }
 
-    private void update(MovementEvent movementEvent) {
-        Section section = game.currentSection();
-
-        moveMario(movementEvent);
-
-        for (Block block: section.getBlocks()) {
-            method(block);
-        }
-        for (Enemy enemy: section.getEnemies()) {
-            method(enemy);
-        }
-        for (Pipe pipe: section.getPipes()) {
-            method(pipe);
-        }
-        for (Item item: section.getItems()) {
-            method(item);
-        }
-        for (Checkpoint checkpoint: section.getCheckpoints()) {
-            method(checkpoint);
-        }
-        for (EmptySpace space: section.getSpaces()) {
-            method(space);
-        }
-
-        // todo collision detection and other updates
-        //  reset gravity if landed
-        //  change blocks if hit
-        //  remove enemies if killed
-    }
-
-    private void method(Component component) {
-        if (component instanceof Movable)
-            ((Movable) component).move();
-
+    private void updateComponentState(Component component) {
         if (component instanceof Gravitational)
             ((Gravitational) component).applyGravity();
-
-        if (frameCount >= 1000 / FPS && component instanceof Timer) {
-            frameCount = 0;
+        if (component instanceof Movable)
+            ((Movable) component).move();
+        if (component instanceof Timer && frameCount > FPS)
             ((Timer) component).changeTime();
-        }
     }
 
     public static void setWIDTH(double WIDTH) {
@@ -105,5 +126,9 @@ public class GameController {
 
     public static void setFPS(double FPS) {
         GameController.FPS = FPS;
+    }
+
+    public void setCollisionManager(CollisionManager collisionManager) {
+        this.collisionManager = collisionManager;
     }
 }

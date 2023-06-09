@@ -1,7 +1,5 @@
 package com.mammedbrk.controller.collision;
 
-import com.mammedbrk.controller.CollisionDirection;
-import com.mammedbrk.controller.CollisionSystem;
 import com.mammedbrk.model.component.Component;
 
 public class MarioItemCollisionHandler implements CollisionHandler {

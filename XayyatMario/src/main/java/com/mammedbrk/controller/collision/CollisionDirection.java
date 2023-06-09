@@ -1,4 +1,4 @@
-package com.mammedbrk.controller;
+package com.mammedbrk.controller.collision;
 
 public enum CollisionDirection {
     top_to_bottom,

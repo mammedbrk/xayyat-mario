@@ -1,9 +1,7 @@
 package com.mammedbrk.controller.collision;
 
-import com.mammedbrk.controller.CollisionSystem;
 import com.mammedbrk.model.component.Component;
 import com.mammedbrk.model.interfaces.Gravitational;
-import com.mammedbrk.model.interfaces.Hittable;
 import com.mammedbrk.model.interfaces.Movable;
 
 public class EnemyBlockCollisionHandler implements CollisionHandler {

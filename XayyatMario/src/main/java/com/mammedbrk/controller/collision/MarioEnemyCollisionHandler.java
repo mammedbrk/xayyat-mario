@@ -1,6 +1,5 @@
 package com.mammedbrk.controller.collision;
 
-import com.mammedbrk.controller.CollisionSystem;
 import com.mammedbrk.model.component.Component;
 import com.mammedbrk.model.interfaces.Hittable;
 

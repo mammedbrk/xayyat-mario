@@ -1,4 +1,4 @@
-package com.mammedbrk.controller;
+package com.mammedbrk.controller.collision;
 
 import com.mammedbrk.model.component.Component;
 
