@@ -38,7 +38,6 @@ public class CoinsBlock extends Block implements Changeable<Block> {
 
     @Override
     public Block changedObject() {
-        if (hasCoins()) return this;
         return new EmptyBlock(x, y);
     }
 
