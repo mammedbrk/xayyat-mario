@@ -17,6 +17,10 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.util.Duration;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
 public class GameController {
     private static double WIDTH;
     private static double HEIGHT;
@@ -47,6 +51,7 @@ public class GameController {
     private void update(MovementEvent movementEvent) {
         updateStates(movementEvent);
         handleCollisions();
+        handleComponentChanges();
     }
 
     private void updateStates(MovementEvent movementEvent) {
@@ -94,6 +99,25 @@ public class GameController {
         for (Item item: section.getItems()) {
             collisionManager.handleCollision(game.getMario(), item);
         }
+    }
+
+    private void handleComponentChanges() {
+        Section section = game.currentSection();
+
+        Iterator<Block> blockIterator = section.getBlocks().listIterator();
+        List<Block> newBlocks = new ArrayList<>();
+        while (blockIterator.hasNext()) {
+            Block block = blockIterator.next();
+            if (block instanceof Hittable && ((Hittable) block).isHit()) {
+                if (block instanceof Changeable)
+                    newBlocks.add((Block) ((Changeable<?>) block).changedObject());
+                blockIterator.remove();
+            }
+        }
+        section.getBlocks().addAll(newBlocks);
+
+        section.getEnemies().removeIf(enemy -> !enemy.isAlive());
+        section.getItems().removeIf(Item::isHit);
     }
 
     private void moveMario(MovementEvent movementEvent) {
