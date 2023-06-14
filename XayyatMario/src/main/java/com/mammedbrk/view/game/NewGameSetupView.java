@@ -45,8 +45,8 @@ public class NewGameSetupView implements Initializable {
     }
 
     private String buttonText(Game game) {
-        return "L" + game.getLevelNo() +
-                ", S" + game.getSectionNo() +
+        return game.getLevelNo() +
+                "-" + game.getSectionNo() +
                 " | score: " + game.getScore() +
                 " | coins: " + game.getCoins();
     }
@@ -64,7 +64,7 @@ public class NewGameSetupView implements Initializable {
         else {
             saveGameListener.listen(index);
             for (StringListener listener: listeners) {
-                listener.listen("StartGame");
+                listener.listen(String.valueOf(index));
             }
         }
     }
