@@ -13,6 +13,7 @@
     <ColumnConstraints hgrow="SOMETIMES" prefWidth="50.0" />
       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
   </columnConstraints>
@@ -29,14 +30,14 @@
             </Button>
          </children>
       </FlowPane>
-      <FlowPane alignment="CENTER" prefHeight="80.0" GridPane.columnIndex="4">
+      <FlowPane alignment="CENTER" prefHeight="80.0" GridPane.columnIndex="5">
          <children>
             <Label fx:id="heartLabel" text="&lt;3 &lt;3 &lt;3" />
          </children>
       </FlowPane>
-      <FlowPane alignment="CENTER" prefHeight="80.0" GridPane.columnIndex="3">
+      <FlowPane alignment="CENTER" prefHeight="80.0" GridPane.columnIndex="4">
          <children>
-            <Label fx:id="timeLabel" text="0:00" />
+            <Label fx:id="timeLabel" />
          </children>
       </FlowPane>
       <FlowPane alignment="CENTER" prefHeight="80.0" GridPane.columnIndex="1">
@@ -49,6 +50,11 @@
          <children>
             <Label text="Coin " />
             <Label fx:id="coinLabel" text="0" />
+         </children>
+      </FlowPane>
+      <FlowPane alignment="CENTER" prefHeight="80.0" GridPane.columnIndex="3">
+         <children>
+            <Label fx:id="levelLabel" />
          </children>
       </FlowPane>
    </children>

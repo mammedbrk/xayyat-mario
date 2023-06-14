@@ -1,27 +1,18 @@
 package com.mammedbrk.view.game;
 
-import com.mammedbrk.current.Current;
 import com.mammedbrk.listener.SaveExistingGameListener;
 import com.mammedbrk.listener.StringListener;
-import javafx.animation.Animation;
-import javafx.animation.AnimationTimer;
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
+import com.mammedbrk.model.game.Game;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
-import javafx.util.Duration;
 
-import java.net.URL;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.ResourceBundle;
 
-public class GameHeaderView implements Initializable {
+public class GameHeaderView {
     @FXML
     private Label heartLabel;
     @FXML
@@ -30,66 +21,25 @@ public class GameHeaderView implements Initializable {
     private Label timeLabel;
     @FXML
     private Label coinLabel;
+    @FXML
+    private Label levelLabel;
     private List<StringListener> listeners = new LinkedList<>();
     private SaveExistingGameListener saveExistingGameListener = new SaveExistingGameListener();
 
-    private Timeline timeline;
-    private AnimationTimer animationTimer;
-
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        timeline = new Timeline();
-        timeline.setCycleCount(Animation.INDEFINITE);
-
-        timeline.getKeyFrames().add(new KeyFrame(Duration.seconds(1), new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                if (Current.user.getCurrentGame().getCurrentLevel().getCurrentSection().getTime() == 0) {
-                    for (StringListener listener: listeners) {
-                        listener.listen("time");
-                    }
-                }
-                timeLabel.setText(timeLeft());
-                if (Current.user.getCurrentGame().getCurrentLevel().getCurrentSection().getTime() > 0)
-                    Current.user.getCurrentGame().getCurrentLevel().getCurrentSection().reduceTime();
-            }
-        }));
-        timeline.play();
-
-        animationTimer = new AnimationTimer() {
-            @Override
-            public void handle(long now) {
-                coinLabel.setText(String.valueOf(Current.user.getCurrentGame().getCoins() + Current.user.getCurrentGame().getCurrentLevel().getCoins() + Current.user.getCurrentGame().getCurrentLevel().getCurrentSection().getCoins()));
-                scoreLabel.setText(String.valueOf(Current.user.getCurrentGame().getScore() + Current.user.getCurrentGame().getCurrentLevel().getScore() + Current.user.getCurrentGame().getCurrentLevel().getCurrentSection().getScore()));
-                switch (Current.user.getCurrentGame().getHearts()) {
-                    case 3: heartLabel.setText("<3 <3 <3"); break;
-                    case 2: heartLabel.setText("<3 <3"); break;
-                    case 1: heartLabel.setText("<3"); break;
-                }
-            }
-        };
-        animationTimer.start();
+    public void render(Game game) {
+        scoreLabel.setText(String.valueOf(game.getScore()));
+        coinLabel.setText(String.valueOf(game.getCoins()));
+        timeLabel.setText(String.valueOf(game.currentSection().getTime()));
+        levelLabel.setText(game.getLevelNo() + "-" + game.getSectionNo());
+        switch (game.getHearts()) {
+            case 3 -> heartLabel.setText("<3 <3 <3");
+            case 2 -> heartLabel.setText("<3 <3");
+            case 1 -> heartLabel.setText("<3");
+        }
     }
 
     public void addListener(StringListener listener) {
         listeners.add(listener);
-    }
-
-    public void stopTimer() {
-        timeline.stop();
-        animationTimer.stop();
-    }
-
-    public void startTimer() {
-        timeline.play();
-        animationTimer.start();
-    }
-
-    private String timeLeft() {
-        int time = Current.user.getCurrentGame().getCurrentLevel().getCurrentSection().getTime();
-        if ((time % 60) / 10 == 0)
-            return (time / 60 + ":0" + time % 60);
-        return (time / 60 + ":" + time % 60);
     }
 
     @FXML

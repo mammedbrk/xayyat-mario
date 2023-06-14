@@ -285,32 +285,16 @@ public class MainView extends BorderPane {
             @Override
             public void listen(String s) {
                 if (s.equals("pause")) {
-                    gameHeaderView.stopTimer();
-                    gameView.stopTimer();
+                    // todo
                 }
                 if (s.equals("resume")) {
-                    gameHeaderView.startTimer();
-                    gameView.startTimer();
+                    // todo
                 }
                 if (s.equals("MainMenu")) {
                     try {
                         mainMenu();
                     } catch (IOException e) {
                         throw new RuntimeException(e);
-                    }
-                }
-                if (s.equals("time")) {
-                    gameHeaderView.stopTimer();
-                    gameView.stopTimer();
-                    controller.readFirstSection();
-                    Current.user.getCurrentGame().reduceHeart();
-                    gameHeaderView.startTimer();
-                    if (Current.user.getCurrentGame().getHearts() == 0) {
-                        controller.finishGame();
-                        gameView.finishGame();
-                    }
-                    else {
-                        gameView.loadSectionGraphics();
                     }
                 }
             }
