@@ -244,9 +244,23 @@ public class MainView extends BorderPane {
                         throw new RuntimeException(e);
                     }
                 }
-                if (s.equals("StartGame")) {
+                if (s.equals("0")) {
                     try {
-                        startGame();
+                        startGame(0);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+                if (s.equals("1")) {
+                    try {
+                        startGame(1);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+                if (s.equals("2")) {
+                    try {
+                        startGame(2);
                     } catch (IOException e) {
                         throw new RuntimeException(e);
                     }
@@ -255,62 +269,30 @@ public class MainView extends BorderPane {
         });
     }
 
-    private void startGame() throws IOException {
+    private void startGame(int index) throws IOException {
         resetPane();
         gameHeaderViewLoader = new FXMLLoader(getClass().getResource(dir + "game/game-header-view.fxml"));
         this.setTop(gameHeaderViewLoader.load());
         GameHeaderView gameHeaderView = gameHeaderViewLoader.getController();
 
-        GameController controller = new GameController();
-        GameView gameView = new GameView(new SectionLoadListener(controller), new CharacterCollisionListener(controller));
+        GameView gameView = new GameView();
+        GameController controller = new GameController(Current.user.getGames().get(index), gameView);
         this.setCenter(gameView);
 
-        gameView.addListener(new StringListener() {
-            @Override
-            public void listen(String s) {
-                if (s.equals("MainMenu")) {
-                    try {
-                        mainMenu();
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
-                }
-                if (s.equals("pause")) {
-                    gameHeaderView.stopTimer();
-                    gameView.stopTimer();
-                }
-            }
-        });
         gameHeaderView.addListener(new StringListener() {
             @Override
             public void listen(String s) {
                 if (s.equals("pause")) {
-                    gameHeaderView.stopTimer();
-                    gameView.stopTimer();
+                    // todo
                 }
                 if (s.equals("resume")) {
-                    gameHeaderView.startTimer();
-                    gameView.startTimer();
+                    // todo
                 }
                 if (s.equals("MainMenu")) {
                     try {
                         mainMenu();
                     } catch (IOException e) {
                         throw new RuntimeException(e);
-                    }
-                }
-                if (s.equals("time")) {
-                    gameHeaderView.stopTimer();
-                    gameView.stopTimer();
-                    controller.readFirstSection();
-                    Current.user.getCurrentGame().reduceHeart();
-                    gameHeaderView.startTimer();
-                    if (Current.user.getCurrentGame().getHearts() == 0) {
-                        controller.finishGame();
-                        gameView.finishGame();
-                    }
-                    else {
-                        gameView.loadSectionGraphics();
                     }
                 }
             }
@@ -333,9 +315,23 @@ public class MainView extends BorderPane {
                         throw new RuntimeException(e);
                     }
                 }
-                if (s.equals("StartGame")) {
+                if (s.equals("0")) {
                     try {
-                        startGame();
+                        startGame(0);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+                if (s.equals("1")) {
+                    try {
+                        startGame(1);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+                if (s.equals("2")) {
+                    try {
+                        startGame(2);
                     } catch (IOException e) {
                         throw new RuntimeException(e);
                     }
