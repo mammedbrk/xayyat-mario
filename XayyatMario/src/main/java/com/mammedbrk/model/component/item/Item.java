@@ -34,4 +34,9 @@ public abstract class Item extends Component {
     public void setHit(boolean hit) {
         this.hit = hit;
     }
+
+    @Override
+    public String getType() {
+        return "Item";
+    }
 }
