@@ -49,6 +49,7 @@ public class Goomba extends Enemy implements Movable, Gravitational, Hittable {
         die();
     }
 
+    @JsonIgnore
     @Override
     public boolean isHit() {
         return false;
