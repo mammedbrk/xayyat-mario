@@ -8,6 +8,6 @@ public class CharacterChooseListener {
     private final UserController controller = new UserController();
 
     public void listen(CharacterEvent characterEvent) {
-        controller.chooseCharacter(Current.user, characterEvent.getCharacter());
+//        controller.chooseCharacter(Current.user, characterEvent.getCharacter());
     }
 }

@@ -38,13 +38,13 @@ public class RankingView implements Initializable {
 
             UserRankingCardView userRankingCardView = loader.getController();
             userRankingCardView.setRankLabel(String.valueOf(++rank));
-            try {
+            /*try {
                 userRankingCardView.getCharacterImg().setImage(new Image(new FileInputStream(user.getChosenCharacter().getImageAddress())));
             } catch (FileNotFoundException e) {
                 throw new RuntimeException(e);
-            }
+            }*/
             userRankingCardView.setUsernameLabel(user.getUsername());
-            userRankingCardView.setScoreLabel(String.valueOf(user.getMaxScore()));
+            userRankingCardView.setScoreLabel(String.valueOf(user.getScore()));
         }
     }
 

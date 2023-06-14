@@ -68,7 +68,7 @@ public class ProfileView implements Initializable {
 
             Pane card = loader.getRoot();
 
-            if (Current.user.getChosenCharacter().equals(character)) {
+            /*if (Current.user.getChosenCharacter().equals(character)) {
                 FXMLLoader mainCardLoader = new FXMLLoader(getClass().getResource("/com.mammedbrk/fxml/character/character-card-view.fxml"));
                 Pane selectedPane;
                 try {
@@ -81,7 +81,7 @@ public class ProfileView implements Initializable {
                 selectedPane.setScaleX(1.5);
                 selectedPane.setScaleY(1.5);
                 cardPane.setCenter(selectedPane);
-            }
+            }*/
 
             card.setOnMouseClicked(new EventHandler<MouseEvent>() {
                 @Override
@@ -99,20 +99,20 @@ public class ProfileView implements Initializable {
                     selectedPane.setScaleY(1.5);
                     cardPane.setCenter(selectedPane);
 
-                    if (Current.user.getChosenCharacter().equals(character)) {
+                    /*if (Current.user.getChosenCharacter().equals(character)) {
                         chooseBtn.setText("Chose!");
                         chooseBtn.setDisable(true);
                     }
                     else {
                         chooseBtn.setText("Choose");
                         chooseBtn.setDisable(false);
-                    }
+                    }*/
 
 
                     chooseBtn.setOnAction(new EventHandler<ActionEvent>() {
                         @Override
                         public void handle(ActionEvent event) {
-                            characterChooseListener.listen(new CharacterEvent(this, character));
+//                            characterChooseListener.listen(new CharacterEvent(this, character));
 
                             chooseBtn.setText("Chose!");
                             chooseBtn.setDisable(true);
@@ -127,13 +127,13 @@ public class ProfileView implements Initializable {
 
     private void setUserInfo() {
         username.setText(Current.user.getUsername());
-        score.setText(String.valueOf(Current.user.getMaxScore()));
+        score.setText(String.valueOf(Current.user.getScore()));
         coin.setText(String.valueOf(Current.user.getCoins()));
-        try {
+        /*try {
             characterImg.setImage(new Image(new FileInputStream(Current.user.getChosenCharacter().getImageAddress())));
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
-        }
+        }*/
     }
 
     private void setItemsInCard(CharacterCardView characterCardView, Character character) {

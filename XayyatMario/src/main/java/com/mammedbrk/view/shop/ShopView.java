@@ -134,11 +134,11 @@ public class ShopView implements Initializable {
     private void setUserInfo() {
         username.setText(Current.user.getUsername());
         coin.setText(String.valueOf(Current.user.getCoins()));
-        try {
+        /*try {
             characterImg.setImage(new Image(new FileInputStream(Current.user.getChosenCharacter().getImageAddress())));
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
-        }
+        }*/
     }
 
     private void setItemsInCard(CharacterCardView characterCardView, Character character) {
