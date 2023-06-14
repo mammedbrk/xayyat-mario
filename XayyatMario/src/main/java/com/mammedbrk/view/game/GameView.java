@@ -4,13 +4,13 @@ import com.mammedbrk.event.MovementEvent;
 import com.mammedbrk.listener.StringListener;
 import com.mammedbrk.model.component.Checkpoint;
 import com.mammedbrk.model.component.Component;
-import com.mammedbrk.model.component.EmptySpace;
 import com.mammedbrk.model.component.block.Block;
 import com.mammedbrk.model.component.enemy.Enemy;
 import com.mammedbrk.model.component.item.Item;
 import com.mammedbrk.model.component.pipe.Pipe;
 import com.mammedbrk.model.game.Game;
 import com.mammedbrk.model.game.Section;
+import com.mammedbrk.model.interfaces.Movable;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Pane;
@@ -29,19 +29,18 @@ public class GameView extends Pane {
         this.sceneProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {
                 newValue.setOnKeyPressed(event -> {
-                    if (event.getCode() == KeyCode.D)
-                        right = true;
-                    if (event.getCode() == KeyCode.A)
-                        left = true;
-                    if (event.getCode() == KeyCode.W)
-                        jump = true;
+                    switch (event.getCode()) {
+                        case UP -> jump = true;
+                        case LEFT -> left = true;
+                        case RIGHT -> right = true;
+                    }
                 });
 
                 newValue.setOnKeyReleased(event -> {
-                    if (event.getCode() == KeyCode.D)
-                        right = false;
-                    if (event.getCode() == KeyCode.A)
-                        left = false;
+                    switch (event.getCode()) {
+                        case LEFT -> left = false;
+                        case RIGHT -> right = false;
+                    }
                 });
             }
         });
@@ -55,7 +54,6 @@ public class GameView extends Pane {
         Section section = game.currentSection();
         this.getChildren().clear();
 
-        this.getChildren().add(getImageView(game.getMario()));
         for (Block block: section.getBlocks())
             this.getChildren().add(getImageView(block));
         for (Enemy enemy: section.getEnemies())
@@ -64,12 +62,14 @@ public class GameView extends Pane {
             this.getChildren().add(getImageView(pipe));
         for (Item item: section.getItems())
             this.getChildren().add(getImageView(item));
-        for (EmptySpace space: section.getSpaces())
-            this.getChildren().add(getImageView(space));
         for (Checkpoint checkpoint: section.getCheckpoints())
             this.getChildren().add(getImageView(checkpoint));
 
-        // todo move scene with mario
+        ImageView marioImageView = getImageView(game.getMario());
+        this.getChildren().add(marioImageView);
+        if (marioImageView.getBoundsInParent().getMaxX() > WIDTH/2 && (game.currentSection().getLength() * Component.SIZE) + this.getTranslateX() > WIDTH)
+            this.setTranslateX(Math.min(this.getTranslateX(), WIDTH/2 - marioImageView.getBoundsInParent().getCenterX()));
+        // todo restrict going out of bounds
     }
 
     private ImageView getImageView(Component component) {
