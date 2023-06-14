@@ -315,9 +315,23 @@ public class MainView extends BorderPane {
                         throw new RuntimeException(e);
                     }
                 }
-                if (s.equals("StartGame")) {
+                if (s.equals("0")) {
                     try {
-                        startGame();
+                        startGame(0);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+                if (s.equals("1")) {
+                    try {
+                        startGame(1);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+                if (s.equals("2")) {
+                    try {
+                        startGame(2);
                     } catch (IOException e) {
                         throw new RuntimeException(e);
                     }
