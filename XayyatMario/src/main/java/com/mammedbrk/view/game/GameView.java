@@ -20,7 +20,7 @@ import java.util.List;
 public class GameView extends Pane {
     private static double WIDTH = Integer.parseInt(Config.getInstance().getProperty("width")) * Integer.parseInt(Config.getInstance().getProperty("tile_size"));;
     private static double HEIGHT = Integer.parseInt(Config.getInstance().getProperty("height")) * Integer.parseInt(Config.getInstance().getProperty("tile_size"));
-    private boolean left, right, jump;
+    private boolean left, right, jump, sit;
     private final List<StringListener> listeners = new LinkedList<>();
 
 
@@ -32,6 +32,7 @@ public class GameView extends Pane {
                         case W -> jump = true;
                         case A -> left = true;
                         case D -> right = true;
+                        case SPACE -> sit = true;
                     }
                 });
 
@@ -39,6 +40,7 @@ public class GameView extends Pane {
                     switch (event.getCode()) {
                         case A -> left = false;
                         case D -> right = false;
+                        case SPACE -> sit = false;
                     }
                 });
             }
@@ -48,9 +50,9 @@ public class GameView extends Pane {
     public MovementEvent handleInput() {
         if (jump) {
             jump = false;
-            return new MovementEvent(right ^ left, left, true);
+            return new MovementEvent(right ^ left, left, true, sit);
         }
-        return new MovementEvent(right ^ left, left, false);
+        return new MovementEvent(right ^ left, left, false, sit);
     }
 
     public void render(Game game) {
@@ -69,6 +71,9 @@ public class GameView extends Pane {
             this.getChildren().add(getImageView(checkpoint));
 
         ImageView marioImageView = getImageView(game.getMario());
+        if (game.getMarioState() > 0 && !game.getMario().isSit()) {
+            marioImageView.setFitHeight(2 * Component.SIZE);
+        }
         this.getChildren().add(marioImageView);
         if (marioImageView.getBoundsInParent().getMaxX() > WIDTH/2 && (game.currentSection().getLength() * Component.SIZE) + this.getTranslateX() > WIDTH)
             this.setTranslateX(Math.min(this.getTranslateX(), WIDTH/2 - marioImageView.getBoundsInParent().getCenterX()));

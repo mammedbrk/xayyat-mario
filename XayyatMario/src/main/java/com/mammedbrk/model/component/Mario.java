@@ -17,6 +17,8 @@ public class Mario extends Component implements Movable, Gravitational {
     @JsonIgnore
     private boolean jump;
     @JsonIgnore
+    private boolean sit;
+    @JsonIgnore
     private double gravity;
 
     public Mario() {
@@ -42,7 +44,7 @@ public class Mario extends Component implements Movable, Gravitational {
     public void move() {
         if (move)
             x = x + (left? -speed: speed);
-        if (jump)
+        if (jump && !sit)
             y = y + jumpSpeed;
     }
 
@@ -104,5 +106,13 @@ public class Mario extends Component implements Movable, Gravitational {
 
     public boolean isJump() {
         return jump;
+    }
+
+    public boolean isSit() {
+        return sit;
+    }
+
+    public void setSit(boolean sit) {
+        this.sit = sit;
     }
 }

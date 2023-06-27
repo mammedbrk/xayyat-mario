@@ -133,6 +133,8 @@ public class GameController {
         } else game.getMario().setMove(false);
         if (movementEvent.isJump() && (game.getMario().getGravity() == 0 || game.getMario().isJump()))
             game.getMario().setJump(true);
+        if (movementEvent.isSit() && game.getMarioState() > 0)
+            game.getMario().setSit(true);
         game.getMario().move();
         game.getMario().applyGravity();
     }
