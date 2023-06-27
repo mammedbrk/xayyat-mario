@@ -37,6 +37,11 @@ public class GameController {
         this.collisionManager = new CollisionManager();
         gameLoop.setCycleCount(Animation.INDEFINITE);
         gameLoop.play();
+
+
+        // todo:
+        game.getMario().setJumpSpeed(Math.sqrt(-2*Double.parseDouble(Config.getInstance().getProperty("gravity"))*Double.parseDouble(Config.getInstance().getProperty("mortaza_jump")))/FPS);
+        game.getMario().setSpeed(Double.parseDouble(Config.getInstance().getProperty("mortaza_speed"))/FPS);
     }
 
     private Timeline gameLoop = new Timeline(new KeyFrame(Duration.millis(1000 / FPS), event -> {
@@ -126,7 +131,7 @@ public class GameController {
             game.getMario().setMove(true);
             game.getMario().setLeft(movementEvent.isLeft());
         } else game.getMario().setMove(false);
-        if (movementEvent.isJump())
+        if (movementEvent.isJump() && (game.getMario().getGravity() == 0 || game.getMario().isJump()))
             game.getMario().setJump(true);
         game.getMario().move();
         game.getMario().applyGravity();

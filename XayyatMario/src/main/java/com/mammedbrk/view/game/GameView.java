@@ -11,9 +11,7 @@ import com.mammedbrk.model.component.item.Item;
 import com.mammedbrk.model.component.pipe.Pipe;
 import com.mammedbrk.model.game.Game;
 import com.mammedbrk.model.game.Section;
-import com.mammedbrk.model.interfaces.Movable;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Pane;
 
 import java.util.LinkedList;
@@ -31,16 +29,16 @@ public class GameView extends Pane {
             if (newValue != null) {
                 newValue.setOnKeyPressed(event -> {
                     switch (event.getCode()) {
-                        case UP -> jump = true;
-                        case LEFT -> left = true;
-                        case RIGHT -> right = true;
+                        case W -> jump = true;
+                        case A -> left = true;
+                        case D -> right = true;
                     }
                 });
 
                 newValue.setOnKeyReleased(event -> {
                     switch (event.getCode()) {
-                        case LEFT -> left = false;
-                        case RIGHT -> right = false;
+                        case A -> left = false;
+                        case D -> right = false;
                     }
                 });
             }
@@ -48,7 +46,11 @@ public class GameView extends Pane {
     }
 
     public MovementEvent handleInput() {
-        return new MovementEvent(right ^ left, left, jump);
+        if (jump) {
+            jump = false;
+            return new MovementEvent(right ^ left, left, true);
+        }
+        return new MovementEvent(right ^ left, left, false);
     }
 
     public void render(Game game) {

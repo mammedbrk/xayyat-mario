@@ -97,4 +97,12 @@ public class Mario extends Component implements Movable, Gravitational {
     public void setLeft(boolean left) {
         this.left = left;
     }
+
+    public double getGravity() {
+        return gravity;
+    }
+
+    public boolean isJump() {
+        return jump;
+    }
 }
