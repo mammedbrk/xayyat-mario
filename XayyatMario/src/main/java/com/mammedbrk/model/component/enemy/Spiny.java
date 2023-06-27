@@ -1,13 +1,14 @@
 package com.mammedbrk.model.component.enemy;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.mammedbrk.config.Config;
 import com.mammedbrk.current.Current;
 import com.mammedbrk.model.interfaces.Gravitational;
 import com.mammedbrk.model.interfaces.Movable;
 
 public class Spiny extends Enemy implements Movable, Gravitational {
     @JsonIgnore
-    private static double SPEED;
+    private static double SPEED = Double.parseDouble(Config.getInstance().getProperty("spiny_speed"));
     @JsonIgnore
     private double speed;
     @JsonIgnore

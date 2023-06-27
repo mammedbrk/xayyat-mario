@@ -2,6 +2,7 @@ package com.mammedbrk.access;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import com.mammedbrk.config.Config;
 import com.mammedbrk.model.game.Level;
 
 import java.io.File;
@@ -10,7 +11,7 @@ import java.io.IOException;
 
 public class LevelAccess {
     private final ObjectMapper mapper;
-    private String directory = "src/main/resources/com.mammedbrk/game/"; // todo
+    private String directory = Config.getInstance().getProperty("level_access_path");
 
     public LevelAccess() {
         this.mapper = new ObjectMapper();

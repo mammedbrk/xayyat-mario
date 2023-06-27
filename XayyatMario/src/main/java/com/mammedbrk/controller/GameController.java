@@ -1,5 +1,6 @@
 package com.mammedbrk.controller;
 
+import com.mammedbrk.config.Config;
 import com.mammedbrk.controller.collision.*;
 import com.mammedbrk.event.MovementEvent;
 import com.mammedbrk.model.component.Checkpoint;
@@ -24,7 +25,7 @@ import java.util.List;
 public class GameController {
     private static double WIDTH;
     private static double HEIGHT;
-    private static double FPS;
+    private static double FPS = Double.parseDouble(Config.getInstance().getProperty("fps"));
     private Game game;
     private GameView view;
     private CollisionManager collisionManager;

@@ -2,6 +2,7 @@ package com.mammedbrk.access;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import com.mammedbrk.config.Config;
 import com.mammedbrk.model.Character;
 
 import java.io.*;
@@ -10,7 +11,7 @@ import java.util.List;
 
 public class CharacterAccess {
     private final ObjectMapper mapper;
-    private final String directory = "src/main/resources/com.mammedbrk/character/";
+    private final String directory = Config.getInstance().getProperty("character_access_path");
 
     public CharacterAccess() {
         mapper = new ObjectMapper();

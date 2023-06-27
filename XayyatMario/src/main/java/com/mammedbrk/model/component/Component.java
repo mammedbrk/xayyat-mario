@@ -1,10 +1,11 @@
 package com.mammedbrk.model.component;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.mammedbrk.config.Config;
 
 public abstract class Component {
     @JsonIgnore
-    public static int SIZE;
+    public static int SIZE = Integer.parseInt(Config.getInstance().getProperty("tile_size"));;
     protected double x, y;
 
     public Component() {

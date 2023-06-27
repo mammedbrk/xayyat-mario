@@ -1,13 +1,14 @@
 package com.mammedbrk.model.component.pipe;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.mammedbrk.config.Config;
 import com.mammedbrk.model.component.enemy.Piranha;
 
 public class PiranhaTrapPipe extends Pipe implements Piranha {
     @JsonIgnore
-    private static int showTime;
+    private static int showTime = Integer.parseInt(Config.getInstance().getProperty("piranha_show_time"));
     @JsonIgnore
-    private static int hideTime;
+    private static int hideTime = Integer.parseInt(Config.getInstance().getProperty("piranha_hide_time"));
     private boolean alive;
     @JsonIgnore
     private boolean shown;

@@ -1,6 +1,7 @@
 package com.mammedbrk.model.game;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.mammedbrk.config.Config;
 import com.mammedbrk.model.component.Checkpoint;
 import com.mammedbrk.model.component.Component;
 import com.mammedbrk.model.component.block.Block;
@@ -13,7 +14,7 @@ import java.util.List;
 
 public class Section {
     @JsonIgnore
-    private static int HEIGHT;
+    private static int HEIGHT = Integer.parseInt(Config.getInstance().getProperty("height"));;
     private int length;
     private int time;
     private List<Block> blocks;

@@ -2,6 +2,7 @@ package com.mammedbrk.access;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import com.mammedbrk.config.Config;
 import com.mammedbrk.model.User;
 
 import java.io.*;
@@ -10,7 +11,7 @@ import java.util.List;
 
 public class UserAccess {
     private final ObjectMapper mapper;
-    private final String directory = "json/user/";
+    private final String directory = Config.getInstance().getProperty("user_access_path");
 
     public UserAccess() {
         mapper = new ObjectMapper();

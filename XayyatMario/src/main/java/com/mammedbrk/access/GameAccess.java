@@ -2,6 +2,7 @@ package com.mammedbrk.access;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import com.mammedbrk.config.Config;
 import com.mammedbrk.model.game.Game;
 
 import java.io.File;
@@ -10,7 +11,7 @@ import java.io.IOException;
 
 public class GameAccess {
     private final ObjectMapper mapper;
-    private String directory = "json/game/"; // todo
+    private String directory = Config.getInstance().getProperty("game_access_path");
 
     public GameAccess() {
         this.mapper = new ObjectMapper();

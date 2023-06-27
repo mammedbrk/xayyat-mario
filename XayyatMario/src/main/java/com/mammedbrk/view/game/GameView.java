@@ -1,5 +1,6 @@
 package com.mammedbrk.view.game;
 
+import com.mammedbrk.config.Config;
 import com.mammedbrk.event.MovementEvent;
 import com.mammedbrk.listener.StringListener;
 import com.mammedbrk.model.component.Checkpoint;
@@ -19,8 +20,8 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class GameView extends Pane {
-    private static double WIDTH;
-    private static double HEIGHT;
+    private static double WIDTH = Integer.parseInt(Config.getInstance().getProperty("width")) * Integer.parseInt(Config.getInstance().getProperty("tile_size"));;
+    private static double HEIGHT = Integer.parseInt(Config.getInstance().getProperty("height")) * Integer.parseInt(Config.getInstance().getProperty("tile_size"));
     private boolean left, right, jump;
     private final List<StringListener> listeners = new LinkedList<>();
 
@@ -76,7 +77,7 @@ public class GameView extends Pane {
         ImageView imageView = new ImageView();
         imageView.setImage(ComponentImageFactory.getImage(component.getClass().getSimpleName()));
         imageView.setX(component.getX() * Component.SIZE);
-        imageView.setX(HEIGHT - component.getY() * Component.SIZE);
+        imageView.setY((-5 + Integer.parseInt(Config.getInstance().getProperty("height")) - component.getY()) * Component.SIZE);
         imageView.setFitWidth(Component.SIZE);
         imageView.setFitHeight(Component.SIZE);
         // todo reverse if speed is negative
