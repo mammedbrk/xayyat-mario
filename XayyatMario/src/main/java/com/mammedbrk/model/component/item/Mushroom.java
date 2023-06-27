@@ -9,7 +9,7 @@ import com.mammedbrk.model.interfaces.Timer;
 
 public class Mushroom extends Item implements Gravitational, Movable, Timer {
     @JsonIgnore
-    private static double SPEED = Double.parseDouble(Config.getInstance().getProperty("goomba_speed")) / Integer.parseInt(Config.getInstance().getProperty("fps"));
+    private static double SPEED = Double.parseDouble(Config.getInstance().getProperty("mushroom_speed")) / Integer.parseInt(Config.getInstance().getProperty("fps"));
     @JsonIgnore
     private double gravity;
     private double speed;
@@ -34,7 +34,7 @@ public class Mushroom extends Item implements Gravitational, Movable, Timer {
 
     @Override
     public void changeTime() {
-        if (time < 3) // todo
+        if (time < Integer.parseInt(Config.getInstance().getProperty("mushroom_time")))
             time++;
         else move = true;
     }

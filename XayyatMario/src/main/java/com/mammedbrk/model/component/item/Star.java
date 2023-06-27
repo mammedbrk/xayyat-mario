@@ -38,7 +38,7 @@ public class Star extends Item implements Movable, Gravitational, Timer {
 
     @Override
     public void changeTime() {
-        if (waitTime < 3) // todo
+        if (waitTime < Integer.parseInt(Config.getInstance().getProperty("star_time")))
             waitTime++;
         else move = jump = true;
     }

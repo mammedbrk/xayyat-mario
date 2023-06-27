@@ -1,6 +1,7 @@
 package com.mammedbrk.model.game;
 
 
+import com.mammedbrk.config.Config;
 import com.mammedbrk.model.component.Mario;
 
 import java.util.ArrayList;
@@ -19,7 +20,7 @@ public class Game {
 
     public Game() {
         levels = new ArrayList<>();
-        hearts = 3; // todo
+        hearts = Integer.parseInt(Config.getInstance().getProperty("heart_count"));
         marioState = 0;
         mario = new Mario();
         score = 0;
