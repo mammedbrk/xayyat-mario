@@ -33,7 +33,8 @@ public class MainView extends BorderPane {
     private FXMLLoader gameHeaderViewLoader;
 
     public MainView() throws IOException {
-        loginView();
+//        loginView();
+        startGame(0);
     }
 
 

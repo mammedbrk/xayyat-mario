@@ -6,8 +6,15 @@ import com.mammedbrk.event.MovementEvent;
 import com.mammedbrk.model.component.Checkpoint;
 import com.mammedbrk.model.component.Component;
 import com.mammedbrk.model.component.block.Block;
+import com.mammedbrk.model.component.block.SimpleBlock;
 import com.mammedbrk.model.component.enemy.Enemy;
+import com.mammedbrk.model.component.enemy.Goomba;
+import com.mammedbrk.model.component.enemy.Koopa;
+import com.mammedbrk.model.component.enemy.Spiny;
+import com.mammedbrk.model.component.item.Coin;
+import com.mammedbrk.model.component.item.Flower;
 import com.mammedbrk.model.component.item.Item;
+import com.mammedbrk.model.component.item.Mushroom;
 import com.mammedbrk.model.component.pipe.Pipe;
 import com.mammedbrk.model.game.Game;
 import com.mammedbrk.model.game.Section;
@@ -114,7 +121,7 @@ public class GameController {
         List<Block> newBlocks = new ArrayList<>();
         while (blockIterator.hasNext()) {
             Block block = blockIterator.next();
-            if (block instanceof Hittable && ((Hittable) block).isHit()) {
+            if (block instanceof Hittable && ((Hittable) block).isHit() && (game.getMarioState() > 0 || !(block instanceof SimpleBlock))) {
                 if (block instanceof Changeable)
                     newBlocks.add((Block) ((Changeable<?>) block).changedObject());
                 blockIterator.remove();
@@ -122,8 +129,43 @@ public class GameController {
         }
         section.getBlocks().addAll(newBlocks);
 
-        section.getEnemies().removeIf(enemy -> !enemy.isAlive());
-        section.getItems().removeIf(Item::isHit);
+        Iterator<Enemy> enemyIterator = section.getEnemies().listIterator();
+        while (enemyIterator.hasNext()) {
+            Enemy enemy = enemyIterator.next();
+            if (!enemy.isAlive()) {
+                if (enemy instanceof Goomba) {
+                    game.addScore(Integer.parseInt(Config.getInstance().getProperty("goomba_score_amount")));
+                }
+                if (enemy instanceof Koopa) {
+                    game.addScore(Integer.parseInt(Config.getInstance().getProperty("koopa_score_amount")));
+                }
+                if (enemy instanceof Spiny) {
+                    game.addScore(Integer.parseInt(Config.getInstance().getProperty("spiny_score_amount")));
+                }
+                enemyIterator.remove();
+            }
+        }
+
+        Iterator<Item> itemIterator = section.getItems().listIterator();
+        while (itemIterator.hasNext()) {
+            Item item = itemIterator.next();
+            if (item.isHit()) {
+                if (item instanceof Coin) {
+                    game.addScore(Integer.parseInt(Config.getInstance().getProperty("coin_score_amount")));
+                    game.addCoin(1);
+                } else if (item instanceof Flower) {
+                    game.addScore(Integer.parseInt(Config.getInstance().getProperty("flower_score_amount")));
+                    // todo
+                } else if (item instanceof Mushroom) {
+                    game.addScore(Integer.parseInt(Config.getInstance().getProperty("mushroom_score_amount")));
+                    // todo
+                } else {
+                    game.addScore(Integer.parseInt(Config.getInstance().getProperty("star_score_amount")));
+                    // todo
+                }
+                itemIterator.remove();
+            }
+        }
     }
 
     private void moveMario(MovementEvent movementEvent) {
