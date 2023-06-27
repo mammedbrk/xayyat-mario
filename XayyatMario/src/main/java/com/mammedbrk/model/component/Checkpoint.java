@@ -18,7 +18,7 @@ public class Checkpoint extends Component implements Gravitational {
 
     @Override
     public String getType() {
-        return this.getClass().getSimpleName();
+        return "Checkpoint";
     }
 
     @Override

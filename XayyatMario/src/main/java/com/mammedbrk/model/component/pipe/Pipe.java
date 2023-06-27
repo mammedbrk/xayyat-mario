@@ -25,6 +25,6 @@ public abstract class Pipe extends Component {
 
     @Override
     public String getType() {
-        return this.getClass().getSimpleName();
+        return "Pipe";
     }
 }

@@ -35,7 +35,7 @@ public class Mario extends Component implements Movable, Gravitational {
 
     @Override
     public String getType() {
-        return this.getClass().getSimpleName();
+        return "Mario";
     }
 
     @Override

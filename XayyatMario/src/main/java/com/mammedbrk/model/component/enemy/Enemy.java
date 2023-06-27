@@ -30,7 +30,7 @@ public abstract class Enemy extends Component {
 
     @Override
     public String getType() {
-        return this.getClass().getSimpleName();
+        return "Enemy";
     }
 
     public void die() {
