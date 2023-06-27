@@ -57,7 +57,7 @@ public class NewGameSetupView implements Initializable {
             if (alert.showAndWait().get() == ButtonType.OK) {
                 saveGameListener.listen(index);
                 for (StringListener listener: listeners) {
-                    listener.listen("StartGame");
+                    listener.listen(String.valueOf(index));
                 }
             }
         }
