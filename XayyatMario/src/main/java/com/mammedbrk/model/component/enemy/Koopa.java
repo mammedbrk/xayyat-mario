@@ -12,7 +12,7 @@ import java.util.Random;
 
 public class Koopa extends Enemy implements Movable, Gravitational, Hittable, Timer {
     @JsonIgnore
-    private static double SPEED = Double.parseDouble(Config.getInstance().getProperty("koopa_speed"));
+    private static double SPEED = Double.parseDouble(Config.getInstance().getProperty("koopa_speed")) / Integer.parseInt(Config.getInstance().getProperty("fps"));
     @JsonIgnore
     private double speed;
     @JsonIgnore

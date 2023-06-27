@@ -9,7 +9,7 @@ import com.mammedbrk.model.interfaces.Movable;
 
 public class Goomba extends Enemy implements Movable, Gravitational, Hittable {
     @JsonIgnore
-    private static double SPEED = Double.parseDouble(Config.getInstance().getProperty("goomba_speed"));
+    private static double SPEED = Double.parseDouble(Config.getInstance().getProperty("goomba_speed")) / Integer.parseInt(Config.getInstance().getProperty("fps"));
     @JsonIgnore
     private double speed;
     @JsonIgnore
