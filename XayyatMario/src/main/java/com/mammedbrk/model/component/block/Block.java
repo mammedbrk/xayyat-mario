@@ -26,6 +26,6 @@ public abstract class Block extends Component {
 
     @Override
     public String getType() {
-        return this.getClass().getSimpleName();
+        return "Block";
     }
 }
