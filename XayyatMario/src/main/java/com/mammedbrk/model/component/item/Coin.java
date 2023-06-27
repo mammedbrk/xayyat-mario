@@ -1,6 +1,7 @@
 package com.mammedbrk.model.component.item;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.mammedbrk.config.Config;
 import com.mammedbrk.current.Current;
 import com.mammedbrk.model.interfaces.Gravitational;
 
@@ -17,7 +18,7 @@ public class Coin extends Item implements Gravitational {
 
     @Override
     public void applyGravity() {
-        gravity = gravity + Current.gravity; // todo
+        gravity = gravity + Double.parseDouble(Config.getInstance().getProperty("gravity")) / Integer.parseInt(Config.getInstance().getProperty("fps")) / Integer.parseInt(Config.getInstance().getProperty("fps"));
         y += gravity;
     }
 

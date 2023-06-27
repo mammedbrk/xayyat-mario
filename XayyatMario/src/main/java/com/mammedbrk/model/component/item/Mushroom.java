@@ -52,7 +52,7 @@ public class Mushroom extends Item implements Gravitational, Movable, Timer {
 
     @Override
     public void applyGravity() {
-        gravity = gravity + Current.gravity; // todo
+        gravity = gravity + Double.parseDouble(Config.getInstance().getProperty("gravity")) / Integer.parseInt(Config.getInstance().getProperty("fps")) / Integer.parseInt(Config.getInstance().getProperty("fps"));
         y += gravity;
     }
 
