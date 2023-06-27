@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.FlowPane?>
@@ -10,7 +8,6 @@
 
 <GridPane id="main" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="80.0" prefWidth="1300.0" stylesheets="@../../style/game-setup.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mammedbrk.view.game.GameHeaderView">
   <columnConstraints>
-    <ColumnConstraints hgrow="SOMETIMES" prefWidth="50.0" />
       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -21,38 +18,29 @@
     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
-      <FlowPane alignment="CENTER_LEFT" prefHeight="80.0" prefWrapLength="50.0">
-         <children>
-            <Button mnemonicParsing="false" onAction="#pauseBtnClicked" prefHeight="50.0" text="Pause">
-               <FlowPane.margin>
-                  <Insets left="10.0" />
-               </FlowPane.margin>
-            </Button>
-         </children>
-      </FlowPane>
-      <FlowPane alignment="CENTER" prefHeight="80.0" GridPane.columnIndex="5">
+      <FlowPane alignment="CENTER" prefHeight="80.0" GridPane.columnIndex="4">
          <children>
             <Label fx:id="heartLabel" text="&lt;3 &lt;3 &lt;3" />
          </children>
       </FlowPane>
-      <FlowPane alignment="CENTER" prefHeight="80.0" GridPane.columnIndex="4">
+      <FlowPane alignment="CENTER" prefHeight="80.0" GridPane.columnIndex="3">
          <children>
             <Label fx:id="timeLabel" />
          </children>
       </FlowPane>
-      <FlowPane alignment="CENTER" prefHeight="80.0" GridPane.columnIndex="1">
+      <FlowPane alignment="CENTER" prefHeight="80.0">
          <children>
             <Label text="Score " />
             <Label fx:id="scoreLabel" text="" />
          </children>
       </FlowPane>
-      <FlowPane alignment="CENTER" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2">
+      <FlowPane alignment="CENTER" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1">
          <children>
             <Label text="Coin " />
             <Label fx:id="coinLabel" text="0" />
          </children>
       </FlowPane>
-      <FlowPane alignment="CENTER" prefHeight="80.0" GridPane.columnIndex="3">
+      <FlowPane alignment="CENTER" prefHeight="80.0" GridPane.columnIndex="2">
          <children>
             <Label fx:id="levelLabel" />
          </children>

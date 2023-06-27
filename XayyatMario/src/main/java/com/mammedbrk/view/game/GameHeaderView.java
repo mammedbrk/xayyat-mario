@@ -41,23 +41,4 @@ public class GameHeaderView {
     public void addListener(StringListener listener) {
         listeners.add(listener);
     }
-
-    @FXML
-    void pauseBtnClicked(ActionEvent event) {
-        for (StringListener listener: listeners) {
-            listener.listen("pause");
-        }
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Want to save and quit this game?");
-        if (alert.showAndWait().get() == ButtonType.OK) {
-            saveExistingGameListener.listen();
-            for (StringListener listener : listeners) {
-                listener.listen("MainMenu");
-            }
-        }
-        else {
-            for (StringListener listener: listeners) {
-                listener.listen("resume");
-            }
-        }
-    }
 }
