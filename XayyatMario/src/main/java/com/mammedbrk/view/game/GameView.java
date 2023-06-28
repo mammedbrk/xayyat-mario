@@ -49,20 +49,20 @@ public class GameView extends Pane {
                             for (StringListener listener: listeners)
                                 listener.listen("Pause");
                             PauseDialogBox dialogBox = new PauseDialogBox(this.getScene());
-                            dialogBox.addListener(new StringListener() {
-                                @Override
-                                public void listen(String s) {
-                                    if (s.equals("Continue")) {
-                                        for (StringListener listener: listeners)
-                                            listener.listen("Pause");
-                                    }
-                                    if (s.equals("Mute")) {
-                                        if (mediaPlayer.getStatus().equals(MediaPlayer.Status.PLAYING))
-                                            mediaPlayer.pause();
-                                        else mediaPlayer.play();
-                                    }
-                                    if (s.equals("Exit")) {
-
+                            dialogBox.addListener(s -> {
+                                if (s.equals("Continue")) {
+                                    for (StringListener listener: listeners)
+                                        listener.listen("Pause");
+                                }
+                                if (s.equals("Mute")) {
+                                    if (mediaPlayer.getStatus().equals(MediaPlayer.Status.PLAYING))
+                                        mediaPlayer.pause();
+                                    else mediaPlayer.play();
+                                }
+                                if (s.equals("MainMenu")) {
+                                    mediaPlayer.stop();
+                                    for (StringListener listener: listeners) {
+                                        listener.listen("MainMenu");
                                     }
                                 }
                             });

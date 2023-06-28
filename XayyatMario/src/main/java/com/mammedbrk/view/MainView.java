@@ -280,21 +280,12 @@ public class MainView extends BorderPane {
         GameController controller = new GameController(Current.user.getGames().get(index), gameView);
         this.setCenter(gameView);
 
-        gameHeaderView.addListener(new StringListener() {
-            @Override
-            public void listen(String s) {
-                if (s.equals("pause")) {
-                    // todo
-                }
-                if (s.equals("resume")) {
-                    // todo
-                }
-                if (s.equals("MainMenu")) {
-                    try {
-                        mainMenu();
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
+        gameView.addListener(s -> {
+            if (s.equals("MainMenu")) {
+                try {
+                    mainMenu();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
                 }
             }
         });
@@ -311,6 +302,7 @@ public class MainView extends BorderPane {
             public void listen(String s) {
                 if (s.equals("MainMenu")) {
                     try {
+                        System.out.println("golabi");
                         mainMenu();
                     } catch (IOException e) {
                         throw new RuntimeException(e);

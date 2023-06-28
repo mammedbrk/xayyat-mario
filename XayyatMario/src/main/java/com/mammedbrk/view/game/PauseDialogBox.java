@@ -41,6 +41,7 @@ public class PauseDialogBox extends Stage {
         exitBtn.setOnMousePressed(e -> {
             for (StringListener listener: listeners)
                 listener.listen("MainMenu");
+            this.close();
         });
         dialogVbox.getChildren().add(exitBtn);
         Scene dialogScene = new Scene(dialogVbox, 200, 200);
