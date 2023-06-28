@@ -11,9 +11,17 @@ import com.mammedbrk.model.component.item.Item;
 import com.mammedbrk.model.component.pipe.Pipe;
 import com.mammedbrk.model.game.Game;
 import com.mammedbrk.model.game.Section;
+import javafx.geometry.Pos;
+import javafx.scene.Scene;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
+import javafx.scene.media.Media;
+import javafx.scene.text.Text;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -33,6 +41,27 @@ public class GameView extends Pane {
                         case A -> left = true;
                         case D -> right = true;
                         case SPACE -> sit = true;
+                        case ESCAPE -> {
+                            for (StringListener listener: listeners)
+                                listener.listen("Pause");
+                            PauseDialogBox dialogBox = new PauseDialogBox(this.getScene());
+                            dialogBox.addListener(new StringListener() {
+                                @Override
+                                public void listen(String s) {
+                                    if (s.equals("Continue")) {
+                                        for (StringListener listener: listeners)
+                                            listener.listen("Pause");
+                                    }
+                                    if (s.equals("Mute")) {
+
+                                    }
+                                    if (s.equals("Exit")) {
+
+                                    }
+                                }
+                            });
+                            dialogBox.show();
+                        }
                     }
                 });
 
@@ -97,5 +126,9 @@ public class GameView extends Pane {
 
     public static void setHEIGHT(double HEIGHT) {
         GameView.HEIGHT = HEIGHT;
+    }
+
+    public void addListener(StringListener listener) {
+        listeners.add(listener);
     }
 }

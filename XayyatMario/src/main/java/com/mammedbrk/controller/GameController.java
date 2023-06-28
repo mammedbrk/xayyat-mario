@@ -3,6 +3,7 @@ package com.mammedbrk.controller;
 import com.mammedbrk.config.Config;
 import com.mammedbrk.controller.collision.*;
 import com.mammedbrk.event.MovementEvent;
+import com.mammedbrk.listener.StringListener;
 import com.mammedbrk.model.component.Checkpoint;
 import com.mammedbrk.model.component.Component;
 import com.mammedbrk.model.component.block.Block;
@@ -45,6 +46,16 @@ public class GameController {
         gameLoop.setCycleCount(Animation.INDEFINITE);
         gameLoop.play();
 
+        view.addListener(new StringListener() {
+            @Override
+            public void listen(String s) {
+                if (s.equals("Pause")) {
+                    if (gameLoop.getStatus().equals(Animation.Status.RUNNING))
+                        gameLoop.pause();
+                    else gameLoop.play();
+                }
+            }
+        });
 
         // todo:
         game.getMario().setJumpSpeed(Math.sqrt(-2*Double.parseDouble(Config.getInstance().getProperty("gravity"))*Double.parseDouble(Config.getInstance().getProperty("mortaza_jump")))/FPS);
