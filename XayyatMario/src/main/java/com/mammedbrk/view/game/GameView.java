@@ -17,10 +17,13 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+import java.io.File;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -30,6 +33,7 @@ public class GameView extends Pane {
     private static double HEIGHT = Integer.parseInt(Config.getInstance().getProperty("height")) * Integer.parseInt(Config.getInstance().getProperty("tile_size"));
     private boolean left, right, jump, sit;
     private final List<StringListener> listeners = new LinkedList<>();
+    private MediaPlayer mediaPlayer;
 
 
     public GameView() {
@@ -53,7 +57,9 @@ public class GameView extends Pane {
                                             listener.listen("Pause");
                                     }
                                     if (s.equals("Mute")) {
-
+                                        if (mediaPlayer.getStatus().equals(MediaPlayer.Status.PLAYING))
+                                            mediaPlayer.pause();
+                                        else mediaPlayer.play();
                                     }
                                     if (s.equals("Exit")) {
 
@@ -74,6 +80,14 @@ public class GameView extends Pane {
                 });
             }
         });
+
+        playMusic("src/main/resources/com.mammedbrk/music/main_theme.mp3");
+    }
+
+    private void playMusic(String path) {
+        Media media = new Media(Paths.get(path).toUri().toString());
+        mediaPlayer = new MediaPlayer(media);
+        mediaPlayer.play();
     }
 
     public MovementEvent handleInput() {
